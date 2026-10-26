@@ -1,6 +1,6 @@
 /* Public Domain Press offline cache. Optional: the app works without it.
    Same-site files only. Catalog searches (gutendex.com) always go to the network. */
-var CACHE = 'pdpress-v5';
+var CACHE = 'pdpress-v7';
 var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './study-bg-2.jpg', './study-bg.jpg', './library-bg.jpg',
   './fonts/federo-latin.woff2', './fonts/marcellus-sc-latin.woff2', './fonts/josefin-sans-latin.woff2',
   './fonts/poiret-one-latin.woff2', './fonts/limelight-latin.woff2'];

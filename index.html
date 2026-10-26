@@ -372,6 +372,84 @@ label.f > span { font-size: 15px; color: #2b2620; }
 .tag.accent { color: #ecd9ae; border-color: #b08d4a; background: #1d1813; }
 .tag.warn { color: #ffd98a; border-color: #d9a63a; background: #2e2110; box-shadow: inset 0 0 0 2px #2e2110, inset 0 0 0 3px rgba(217,166,58,0.5); }
 .tag.warn:before { background: #f0b84a; }
+
+/* ---- Book editor (v2.4) ---- */
+.editor { z-index: 45; }
+.pv-bw img { -webkit-filter: grayscale(1); filter: grayscale(1); }
+.ed-open { margin: 18px 4px 4px; }
+.ed-open .btn { display: block; width: 100%; font-size: 17px; padding: 14px 18px 13px; }
+.ed-open p { margin: 8px 0 0; text-align: center; }
+.ed-opt { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; width: 100%; text-align: left; padding: 12px 14px; margin-bottom: 9px; border: 1px solid rgba(176,141,74,0.6); background: rgba(255,252,245,0.72); color: #1d1813; border-radius: 0; }
+.ed-opt.on { background: #1d1813; color: #ecd9ae; border-color: #b08d4a; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(201,164,92,0.6); }
+.ed-opt-t { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; min-width: 0; }
+.ed-opt b { display: block; font-family: "Marcellus SC", Georgia, serif; font-weight: 400; font-size: 17px; letter-spacing: 0.03em; }
+.ed-opt em { display: block; font-style: normal; font-size: 15px; line-height: 1.35; color: #3d362d; margin-top: 2px; }
+.ed-opt.on em { color: #ddd0b6; }
+.ed-opt .tag { margin: 0 0 0 8px; -webkit-flex: none; flex: none; }
+.ed-mini-box { -webkit-flex: none; flex: none; width: 48px; height: 46px; margin-right: 14px; display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: flex-end; align-items: flex-end; -webkit-justify-content: center; justify-content: center; }
+.ed-mini { display: block; background: #fbf6ea; border: 1px solid #8a6a2c; }
+.ed-opt.on .ed-mini { background: #ecd9ae; border-color: #ecd9ae; }
+.ed-stage { position: relative; margin: 10px auto 6px; }
+.ed-letter { position: absolute; left: 0; bottom: 0; border: 1px dashed rgba(90,66,32,0.55); }
+.ed-page { position: absolute; left: 0; bottom: 0; background: #fbf6ea; border: 1px solid #8a6a2c; box-shadow: 4px 6px 16px rgba(0,0,0,0.22), inset 0 0 0 5px #fbf6ea, inset 0 0 0 6px rgba(176,141,74,0.5); -webkit-transition: width .25s, height .25s; transition: width .25s, height .25s; }
+.ed-page span { position: absolute; left: 0; right: 0; top: 50%; margin-top: -12px; text-align: center; font-family: "Federo", Georgia, serif; font-size: 18px; color: #3d362d; text-shadow: none; }
+.ed-read { text-align: center; margin: 4px 0 6px; }
+.ed-read .big { font-family: "Federo", Georgia, serif; }
+.ed-read .tag { margin: 6px 0 0; }
+.ed-h { font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 21px; margin: 24px 0 10px; }
+.seg.ed-seg { margin-top: 0; margin-bottom: 8px; }
+.seg button[disabled] { opacity: 0.4; }
+.ed-tools { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 12px 0 2px; }
+.deco-2 .ed-tools .btn { margin: 4px 12px 12px 4px; }
+.ed-text { min-height: 50vh; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 18px; line-height: 1.6; }
+.ed-count { font-size: 15px; color: #3d362d; margin: 6px 0 0; }
+.ed-bar { height: 10px; background: rgba(29,24,19,0.12); border: 1px solid rgba(176,141,74,0.7); margin: 8px 0 4px; }
+.ed-bar i { display: block; height: 100%; background: #b08d4a; }
+.ed-bar i.full { background: #c27c60; }
+.ed-grid { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 4px -5px 0; }
+.ed-thumb { width: 50%; padding: 5px; position: relative; text-align: left; }
+.ed-thumb img { display: block; width: 100%; height: 140px; object-fit: cover; background: #1d1813; border: 1px solid #b08d4a; box-shadow: inset 0 0 0 2px #1d1813; }
+.ed-thumb.on img { outline: 3px solid #b08d4a; outline-offset: 1px; }
+.ed-thumb .tag { position: absolute; left: 11px; bottom: 11px; margin: 0; font-size: 13px; padding: 3px 7px 2px 19px; }
+.ed-thumb .tag:before { left: 7px; }
+.ed-artedit img { display: block; max-width: 100%; max-height: 260px; margin: 0 auto 12px; border: 1px solid #b08d4a; }
+.ed-roycard { margin-top: 14px; }
+.ed-roycard table.mini td { font-size: 16px; padding: 8px 0; }
+.ed-roycard strong.pos { color: #3f6b4a; } .ed-roycard strong.neg { color: #8c3b2a; }
+.ed-roy-wrap { margin: 22px 4px 8px; }
+.ed-roy-wrap > .btn { display: block; width: 100%; }
+.pv { text-align: center; margin: 8px 0 26px; }
+.pv-row { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; -webkit-align-items: flex-end; align-items: flex-end; }
+.pv-page { position: relative; overflow: hidden; text-align: left; background: #ffffff; box-shadow: 0 8px 22px rgba(0,0,0,0.3); border: 1px solid rgba(0,0,0,0.15); font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; color: #2a241d; text-shadow: none; }
+.pv-page.cream { background: #f6eedb; }
+.pv-cap { font-size: 15px; color: #3d362d; margin-top: 10px; }
+.pv-cover { background: #1d1813; color: #ecd9ae; }
+.pv-cover.cloth { background-color: #3b2a1e; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 4px); }
+.pv-cover img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.pv-ct { position: absolute; left: 9%; right: 9%; bottom: 9%; text-align: center; padding: 10px 8px; background: rgba(20,15,10,0.72); border: 1px solid #b08d4a; box-shadow: inset 0 0 0 2px rgba(20,15,10,0.72), inset 0 0 0 3px rgba(201,164,92,0.5); }
+.pv-ct b { display: block; font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 17px; line-height: 1.2; color: #f3e3bd; }
+.pv-ct i { display: block; font-style: normal; font-family: "Marcellus SC", Georgia, serif; font-size: 12px; margin-top: 5px; color: #d9c79f; }
+.pv-gloss:after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: -webkit-linear-gradient(330deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 38%, rgba(255,255,255,0) 72%, rgba(255,255,255,0.14) 100%); background: linear-gradient(120deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 38%, rgba(255,255,255,0) 72%, rgba(255,255,255,0.14) 100%); }
+.pv-spine { position: relative; background: #2a2119; border: 1px solid rgba(0,0,0,0.3); margin-right: 2px; overflow: hidden; box-shadow: 0 8px 22px rgba(0,0,0,0.3); }
+.pv-spine span { position: absolute; left: 50%; top: 50%; white-space: nowrap; font-family: "Federo", Georgia, serif; font-size: 10px; color: #e6cf9a; -webkit-transform: translate(-50%, -50%) rotate(90deg); transform: translate(-50%, -50%) rotate(90deg); }
+.pv-in { position: absolute; top: 9%; left: 11%; right: 9%; bottom: 8%; overflow: hidden; font-size: 10px; line-height: 1.45; }
+.pv-in h4 { font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 15px; text-align: center; margin: 4px 0 10px; }
+.pv-in h5 { font-size: 11px; margin: 6px 0 4px; }
+.pv-in p { margin: 0 0 5px; text-indent: 1.2em; }
+.pv-in ul { margin: 0 0 5px; padding-left: 1.2em; }
+.pv-two { -webkit-column-count: 2; column-count: 2; -webkit-column-gap: 10px; column-gap: 10px; }
+.pv-in img { display: block; max-width: 100%; max-height: 70%; margin: 0 auto 8px; }
+.pv-in .pv-fig { text-align: center; font-style: italic; font-size: 10px; }
+.pv-title { text-align: center; }
+.pv-title b { display: block; font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 18px; line-height: 1.2; margin-top: 22%; }
+.pv-title i { display: block; font-style: italic; font-size: 10px; margin-top: 8px; }
+.pv-title span { display: block; font-size: 11px; margin-top: 18px; }
+.pv-title em { display: block; font-style: normal; font-size: 9px; margin-top: 30%; letter-spacing: 0.1em; }
+.pv-empty { color: #8a8070; font-style: italic; text-align: center; margin-top: 30%; text-indent: 0 !important; }
+.pv-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 22%; }
+.pv-page .pv-fade { background: -webkit-linear-gradient(top, rgba(255,255,255,0), #ffffff); background: linear-gradient(180deg, rgba(255,255,255,0), #ffffff); }
+.pv-page.cream .pv-fade { background: -webkit-linear-gradient(top, rgba(246,238,219,0), #f6eedb); background: linear-gradient(180deg, rgba(246,238,219,0), #f6eedb); }
+.pv-num { position: absolute; bottom: 3%; left: 0; right: 0; text-align: center; font-size: 9px; color: #6b6255; }
 </style>
 </head>
 <body>
@@ -446,9 +524,12 @@ label.f > span { font-size: 15px; color: #2b2620; }
           <option value="5.25x8">5.25 x 8 in (regular)</option>
           <option value="5.5x8.5" selected>5.5 x 8.5 in (regular)</option>
           <option value="6x9">6 x 9 in (regular)</option>
+          <option value="6.14x9.21">6.14 x 9.21 in (large)</option>
           <option value="7x10">7 x 10 in (large)</option>
           <option value="8x10">8 x 10 in (large)</option>
           <option value="8.5x11">8.5 x 11 in (large)</option>
+          <option value="8.5x8.5">8.5 x 8.5 in square (large)</option>
+          <option value="8.25x6">8.25 x 6 in landscape (large)</option>
         </select>
         <em>Wider than 6.12 in or taller than 9 in counts as large trim and costs more to print.</em>
       </label>
@@ -478,6 +559,14 @@ label.f > span { font-size: 15px; color: #2b2620; }
   </div>
 </main>
 
+<main id="v-books" class="view hidden">
+  <div class="wrap">
+    <header class="top"><div class="eyebrow">Book editor</div><h2 style="font-size:26px;margin-top:4px">Make the book</h2></header>
+    <p class="muted small" style="margin-top:6px">Pick a title to choose its size, paper and cover, write your text and add art.</p>
+    <div id="booksList"></div>
+  </div>
+</main>
+
 <main id="v-data" class="view hidden">
   <div class="wrap">
     <header class="top"><div class="eyebrow">Your data</div><h2 style="font-size:26px;margin-top:4px">Backup and basics</h2></header>
@@ -485,7 +574,9 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <p class="mt0 small">Everything is saved on this phone, in this browser only. Download a backup now and then, and before clearing your browser.</p>
       <div class="btns"><button class="btn" id="bk-dl">Download backup</button><button class="btn ghost" id="bk-up">Restore from file</button></div>
       <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
-      <p class="small muted" id="bk-info" style="margin-bottom:0"></p>
+      <p class="small muted" id="bk-info"></p>
+      <div id="bk-space"></div>
+      <button class="btn ghost small hidden" id="bk-persist" style="margin-top:10px">Ask the phone to keep my art</button>
     </div>
     <div class="card">
       <h3 style="font-size:18px">Rules of thumb</h3>
@@ -499,7 +590,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.3. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.5. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -511,12 +602,22 @@ label.f > span { font-size: 15px; color: #2b2620; }
   <div class="wrap" id="sheetBody"></div>
 </div>
 
+<div id="editor" class="sheet editor hidden" role="dialog" aria-modal="true" aria-label="Book editor">
+  <div class="sheet-bar"><div class="wrap">
+    <button class="back" id="edBack"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1d1b18" stroke-width="1.8"><path d="M11 3L5 9l6 6"/></svg><span id="edBackLbl">Back to title</span></button>
+    <span class="saved" id="edSaved">Saved</span>
+  </div></div>
+  <div class="wrap" id="edBody"></div>
+</div>
+<input type="file" id="artFile" accept="image/*" multiple class="hidden">
+
 <div class="toast" id="toast"></div>
 
 <nav class="nav" aria-label="Sections"><div class="wrap">
   <button data-v="watch" class="on"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="14" height="16" rx="1.5"/><path d="M8 3v8l2.5-1.8L13 11V3"/></svg>Titles</button>
   <button data-v="search"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9.5" cy="9.5" r="5.5"/><path d="M13.5 13.5L19 19"/></svg>Catalog</button>
   <button data-v="calc"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="14" height="16" rx="1.5"/><path d="M7 7.5h8M7 11.5h2M11 11.5h4M7 15h2M11 15h4"/></svg>Royalty</button>
+  <button data-v="books"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18l1-4L15 4l3 3L8 17z"/><path d="M13 6l3 3"/></svg>Editor</button>
   <button data-v="data"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="11" cy="5.5" rx="6.5" ry="2.5"/><path d="M4.5 5.5v11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-11M4.5 11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5"/></svg>Backup</button>
 </div></nav>
 <script>
@@ -672,10 +773,11 @@ function blankTitle(o) {
     created: new Date().toISOString()
   };
 }
+function newTitle(o) { var t = blankTitle(o); fixBook(t); return t; }
 function seedTitles(skip) {
   var t = [];
-  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; t.push(blankTitle(s)); } });
-  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; t.push(blankTitle(s)); } });
+  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; t.push(newTitle(s)); } });
+  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; t.push(newTitle(s)); } });
   return t;
 }
 function fresh() { return { v: 2, titles: seedTitles(), group: 'now', filter: 'All' }; }
@@ -701,6 +803,7 @@ function normalize(d) {
   var base = blankTitle();
   each(d.titles, function (t) {
     each(keys(base), function (k) { if (t[k] === undefined) t[k] = base[k]; });
+    fixBook(t);
     if (!t.id) t.id = uid();
     if (!t.flags) t.flags = { trademark: false, translation: false, revised: false };
     if (!t.plan) t.plan = {};
@@ -733,10 +836,11 @@ function tick() {
 }
 
 function go(v) {
-  each(['watch', 'search', 'calc', 'data'], function (x) { $('v-' + x).className = 'view' + (x === v ? '' : ' hidden'); });
+  each(['watch', 'search', 'calc', 'books', 'data'], function (x) { $('v-' + x).className = 'view' + (x === v ? '' : ' hidden'); });
   each(document.querySelectorAll('.nav button'), function (b) { b.className = b.getAttribute('data-v') === v ? 'on' : ''; });
   if (v === 'calc') fillTitleSelect();
   if (v === 'data') backupInfo();
+  if (v === 'books') renderBooks();
   if (v === 'watch') renderList();
   window.scrollTo(0, 0);
 }
@@ -842,7 +946,8 @@ function renderSheet() {
   var stOpts = {}; each(STATUSES, function (s) { stOpts[s] = s; });
   var h = '<h1 class="d-title">' + esc(t.title || 'Untitled') + '</h1>' +
     '<div class="d-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div>' +
-    '<div class="tags" id="d-tags">' + detailTags(t) + '</div><div class="tabs2">';
+    '<div class="tags" id="d-tags">' + detailTags(t) + '</div>' +
+    '<div class="ed-open"><button class="btn" id="openEditor">Open book editor</button><p class="small muted">Size, shape, paper, your text and art</p></div><div class="tabs2">';
   each([['plan', 'Plan'], ['edition', 'Edition'], ['legal', 'Legal'], ['check', 'Checklist'], ['export', 'Export']], function (p) {
     h += '<button data-tab="' + p[0] + '" class="' + (dtab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
   });
@@ -969,7 +1074,7 @@ function calc() {
 function updDetailRoyalty(t) {
   var el = $('d-roy'); if (!el) return;
   var r = royalty(num(t.pages, 0), num(t.price, 0), t.trim || '5.5x8.5');
-  el.innerHTML = 'Approximate: print ' + money(r.print) + ', you earn about <strong>' + money(r.roy) + '</strong> per Amazon.com sale at ' + esc(t.trim || '5.5x8.5') + ' in trim. Change the trim on the Royalty screen.';
+  el.innerHTML = 'Approximate: print ' + money(r.print) + ', you earn about <strong>' + money(r.roy) + '</strong> per Amazon.com sale at ' + esc(t.trim || '5.5x8.5') + ' in trim. Change the size in the Book editor or on the Royalty screen.';
 }
 function fillTitleSelect() {
   var h = '';
@@ -1043,7 +1148,7 @@ function addFromCatalog(id) {
   var b = null; each(sLast, function (x) { if (String(x.id) === String(id)) b = x; });
   if (!b) return;
   var a = (b.authors && b.authors[0]) || {};
-  var t = blankTitle({
+  var t = newTitle({
     title: b.title, author: personName(a.name), year: '', group: 'now',
     source: 'Project Gutenberg ebook ' + b.id + ' (remove the license and name before publishing)',
     sourceUrl: 'https://www.gutenberg.org/ebooks/' + b.id, gutenbergId: b.id,
@@ -1061,7 +1166,9 @@ function outlineMd(t) {
   if (trim(t.subtitle)) o.push('subtitle: ' + q(t.subtitle));
   o.push('original_title: ' + q(t.title), 'original_author: ' + q(t.author), 'original_year: ' + yr,
     'editor: "[Your name or imprint]"', 'edition: ' + q(PRODUCTS[t.product] || t.product),
-    'trim: ' + q((t.trim || '5.5x8.5') + ' in'), 'target_pages: ' + (t.pages || ''), 'list_price_usd: ' + (t.price || ''),
+    'trim: ' + q((t.trim || '5.5x8.5') + ' in'), 'binding: ' + q(t.book ? nameOf(BINDINGS, t.book.binding) : 'Paperback'),
+    'ink: ' + q(t.book ? nameOf(INKS, t.book.ink) : 'Black and white'), 'paper: ' + q(t.book ? (t.book.ink === 'bw' ? t.book.paper : 'white') : 'cream'),
+    'cover_finish: ' + q(t.book ? t.book.finish : 'matte'), 'columns: ' + (t.book ? t.book.columns : 1), 'target_pages: ' + (t.pages || ''), 'list_price_usd: ' + (t.price || ''),
     'ai_content: ' + q({ none: 'none', assisted: 'assisted only', generated: 'AI-generated, disclose in KDP' }[t.ai] || 'not answered'),
     '---', '');
   o.push('# ' + et, '', '## Front matter', '');
@@ -1073,13 +1180,19 @@ function outlineMd(t) {
     'Source text: ' + (trim(t.source) || '[the printing you used]'), '',
     'This edition is not affiliated with or endorsed by the author\'s estate or any trademark holder.', '');
   o.push('### Contents', '', '[Filled in when the interior is typeset]', '');
-  o.push('### Introduction', '', trim(t.plan.intro) || '[Plan your introduction on the Plan tab]', '');
+  var edt = t.editor || {};
+  function demote(x) { return trim(x).replace(/^#{1,3} /gm, '#### '); }
+  o.push('### Introduction', '', demote(edt.intro) || trim(t.plan.intro) || '[Plan your introduction on the Plan tab]', '');
   o.push('### A note on the text', '', '[Which printing you used, what you corrected, and what you kept as first printed.]', '');
   o.push('## The text', '', '[Insert the cleaned ' + yr + ' text here, chapter by chapter. No Project Gutenberg header, footer, license or name.]', '');
+  if (trim(edt.notes)) o.push('### Chapter notes', '', demote(edt.notes), '');
   if (trim(t.plan.footnotes)) o.push('### Annotation plan', '', trim(t.plan.footnotes), '');
+  var arts = artMeta(t.id);
+  if (arts.length) { o.push('### Art (' + arts.length + (arts.length === 1 ? ' picture' : ' pictures') + ', kept in the app)', ''); each(arts, function (a) { o.push('- ' + artLabel(a) + ': ' + (a.caption || a.name) + ' (' + a.width + ' x ' + a.height + ' px)'); }); o.push(''); }
   if (trim(t.plan.illustrations) || num(t.illusCount, 0)) o.push('### Illustrations (' + num(t.illusCount, 0) + ' original)', '', trim(t.plan.illustrations) || '[List planned images]', '');
   o.push('## Back matter', '', '### Glossary', '', trim(t.plan.glossary) || '[Terms]', '');
   o.push('### Further material', '', trim(t.plan.backmatter) || '[Timeline, discussion questions, further reading]', '');
+  if (trim(edt.backmatter)) o.push('### About this edition', '', demote(edt.backmatter), '');
   o.push('### About the editor', '', '[Short bio]', '');
   o.push('---', '', '## Working notes (not for print)', '', 'Status: ' + t.status);
   var fl = []; if (t.flags.trademark) fl.push('trademark'); if (t.flags.translation) fl.push('translation year'); if (t.flags.revised) fl.push('revised edition');
@@ -1101,10 +1214,12 @@ function mdToHtml(md) {
   each(body.split('\n'), function (l) {
     var m;
     if (/^---$/.test(l)) { flush(); out.push('<hr>'); }
-    else if ((m = /^(#{1,3}) (.*)$/.exec(l))) { flush(); var n = m[1].length; out.push('<h' + n + (n === 2 ? ' class="part"' : '') + '>' + esc(m[2]) + '</h' + n + '>'); }
+    else if ((m = /^(#{1,4}) (.*)$/.exec(l))) { flush(); var n = m[1].length; out.push('<h' + n + (n === 2 ? ' class="part"' : '') + '>' + mdInline(m[2]) + '</h' + n + '>'); }
+    else if (/^\[Page break\]$/.test(l)) { flush(); out.push('<div style="page-break-after:always"></div>'); }
     else if ((m = /^- \[(.)\] (.*)$/.exec(l))) { list.push('<li>' + (m[1] === 'x' ? 'Done: ' : m[1] === '-' ? 'Not needed: ' : 'To do: ') + esc(m[2]) + '</li>'); }
     else if (/^\s*$/.test(l)) flush();
-    else para.push(esc(l));
+    else if ((m = /^- (.*)$/.exec(l))) list.push('<li>' + mdInline(m[1]) + '</li>');
+    else para.push(mdInline(l));
   });
   flush();
   return out.join('\n');
@@ -1119,7 +1234,7 @@ function outlineHtml(t) {
 function slug(s) { return String(s || 'title').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'title'; }
 function download(name, text, mime) {
   try {
-    var blob = new Blob([text], { type: mime + ';charset=utf-8' });
+    var blob = new Blob(typeof text === 'string' ? [text] : text, { type: mime + ';charset=utf-8' });
     if (window.navigator.msSaveBlob) { window.navigator.msSaveBlob(blob, name); return; }
     var url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = name; a.style.display = 'none';
@@ -1133,14 +1248,57 @@ function backupInfo() {
   $('bk-info').textContent = state.titles.length + ' titles saved' +
     (state.updated ? '. Last change ' + new Date(state.updated).toLocaleString() : '') +
     (storageOk ? '.' : '. Warning: this browser is blocking storage, so changes are lost when you close it.');
+  var sp = $('bk-space'); if (!sp) return;
+  if (!artReady) { sp.innerHTML = '<div class="small muted">Checking your art...</div>'; return; }
+  var tt = artTotals();
+  var head = '<div class="small">Art: <strong>' + tt.count + (tt.count === 1 ? ' picture' : ' pictures') + ', ' + sizeText(tt.size) + '</strong>' + (tt.count ? ', included in the backup file.' : '.') + '</div>';
+  if (artMode === 'idb') { sp.innerHTML = head + '<div id="bk-space2"><div class="small muted">Checking space on this phone...</div></div>'; fillSpace('bk-space2'); }
+  else { sp.innerHTML = head + '<div class="small muted">This browser cannot use the larger picture storage (often because of private browsing or an older browser). Art is limited to about 4,600 KB per title and all app data to about 5,000 KB.</div>'; $('bk-persist').className = 'btn ghost small hidden'; }
 }
 
+function backupParts() {
+  // Built in pieces so a large backup is not one giant string in memory.
+  var dump = {}; each(keys(state), function (k) { dump[k] = state[k]; });
+  var head = JSON.stringify(dump), parts = [head.slice(0, -1) + (head.length > 2 ? ',' : '') + '"art":{'];
+  var tids = keys(artIdx), firstT = true, chain = Promise.resolve();
+  each(tids, function (tid) {
+    chain = chain.then(function () { return artList(tid); }).then(function (list) {
+      if (!list.length) return;
+      parts.push((firstT ? '' : ',') + JSON.stringify(tid) + ':['); firstT = false;
+      var c2 = Promise.resolve();
+      each(list, function (a, i) {
+        c2 = c2.then(function () { return a._blob ? blobToDataUrl(a._blob) : (a._durl || a.data || ''); }).then(function (durl) {
+          var o = metaOf(a); delete o.titleId; delete o.size; o.data = durl;
+          parts.push((i ? ',' : '') + JSON.stringify(o));
+        });
+      });
+      return c2.then(function () { parts.push(']'); });
+    });
+  });
+  return chain.then(function () { parts.push('}}'); return parts; });
+}
+function restoreArt(art) {
+  var r = { ok: 0, fail: 0, msg: '' };
+  return artClear()['catch'](function () {}).then(function () {
+    var chain = Promise.resolve();
+    each(keys(art), function (tid) {
+      var list = art[tid]; if (!list || typeof list.length !== 'number') return;
+      each(list, function (o, i) {
+        chain = chain.then(function () {
+          if (!o || !o.data) { r.fail++; return; }
+          return artPutMany([oldToItem(o, tid, o.order !== undefined ? o.order : i)]).then(function () { r.ok++; }, function (e) { r.fail++; r.msg = artErrMsg(e); });
+        });
+      });
+    });
+    return chain;
+  }).then(function () { return r; });
+}
 function closest(el, attr) { while (el && el !== document) { if (el.getAttribute && el.getAttribute(attr) != null) return el; el = el.parentNode; } return null; }
 function bind() {
   each(document.querySelectorAll('.nav button'), function (b) { b.addEventListener('click', function () { go(b.getAttribute('data-v')); }); });
   $('filters').addEventListener('click', function (e) { var c = closest(e.target, 'data-f'); if (!c) return; state.filter = c.getAttribute('data-f'); save(); renderList(); });
   $('list').addEventListener('click', function (e) { var c = closest(e.target, 'data-id'); if (c) openTitle(c.getAttribute('data-id')); });
-  $('addBtn').addEventListener('click', function () { var t = blankTitle({ year: state.group === 'soon' ? 1931 : '', group: state.group }); state.titles.unshift(t); save(); openTitle(t.id, 'edition'); });
+  $('addBtn').addEventListener('click', function () { var t = newTitle({ year: state.group === 'soon' ? 1931 : '', group: state.group }); state.titles.unshift(t); save(); openTitle(t.id, 'edition'); });
   function pickGroup(e) { var c = closest(e.target, 'data-g'); if (!c) return; state.group = c.getAttribute('data-g'); state.filter = 'All'; save(); renderList(); window.scrollTo(0, 0); }
   $('seg').addEventListener('click', pickGroup);
   $('nowCard').addEventListener('click', pickGroup);
@@ -1149,6 +1307,14 @@ function bind() {
     state.group = 'now'; state.filter = 'All'; save(); renderList(); toast(n + ' titles moved to Publish now');
   });
   $('sheetBack').addEventListener('click', closeSheet);
+  $('edBack').addEventListener('click', closeEditor);
+  $('edBody').addEventListener('click', onEdClick);
+  $('edBody').addEventListener('input', onEdInput);
+  $('edBody').addEventListener('change', onEdInput);
+  $('edBody').addEventListener('mousedown', function (e) { if (closest(e.target, 'data-md')) e.preventDefault(); });
+  $('artFile').addEventListener('change', function () { var f = $('artFile').files; if (f && f.length) importFiles(f); });
+  $('booksList').addEventListener('click', function (e) { var c = closest(e.target, 'data-ed'); if (c) openEditor(c.getAttribute('data-ed'), 'books'); });
+  window.addEventListener('pagehide', flushText);
   $('sheetBody').addEventListener('input', onSheetInput);
   $('sheetBody').addEventListener('change', onSheetInput);
   $('sheetBody').addEventListener('click', function (e) {
@@ -1156,12 +1322,13 @@ function bind() {
     if (tb) { dtab = tb.getAttribute('data-tab'); renderSheet(); return; }
     var t = find(openId); if (!t) return;
     var id = e.target.id;
+    if (id === 'openEditor') { openEditor(t.id, 'sheet'); return; }
     if (id === 'ex-md') download(slug(t.editionTitle || t.title) + '-outline.md', outlineMd(t), 'text/markdown');
     else if (id === 'ex-html') download(slug(t.editionTitle || t.title) + '-outline.html', outlineHtml(t), 'text/html');
     else if (id === 'del') {
       if (!window.confirm('Remove "' + (t.title || 'Untitled') + '" and its notes?')) return;
       var a = []; each(state.titles, function (x) { if (x.id !== t.id) a.push(x); });
-      state.titles = a; save(); closeSheet(); toast('Removed');
+      state.titles = a; artRemoveTitle(t.id); save(); closeSheet(); toast('Removed');
     }
   });
   $('sform').addEventListener('submit', function (e) {
@@ -1185,7 +1352,16 @@ function bind() {
   });
   $('bk-dl').addEventListener('click', function () {
     var d = new Date(), stamp = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
-    download('pdpress-backup-' + stamp + '.json', JSON.stringify(state, null, 2), 'application/json');
+    var btn = $('bk-dl'); btn.disabled = true; toast('Preparing backup...');
+    whenArt(function () {
+      backupParts().then(function (parts) {
+        btn.disabled = false;
+        download('pdpress-backup-' + stamp + '.json', parts, 'application/json');
+      }, function () { btn.disabled = false; toast('Could not read all the art for the backup. Try again.'); });
+    });
+  });
+  $('bk-persist').addEventListener('click', function () {
+    askPersist().then(function (p) { toast(p === 'yes' ? 'This phone will keep your art' : 'The browser did not agree to keep your art for sure. Make a backup now and then.'); backupInfo(); });
   });
   $('bk-up').addEventListener('click', function () { $('bk-file').click(); });
   $('bk-file').addEventListener('change', function () {
@@ -1197,15 +1373,923 @@ function bind() {
       $('bk-file').value = '';
       if (!d || !d.titles || typeof d.titles.length !== 'number') { toast('That file is not a Public Domain Press backup.'); return; }
       if (!window.confirm('Replace your ' + state.titles.length + ' titles with the ' + d.titles.length + ' in this file?' + (!d.v || d.v < 2 ? ' This is an older backup; the new Publish now titles will be added too.' : ''))) return;
-      state = normalize(d); save(); renderList(); backupInfo(); toast('Restored ' + state.titles.length + ' titles');
+      var art = d.art; delete d.art;
+      state = normalize(d); save(); renderList(); backupInfo();
+      if (!art || typeof art !== 'object') { toast('Restored ' + state.titles.length + ' titles'); return; }
+      toast('Restoring titles and art...');
+      whenArt(function () {
+        restoreArt(art).then(function (r) {
+          renderList(); backupInfo();
+          toast('Restored ' + state.titles.length + ' titles and ' + r.ok + (r.ok === 1 ? ' picture' : ' pictures') + (r.fail ? '. ' + r.fail + ' could not be saved: ' + r.msg : ''));
+        });
+      });
     };
     r.readAsText(f);
   });
   $('reset').addEventListener('click', function () {
     if (!window.confirm('Reset to the starter lists? Your own titles and notes will be removed. Download a backup first if unsure.')) return;
-    state = fresh(); save(); renderList(); backupInfo(); toast('Starter list restored');
+    state = fresh(); save(); renderList();
+    whenArt(function () { artClear().then(function () { backupInfo(); }, function () { toast('Could not clear all art. Try Reset again.'); }); });
+    backupInfo(); toast('Starter list restored');
   });
-  document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.keyCode === 27) && openId) closeSheet(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' || e.keyCode === 27) { if (edId) closeEditor(); else if (openId) closeSheet(); } });
+}
+
+
+/* ---- Book editor (v2.4, art storage v2.5) ----
+   Print setup lives on t.book, trim stays on t.trim (shared with the Royalty screen),
+   the text editor writes t.editor, and art is kept in its own localStorage key per title
+   ("pdpress.art.<id>") so typing does not re-save megabytes of pictures. */
+var TRIMS = [
+  ['5x8', 'Small novel'], ['5.25x8', 'Novel'], ['5.5x8.5', 'Classic paperback'], ['6x9', 'The most popular size'],
+  ['6.14x9.21', 'Roomy, good for many notes'], ['7x10', 'Workbooks and illustrated books'], ['8x10', 'Picture books'],
+  ['8.5x11', 'Letter size, workbooks'], ['8.5x8.5', 'Large square: coffee-table and kids'], ['8.25x6', 'Landscape: kids and coffee-table']];
+var HC_TRIMS = { '5.5x8.5': 1, '6x9': 1, '6.14x9.21': 1, '7x10': 1, '8.25x11': 1 };
+var BINDINGS = [
+  ['paperback', 'Paperback', 'Soft cover. The usual choice and the cheapest.'],
+  ['hardcover', 'Hardcover, case laminate', 'Printed hard cover with no dust jacket. KDP offers 5 sizes and 75 to 550 pages.'],
+  ['cloth', 'Hardcover, cloth', 'Fabric-covered boards. KDP does not offer this. You would need a different printing service.']];
+var INKS = [
+  ['bw', 'Black and white', 'Text and grey pictures. The cheapest to print.'],
+  ['premium', 'Premium color', 'Rich color for photos and paintings. Costs the most.'],
+  ['standard', 'Standard color', 'Lighter, cheaper color. Paperback only, 72 to 600 pages.']];
+var PLACES = { cover: 'Cover', frontispiece: 'Frontispiece', plate: 'Full-page picture', 'in-chapter': 'Picture in the text', other: 'Other' };
+var SECTIONS = [['intro', 'Intro', 'Introduction or preface'], ['notes', 'Notes', 'Chapter notes and annotations'], ['backmatter', 'Back matter', 'Back matter and about this edition']];
+var ART_CAP = Math.round(4.5 * 1024 * 1024), ART_PREFIX = 'pdpress.art.';
+var edId = null, edTab = 'size', edSec = 'intro', edFrom = 'sheet', edArtSel = null, edRoy = false, edSaveT = null, artSaveT = null, edArt = [], pvIdx = 0, artMem = {};
+var canArt = (function () {
+  try {
+    var i = document.createElement('input'); i.type = 'file';
+    var c = document.createElement('canvas');
+    return i.type === 'file' && !i.disabled && !!(c.getContext && c.getContext('2d')) && !!window.FileReader;
+  } catch (e) { return false; }
+})();
+
+function bookDefaults(t) {
+  var color = t.product === 'children' || t.product === 'coffee';
+  return { binding: 'paperback', orientation: t.trim === '8.25x6' ? 'landscape' : 'portrait', columns: t.product === 'coffee' ? 2 : 1,
+    ink: color ? 'premium' : 'bw', paper: color || t.product === 'illustrated' ? 'white' : 'cream', finish: 'matte' };
+}
+function blankEditor() { return { intro: '', notes: '', backmatter: '', updated: '' }; }
+function fixBook(t) {
+  var d = bookDefaults(t);
+  if (!t.book || typeof t.book !== 'object') t.book = d;
+  each(keys(d), function (k) { if (t.book[k] === undefined) t.book[k] = d[k]; });
+  if (t.book.ink !== 'bw') t.book.paper = 'white';
+  if (!t.editor || typeof t.editor !== 'object') t.editor = blankEditor();
+  each(['intro', 'notes', 'backmatter', 'updated'], function (k) { if (typeof t.editor[k] !== 'string') t.editor[k] = ''; });
+  if (typeof t.artCount !== 'number') t.artCount = 0;
+}
+function trimWH(tr) { var p = String(tr || '5.5x8.5').split('x'); return [num(p[0], 5.5), num(p[1], 8.5)]; }
+function trimName(tr) { var w = trimWH(tr); return w[0] + ' x ' + w[1] + ' in'; }
+function nameOf(list, k) { for (var i = 0; i < list.length; i++) if (list[i][0] === k) return list[i][1]; return k; }
+function canLandscape(t) { return t.product === 'children' || t.product === 'coffee'; }
+function bookSummary(t) {
+  var b = t.book;
+  return trimName(t.trim) + ', ' + nameOf(BINDINGS, b.binding).toLowerCase() + ', ' + nameOf(INKS, b.ink).toLowerCase() +
+    (b.ink === 'bw' ? ' on ' + b.paper + ' paper' : '') + ', ' + b.finish + ' cover';
+}
+function pageLimits(t) {
+  var b = t.book, tr = t.trim, big = tr === '8.5x11' || tr === '8.5x8.5', land = tr === '8.25x6';
+  if (b.binding !== 'paperback') return { min: 75, max: 550 };
+  if (b.ink === 'standard') return { min: 72, max: 600 };
+  if (b.ink === 'bw' && b.paper === 'cream') return { min: 24, max: big ? 550 : (land ? 750 : 776) };
+  return { min: 24, max: big ? 590 : (land ? 800 : 828) };
+}
+function spineIn(t) {
+  var b = t.book, per = b.ink === 'premium' ? 0.002347 : (b.ink === 'bw' && b.paper === 'cream' ? 0.0025 : 0.002252);
+  return Math.max(0, num(t.pages, 0)) * per;
+}
+function wordCount(s) { s = trim(s); return s ? s.split(/\s+/).length : 0; }
+function kb(n) { return commas(n / 1024) + ' KB'; }
+
+/* Art storage (v2.5)
+   IndexedDB first: database "pdpress", store "art" keyed by id, index "titleId".
+   Pictures are kept as Blobs where the browser can store them, otherwise as data URLs.
+   If IndexedDB is missing (old browser, some private modes) we fall back to the v2.4
+   localStorage keys "pdpress.art.<titleId>" with the old 4.5 MB per title cap.
+   artIdx keeps small metadata (no image data) per title so lists and exports stay quick. */
+var IDB_NAME = 'pdpress', IDB_STORE = 'art', MB = 1024 * 1024;
+var artDb = null, artMode = 'ls', artBlobs = false, artReady = false, artWaiters = [], artIdx = {}, artUrls = [], artDirty = {};
+var artMigrate = { moved: 0, failed: 0, skipped: 0 }, persistAsked = false, edArtLoading = false;
+var META = ['id', 'titleId', 'name', 'width', 'height', 'added', 'caption', 'placement', 'page', 'order', 'size', 'thumb'];
+
+function whenArt(fn) { if (artReady) fn(); else artWaiters.push(fn); }
+function isQuota(e) { return !!e && (e.name === 'QuotaExceededError' || e.code === 22 || /quota|space/i.test(String(e.message || e))); }
+function artErrMsg(e) {
+  if (e && e.cap) return 'Art space for this title is full (' + kb(e.used || 0) + ' of ' + kb(ART_CAP) + '). Delete a picture to add more.';
+  return isQuota(e) ? 'This phone is out of space for art. Delete some pictures or free up space on the phone, then try again.'
+    : 'Could not save the picture on this phone. Try again, and make a backup.';
+}
+function sizeText(n) {
+  n = Math.max(0, n || 0);
+  if (n < MB) return commas(n / 1024) + ' KB';
+  if (n < 1024 * MB) return (n / MB).toFixed(1) + ' MB';
+  return (n / 1024 / MB).toFixed(1) + ' GB';
+}
+
+/* image data helpers */
+function dataUrlToBlob(d) {
+  try {
+    var i = d.indexOf(','), head = d.slice(5, i), b64 = /;base64/.test(head), type = head.split(';')[0] || 'image/jpeg';
+    var s = b64 ? window.atob(d.slice(i + 1)) : decodeURIComponent(d.slice(i + 1)), n = s.length, arr = new Uint8Array(n);
+    for (var k = 0; k < n; k++) arr[k] = s.charCodeAt(k);
+    return new Blob([arr], { type: type });
+  } catch (e) { return null; }
+}
+function blobToDataUrl(b) {
+  return new Promise(function (res, rej) {
+    var r = new FileReader();
+    r.onload = function () { res(r.result); };
+    r.onerror = function () { rej(r.error || new Error('read')); };
+    r.readAsDataURL(b);
+  });
+}
+function setImage(item, durl) {
+  // give an item its full-size picture, as a Blob when we can
+  item._blob = null; item._durl = null; item.data = null;
+  if (artMode === 'idb' && artBlobs) { var b = dataUrlToBlob(durl); if (b) { item._blob = b; item.size = b.size; return item; } }
+  item._durl = durl; item.data = durl; item.size = durl.length;
+  return item;
+}
+function srcOf(a) {
+  if (!a) return '';
+  if (a.data) return a.data;
+  if (a._blob && window.URL && URL.createObjectURL) { a.data = URL.createObjectURL(a._blob); artUrls.push(a.data); }
+  return a.data || a._durl || '';
+}
+function freeUrls() { each(artUrls, function (u) { try { URL.revokeObjectURL(u); } catch (e) {} }); artUrls = []; }
+function metaOf(x) { var m = {}; each(META, function (k) { if (x[k] !== undefined) m[k] = x[k]; }); if (m.page === undefined) m.page = ''; if (m.caption === undefined) m.caption = ''; return m; }
+function toRecord(item) { var r = metaOf(item); if (item._blob) r.blob = item._blob; else r.data = item._durl || item.data; return r; }
+function fromRecord(r) { var a = metaOf(r); a._blob = r.blob || null; a._durl = r.blob ? null : (r.data || null); a.data = a._durl; return a; }
+function sortArt(list) { list.sort(function (x, y) { return (num(x.order, 0) - num(y.order, 0)) || (x.added < y.added ? -1 : x.added > y.added ? 1 : 0); }); return list; }
+function oldToItem(o, titleId, i) {
+  // v2.4 item {id,name,width,height,added,caption,placement,page,data,thumb} to a v2.5 item
+  var a = metaOf(o); a.titleId = titleId; if (a.order === undefined) a.order = i;
+  if (!a.id) a.id = uid();
+  return setImage(a, String(o.data || o.thumb || ''));
+}
+function artMeta(titleId) { return artIdx[titleId] || []; }
+function setCount(titleId) {
+  var t = find(titleId), n = artMeta(titleId).length;
+  if (t && t.artCount !== n) { t.artCount = n; return true; }
+  return false;
+}
+function idxPut(items) {
+  each(items, function (it) {
+    var l = artIdx[it.titleId] || (artIdx[it.titleId] = []), m = metaOf(it), hit = false;
+    for (var i = 0; i < l.length; i++) if (l[i].id === m.id) { l[i] = m; hit = true; }
+    if (!hit) l.push(m);
+    sortArt(l);
+  });
+}
+function idxDel(titleId, id) { var l = artIdx[titleId] || [], k = []; each(l, function (m) { if (m.id !== id) k.push(m); }); artIdx[titleId] = k; }
+
+/* IndexedDB plumbing */
+function idbTx(mode, fn) {
+  return new Promise(function (res, rej) {
+    var tx, box = {}, done = false;
+    function fail(e) { if (done) return; done = true; rej(e || new Error('Storage error')); }
+    try { tx = artDb.transaction(IDB_STORE, mode); } catch (e) { fail(e); return; }
+    tx.oncomplete = function () { if (done) return; done = true; res(box.v); };
+    tx.onerror = function (ev) { fail(tx.error || (ev && ev.target && ev.target.error)); };
+    tx.onabort = function () { fail(tx.error || new Error('Storage aborted')); };
+    try { fn(tx.objectStore(IDB_STORE), box); } catch (e) { try { tx.abort(); } catch (x) {} fail(e); }
+  });
+}
+function idbEach(store, onRec, indexKey) {
+  var src = indexKey !== undefined ? store.index('titleId').openCursor(window.IDBKeyRange.only(indexKey)) : store.openCursor();
+  src.onsuccess = function () { var c = src.result; if (c) { onRec(c.value); c['continue'](); } };
+}
+function openArtDb() {
+  return new Promise(function (res, rej) {
+    var idb = null, done = false;
+    function fail(e) { if (!done) { done = true; rej(e || new Error('No IndexedDB')); } }
+    try { idb = window.indexedDB; } catch (e) {}
+    if (!idb || window.__pdNoIDB || !window.Promise) { fail(); return; }
+    var r;
+    try { r = idb.open(IDB_NAME, 1); } catch (e2) { fail(e2); return; }
+    r.onupgradeneeded = function () {
+      var db = r.result;
+      if (!db.objectStoreNames.contains(IDB_STORE)) db.createObjectStore(IDB_STORE, { keyPath: 'id' }).createIndex('titleId', 'titleId', { unique: false });
+    };
+    r.onsuccess = function () { if (done) { try { r.result.close(); } catch (e) {} return; } done = true; res(r.result); };
+    r.onerror = function () { fail(r.error); };
+    r.onblocked = function () { fail(new Error('blocked')); };
+    setTimeout(function () { fail(new Error('timeout')); }, 5000);
+  });
+}
+function probeBlobs() {
+  // can this browser keep a Blob inside IndexedDB? (older Chrome and some WebViews cannot)
+  if (!window.Blob || !window.URL || !URL.createObjectURL) return Promise.resolve(false);
+  var key = '__probe__';
+  return idbTx('readwrite', function (s) { s.put({ id: key, titleId: key, blob: new Blob(['ok'], { type: 'text/plain' }) }); })
+    .then(function () { return idbTx('readonly', function (s, box) { var r = s.get(key); r.onsuccess = function () { box.v = r.result; }; }); })
+    .then(function (rec) {
+      var ok = !!(rec && rec.blob && typeof rec.blob.size === 'number' && rec.blob.size === 2);
+      return idbTx('readwrite', function (s) { s['delete'](key); }).then(function () { return ok; }, function () { return ok; });
+    }, function () { return false; });
+}
+
+/* localStorage fallback (v2.4 format) */
+function artKey(id) { return ART_PREFIX + id; }
+function lsIds() {
+  var ids = [];
+  try { for (var i = 0; i < window.localStorage.length; i++) { var k = window.localStorage.key(i); if (k && k.indexOf(ART_PREFIX) === 0) ids.push(k.slice(ART_PREFIX.length)); } } catch (e) {}
+  each(keys(artMem), function (k) { if (ids.indexOf(k) < 0) ids.push(k); });
+  return ids;
+}
+function lsLoad(id) {
+  var raw = null;
+  try { raw = window.localStorage.getItem(artKey(id)); } catch (e) {}
+  if (!raw && artMem[id]) raw = artMem[id];
+  try { var a = JSON.parse(raw || '[]'); return a && typeof a.length === 'number' ? a : []; } catch (e2) { return []; }
+}
+function lsSave(id, list) {
+  var raw = JSON.stringify(list);
+  try {
+    if (list.length) window.localStorage.setItem(artKey(id), raw); else window.localStorage.removeItem(artKey(id));
+    delete artMem[id];
+  } catch (e) {
+    if (storageOk) return false;
+    artMem[id] = raw;
+  }
+  return true;
+}
+function lsRemove(id) { try { window.localStorage.removeItem(artKey(id)); } catch (e) {} delete artMem[id]; }
+function lsPlain(item) { var o = metaOf(item); delete o.titleId; delete o.size; o.data = item._durl || item.data; return o; }
+function storageUsed() {
+  var n = 0;
+  try { for (var i = 0; i < window.localStorage.length; i++) { var k = window.localStorage.key(i); if (k && k.indexOf('pdpress') === 0) n += k.length + (window.localStorage.getItem(k) || '').length; } } catch (e) {}
+  return n;
+}
+
+/* Public art API, all Promise based */
+function artList(titleId) {
+  if (artMode === 'idb') {
+    return idbTx('readonly', function (s, box) { box.v = []; idbEach(s, function (r) { box.v.push(fromRecord(r)); }, titleId); })
+      .then(function (l) { return sortArt(l || []); });
+  }
+  var l = []; each(lsLoad(titleId), function (o, i) { l.push(oldToItem(o, titleId, i)); });
+  return Promise.resolve(sortArt(l));
+}
+function artPutMany(items) {
+  if (!items.length) return Promise.resolve();
+  var after = function () {
+    idxPut(items);
+    var ch = false; each(items, function (it) { if (setCount(it.titleId)) ch = true; });
+    if (ch) save();
+  };
+  if (artMode === 'idb') {
+    return idbTx('readwrite', function (s) { each(items, function (it) { s.put(toRecord(it)); }); }).then(after);
+  }
+  var tid = items[0].titleId, list = lsLoad(tid), before = JSON.stringify(list).length;
+  each(items, function (it) {
+    var p = lsPlain(it), hit = false;
+    for (var i = 0; i < list.length; i++) if (list[i].id === p.id) { list[i] = p; hit = true; }
+    if (!hit) list.push(p);
+  });
+  var used = JSON.stringify(list).length;
+  if (used > ART_CAP && used > before) return Promise.reject({ cap: true, used: before });
+  if (!lsSave(tid, list)) return Promise.reject({ name: 'QuotaExceededError' });
+  after();
+  return Promise.resolve();
+}
+function artDelete(titleId, id) {
+  var after = function () { idxDel(titleId, id); if (setCount(titleId)) save(); };
+  if (artMode === 'idb') return idbTx('readwrite', function (s) { s['delete'](id); }).then(after);
+  var k = []; each(lsLoad(titleId), function (o) { if (o.id !== id) k.push(o); });
+  lsSave(titleId, k); after();
+  return Promise.resolve();
+}
+function artRemoveTitle(titleId) {
+  delete artIdx[titleId];
+  lsRemove(titleId); // old copy, if any
+  if (artMode !== 'idb') return Promise.resolve();
+  return idbTx('readwrite', function (s) {
+    var r = s.index('titleId').openCursor(window.IDBKeyRange.only(titleId));
+    r.onsuccess = function () { var c = r.result; if (c) { c['delete'](); c['continue'](); } };
+  })['catch'](function () { toast('Could not remove all art for that title. It will be tidied up later.'); });
+}
+function artClear() {
+  artIdx = {};
+  each(lsIds(), lsRemove);
+  if (artMode !== 'idb') return Promise.resolve();
+  return idbTx('readwrite', function (s) { s.clear(); });
+}
+function artTotals() {
+  var n = 0, size = 0;
+  each(keys(artIdx), function (k) { each(artIdx[k], function (m) { n++; size += num(m.size, 0); }); });
+  return { count: n, size: size };
+}
+function buildIndex() {
+  artIdx = {};
+  if (artMode === 'idb') {
+    return idbTx('readonly', function (s) {
+      idbEach(s, function (r) { if (r.titleId === '__probe__') return; var m = metaOf(r); if (!m.size) m.size = r.blob ? r.blob.size : String(r.data || '').length; (artIdx[m.titleId] || (artIdx[m.titleId] = [])).push(m); });
+    }).then(function () { each(keys(artIdx), function (k) { sortArt(artIdx[k]); }); });
+  }
+  each(lsIds(), function (id) {
+    artIdx[id] = []; each(lsLoad(id), function (o, i) { var m = metaOf(o); m.titleId = id; if (m.order === undefined) m.order = i; m.size = String(o.data || '').length; artIdx[id].push(m); });
+  });
+  return Promise.resolve();
+}
+
+/* Move v2.4 localStorage art into IndexedDB. A title's old copy is removed only after
+   every picture has been read back from IndexedDB. Anything that fails stays put
+   and is tried again on the next launch. */
+function migrateArt() {
+  var ids = []; try { for (var i = 0; i < window.localStorage.length; i++) { var k = window.localStorage.key(i); if (k && k.indexOf(ART_PREFIX) === 0) ids.push(k.slice(ART_PREFIX.length)); } } catch (e) { return Promise.resolve(); }
+  var chain = Promise.resolve();
+  each(ids, function (tid) {
+    chain = chain.then(function () {
+      var raw = null, list = null;
+      try { raw = window.localStorage.getItem(artKey(tid)); list = JSON.parse(raw || '[]'); } catch (e) { list = null; }
+      if (!list || typeof list.length !== 'number') { artMigrate.skipped++; return; } // unreadable: left untouched, not retried noisily
+      if (!list.length) { lsRemove(tid); return; }
+      var existing = {};
+      return idbTx('readonly', function (s) { idbEach(s, function (r) { existing[r.id] = true; }, tid); })
+        .then(function () {
+          var items = []; each(list, function (o, i) { if (o && !existing[o.id]) items.push(oldToItem(o, tid, i)); });
+          return idbTx('readwrite', function (s) { each(items, function (it) { s.put(toRecord(it)); }); });
+        })
+        .then(function () { return idbTx('readonly', function (s, box) { box.v = {}; idbEach(s, function (r) { box.v[r.id] = (r.blob && r.blob.size) || String(r.data || '').length; }, tid); }); })
+        .then(function (got) {
+          var ok = true; each(list, function (o) { if (o && (!o.id || !got[o.id])) ok = false; });
+          if (!ok) throw new Error('verify');
+          window.localStorage.removeItem(artKey(tid));
+          artMigrate.moved += list.length;
+        })['catch'](function () { artMigrate.failed++; });
+    });
+  });
+  return chain;
+}
+
+function initArt() {
+  function finish() {
+    var ch = false; each(state.titles, function (t) { if (setCount(t.id)) ch = true; });
+    if (ch) save();
+    artReady = true; window.__pdArtReady = true;
+    var w = artWaiters; artWaiters = []; each(w, function (fn) { try { fn(); } catch (e) {} });
+    if (artMigrate.moved && !artMigrate.failed) toast('Your art moved to the larger picture storage on this phone.');
+    else if (artMigrate.failed) toast('Some art could not be moved yet. It is still safe and will be tried again next time.');
+    if (!$('v-data').classList.contains('hidden')) backupInfo();
+    if (!$('v-books').classList.contains('hidden')) renderBooks();
+  }
+  if (!window.Promise) { artMode = 'ls'; buildIndexSync(); finish(); return; }
+  openArtDb().then(function (db) {
+    artDb = db; artMode = 'idb';
+    try { db.onversionchange = function () { try { db.close(); } catch (e) {} }; } catch (e) {}
+    return probeBlobs().then(function (ok) { artBlobs = ok; return migrateArt(); });
+  }, function () { artMode = 'ls'; })
+    .then(function () { return buildIndex(); })
+    ['catch'](function () { if (artMode !== 'idb') return; return buildIndex()['catch'](function () {}); })
+    .then(finish, finish);
+}
+function buildIndexSync() { artIdx = {}; each(lsIds(), function (id) { artIdx[id] = []; each(lsLoad(id), function (o, i) { var m = metaOf(o); m.titleId = id; m.size = String(o.data || '').length; artIdx[id].push(m); }); }); }
+
+/* Space on the phone and "keep my data" */
+function storeEstimate() {
+  try { if (navigator.storage && navigator.storage.estimate) return navigator.storage.estimate().then(function (e) { return e && e.quota ? e : null; }, function () { return null; }); } catch (e) {}
+  return Promise.resolve(null);
+}
+function persistStatus() {
+  try { if (navigator.storage && navigator.storage.persisted) return navigator.storage.persisted().then(function (v) { return v ? 'yes' : 'no'; }, function () { return 'unknown'; }); } catch (e) {}
+  return Promise.resolve('unknown');
+}
+function askPersist() {
+  persistAsked = true;
+  try { if (navigator.storage && navigator.storage.persist) return navigator.storage.persist().then(function (v) { return v ? 'yes' : 'no'; }, function () { return 'no'; }); } catch (e) {}
+  return Promise.resolve('unknown');
+}
+function persistWords(p) {
+  if (p === 'yes') return 'This phone will keep your art, even if it runs low on space.';
+  if (p === 'no') return 'The browser may clear your art if the phone runs low on space. Make a backup now and then.';
+  return 'This browser does not say whether it will keep your art. Make a backup now and then.';
+}
+function lowSpace(e) { return !!e && (e.quota - e.usage < 50 * MB || e.usage / e.quota > 0.9); }
+function spaceHtml(e, p) {
+  var h = '';
+  if (e) {
+    var pct = Math.min(100, Math.max(1, Math.round(e.usage / e.quota * 100))), free = Math.max(0, e.quota - e.usage);
+    h += '<div class="small">This app is using <strong>' + sizeText(e.usage) + '</strong>. About <strong>' + sizeText(free) + '</strong> more is free for it on this phone.</div>' +
+      '<div class="ed-bar"><i class="' + (lowSpace(e) ? 'full' : '') + '" style="width:' + pct + '%"></i></div>';
+    if (lowSpace(e)) h += '<div class="small" style="color:#7a2e1f;font-weight:600">Space is running low. Make a backup, and delete pictures you do not need.</div>';
+  } else h += '<div class="small muted">This browser does not say how much space is left. Make a backup now and then.</div>';
+  h += '<div class="small muted" id="persistLine">' + esc(persistWords(p)) + '</div>';
+  return h;
+}
+function fillSpace(id) {
+  var el = $(id); if (!el) return;
+  Promise.all([storeEstimate(), persistStatus()]).then(function (r) {
+    var el2 = $(id); if (!el2) return;
+    el2.innerHTML = spaceHtml(r[0], r[1]);
+    var pb = $('bk-persist'); if (pb) pb.className = r[1] === 'yes' || !(navigator.storage && navigator.storage.persist) ? 'btn ghost small hidden' : 'btn ghost small';
+  });
+}
+
+function artLabel(a) {
+  if (a.placement === 'cover' || a.placement === 'frontispiece') return PLACES[a.placement];
+  return a.page ? 'Page ' + a.page : 'No page yet';
+}
+function readImage(src, cb) {
+  var img = new Image(), url = null, done = false;
+  function fin(ok) { if (done) return; done = true; if (url) { try { URL.revokeObjectURL(url); } catch (e) {} } cb(ok ? img : null); }
+  img.onload = function () { fin(true); };
+  img.onerror = function () { fin(false); };
+  if (typeof src === 'string') { img.src = src; return; }
+  if (window.URL && URL.createObjectURL) { url = URL.createObjectURL(src); img.src = url; return; }
+  var r = new FileReader();
+  r.onload = function () { img.src = r.result; };
+  r.onerror = function () { fin(false); };
+  r.readAsDataURL(src);
+}
+function shrink(img, max, q, rotate) {
+  var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height, s = Math.min(1, max / Math.max(w, h));
+  var cw = Math.max(1, Math.round(w * s)), ch = Math.max(1, Math.round(h * s));
+  var c = document.createElement('canvas'), x = c.getContext('2d');
+  c.width = rotate ? ch : cw; c.height = rotate ? cw : ch;
+  x.fillStyle = '#ffffff'; x.fillRect(0, 0, c.width, c.height);
+  if (rotate) { x.translate(ch, 0); x.rotate(Math.PI / 2); }
+  x.drawImage(img, 0, 0, cw, ch);
+  return { url: c.toDataURL('image/jpeg', q), w: c.width, h: c.height };
+}
+function nextPage(list) { var m = 0; each(list, function (a) { if (num(a.page, 0) > m) m = num(a.page, 0); }); return m ? m + 2 : 5; }
+function importFiles(files) {
+  var t = find(edId); if (!t || !files || !files.length) return;
+  if (!artReady || edArtLoading) { toast('Still opening your art. Try again in a moment.'); return; }
+  var tid = t.id, list = edArt, i = 0, added = 0, problems = [], stopped = false;
+  var st = $('ed-art-status'); if (st) st.innerHTML = '<span class="spinner"></span>Adding pictures...';
+  var first = artMode === 'idb' && !persistAsked && !artTotals().count;
+  function done() {
+    if (edId !== tid) return;
+    edArt = list; edArtSel = null; renderEditor();
+    toast(added ? added + (added === 1 ? ' picture added' : ' pictures added') + (problems.length ? '. ' + problems[0] : '') : (problems[0] || 'No pictures added.'));
+    if (artMode === 'idb') storeEstimate().then(function (e) { if (lowSpace(e)) toast('Space for art is running low on this phone. Make a backup soon.'); });
+    if (first) askPersist().then(function (p) { var pl = $('persistLine'); if (pl) pl.textContent = persistWords(p); });
+  }
+  function next() {
+    if (i >= files.length || stopped) { done(); return; }
+    var f = files[i++];
+    if (f.type && !/^image\//.test(f.type)) { problems.push((f.name || 'A file') + ' is not a picture.'); next(); return; }
+    readImage(f, function (img) {
+      if (!img) { problems.push('Could not read ' + (f.name || 'a picture') + '. Try a JPEG or PNG.'); next(); return; }
+      var big, th;
+      try { big = shrink(img, 1600, 0.72); th = shrink(img, 360, 0.7); } catch (e) { problems.push('This browser could not shrink ' + (f.name || 'the picture') + '.'); next(); return; }
+      var hasCover = false, maxOrder = -1;
+      each(list, function (a) { if (a.placement === 'cover') hasCover = true; if (num(a.order, 0) > maxOrder) maxOrder = num(a.order, 0); });
+      var item = { id: uid() + i, titleId: tid, name: f.name || 'Picture', width: big.w, height: big.h, added: new Date().toISOString(), caption: '',
+        placement: hasCover ? 'plate' : 'cover', page: hasCover ? nextPage(list) : '', order: maxOrder + 1, thumb: th.url };
+      setImage(item, big.url); big = null;
+      artPutMany([item]).then(function () { list.push(item); added++; next(); },
+        function (err) { problems.push(artErrMsg(err)); stopped = true; done(); });
+    });
+  }
+  next();
+}
+function findArt(id) { for (var i = 0; i < edArt.length; i++) if (edArt[i].id === id) return edArt[i]; return null; }
+
+/* Open and close */
+function openEditor(id, from) {
+  edId = id; edFrom = from || 'sheet'; edTab = 'size'; edArtSel = null; edRoy = false; pvIdx = 0;
+  var t = find(id); if (!t) return; fixBook(t);
+  freeUrls(); edArt = []; edArtLoading = true; artDirty = {};
+  whenArt(function () {
+    artList(id).then(function (l) { if (edId !== id) return; edArt = l; edArtLoading = false; var st = $('editor').scrollTop; renderEditor(); $('editor').scrollTop = st; },
+      function () { if (edId !== id) return; edArtLoading = false; renderEditor(); toast('Could not open the art for this title.'); });
+  });
+  $('edBackLbl').textContent = edFrom === 'sheet' ? 'Back to title' : 'All books';
+  renderEditor();
+  $('editor').className = 'sheet editor';
+  if (openId) $('sheet').classList.add('hidden');
+  $('editor').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function flushArt() {
+  if (artSaveT) { clearTimeout(artSaveT); artSaveT = null; }
+  var l = []; each(keys(artDirty), function (k) { l.push(artDirty[k]); }); artDirty = {};
+  if (!l.length) return Promise.resolve();
+  return artPutMany(l).then(function () { edSaved(); }, function (e) { toast('Could not save: ' + artErrMsg(e)); });
+}
+function flushText() { if (edSaveT) { clearTimeout(edSaveT); edSaveT = null; save(); } flushArt(); }
+function closeEditor() {
+  flushText();
+  $('editor').className = 'sheet editor hidden'; edId = null; edArt = []; edArtLoading = false; setTimeout(freeUrls, 3000);
+  if (openId) { $('sheet').classList.remove('hidden'); renderSheet(); } else { document.body.style.overflow = ''; renderBooks(); }
+}
+function cap1(x) { x = String(x || ''); return x.charAt(0).toUpperCase() + x.slice(1); }
+function edSaved(msg) { var s = $('edSaved'); if (s) s.textContent = msg || (storageOk ? 'Saved on this phone' : 'Not saved: storage blocked'); }
+function syncCalc(t) {
+  if ($('c-title') && $('c-title').value === t.id) { $('c-pages').value = t.pages; $('c-price').value = t.price; $('c-trim').value = t.trim; calc(); }
+}
+
+/* Pieces */
+function optRow(attr, val, on, title, desc, extra, lead) {
+  return '<button class="ed-opt' + (on ? ' on' : '') + '" ' + attr + '="' + esc(val) + '">' + (lead || '') + '<span class="ed-opt-t"><b>' + esc(title) + '</b>' + (desc ? '<em>' + esc(desc) + '</em>' : '') + '</span>' + (extra || '') + '</button>';
+}
+function segRow(attr, cur, opts, dis) {
+  var h = '<div class="seg ed-seg">';
+  each(opts, function (o) { h += '<button ' + attr + '="' + o[0] + '" class="' + (String(cur) === String(o[0]) ? 'on' : '') + '"' + (dis && dis[o[0]] ? ' disabled' : '') + '>' + esc(o[1]) + '</button>'; });
+  return h + '</div>';
+}
+function noteBox(s, plain) { return '<div class="note' + (plain ? ' plain' : '') + '">' + s + '</div>'; }
+function royTable(t) {
+  var b = t.book, r = royalty(num(t.pages, 0), num(t.price, 0), t.trim), lim = pageLimits(t), out = '';
+  out += '<table class="mini">' +
+    '<tr><td>Trim size</td><td>' + esc(trimName(t.trim)) + (r.large ? ', large' : ', regular') + '</td></tr>' +
+    '<tr><td>Print cost</td><td><strong>' + money(r.print) + '</strong></td></tr>' +
+    '<tr><td>Royalty rate</td><td>' + Math.round(r.rate * 100) + '%</td></tr>' +
+    '<tr><td>You earn per Amazon.com sale</td><td><strong class="' + (r.roy >= 0 ? 'pos' : 'neg') + '">' + money(r.roy) + '</strong></td></tr>' +
+    '<tr><td>Breakeven list price</td><td>' + money(up(r.breakeven)) + '</td></tr></table>';
+  var warn = [];
+  if (b.ink !== 'bw') warn.push('You picked ' + nameOf(INKS, b.ink).toLowerCase() + '. Color costs more to print, often a lot more. These figures are for black and white only, so check the KDP printing cost calculator before you set a price.');
+  if (b.binding !== 'paperback') warn.push('Hardcovers cost more to print. These figures are for a paperback.');
+  var p = num(t.pages, 0);
+  if (p < lim.min || p > lim.max) warn.push('This setup allows ' + lim.min + ' to ' + lim.max + ' pages. You have ' + p + '.');
+  each(warn, function (w) { out += '<div class="note" style="margin:12px 0 0">' + esc(w) + '</div>'; });
+  return out;
+}
+function royBlock(t) {
+  var h = '<div class="ed-roy-wrap"><button class="btn" id="ed-roy-btn">Check royalty</button>';
+  if (!edRoy) return h + '<p class="small muted" style="margin:10px 0 0">Works out print cost and what you earn per sale from this book\'s size, pages and price.</p></div>';
+  return h + '<div class="card ed-roycard" id="ed-roycard"><div class="eyebrow">Amazon.com, black and white paperback</div>' +
+    '<div class="row2" style="margin-top:12px">' +
+    '<label class="f"><span>Pages</span><input type="number" data-ek="pages" inputmode="numeric" value="' + esc(t.pages) + '"></label>' +
+    '<label class="f"><span>List price (USD)</span><input type="number" data-ek="price" inputmode="decimal" step="0.01" value="' + esc(t.price) + '"></label></div>' +
+    '<div id="ed-roytab">' + royTable(t) + '</div></div></div>';
+}
+function edLive(t) {
+  if ($('ed-roytab')) $('ed-roytab').innerHTML = royTable(t);
+  if ($('ed-spine')) $('ed-spine').innerHTML = spineText(t);
+  if ($('ed-sum')) $('ed-sum').textContent = bookSummary(t);
+}
+function spineText(t) {
+  var s = spineIn(t), p = num(t.pages, 0), lim = pageLimits(t);
+  return 'Spine about <strong>' + s.toFixed(2) + ' in</strong> (' + (s * 25.4).toFixed(1) + ' mm) for ' + p + ' pages. ' +
+    (p >= 80 ? 'Wide enough for spine text.' : 'Too thin for spine text; KDP needs at least 80 pages.') +
+    (t.book.binding !== 'paperback' ? ' A hardcover spine is a little wider because of the boards; KDP\'s cover calculator gives the exact size.' : '') +
+    (p < lim.min || p > lim.max ? ' <strong>This setup allows ' + lim.min + ' to ' + lim.max + ' pages.</strong>' : '');
+}
+function mdInline(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>'); }
+function mdLite(s, max) {
+  s = String(s || ''); var cut = s.indexOf('[Page break]'); if (cut >= 0) s = s.slice(0, cut);
+  if (max && s.length > max) s = s.slice(0, max);
+  var out = [], list = [];
+  function fl() { if (list.length) { out.push('<ul>' + list.join('') + '</ul>'); list = []; } }
+  each(s.split('\n'), function (l) {
+    var m;
+    if ((m = /^#{1,6}\s+(.*)$/.exec(l))) { fl(); out.push('<h5>' + mdInline(m[1]) + '</h5>'); }
+    else if ((m = /^[-*]\s+(.*)$/.exec(l))) list.push('<li>' + mdInline(m[1]) + '</li>');
+    else if (trim(l)) { fl(); out.push('<p>' + mdInline(l) + '</p>'); }
+    else fl();
+  });
+  fl();
+  return out.join('');
+}
+
+/* Tabs */
+function tabSize(t) {
+  var wh = trimWH(t.trim), s = 19, h = '';
+  h += '<div class="card"><div class="ed-stage" style="width:' + Math.round(8.5 * s) + 'px;height:' + Math.round(11 * s) + 'px">' +
+    '<div class="ed-letter" style="width:' + Math.round(8.5 * s) + 'px;height:' + Math.round(11 * s) + 'px"></div>' +
+    '<div class="ed-page" style="width:' + Math.round(wh[0] * s) + 'px;height:' + Math.round(wh[1] * s) + 'px"><span>' + wh[0] + ' x ' + wh[1] + '</span></div></div>' +
+    '<div class="ed-read"><div class="big">' + wh[0] + ' x ' + wh[1] + ' in</div><div class="small muted">' + wh[0] + ' inches wide, ' + wh[1] + ' inches tall</div>' +
+    '<span class="tag ' + (isLarge(t.trim) ? 'warn' : 'accent') + '">' + (isLarge(t.trim) ? 'Large trim, costs more to print' : 'Regular trim') + '</span></div>' +
+    '<p class="small muted" style="margin:8px 0 0;text-align:center">Dotted outline: a sheet of 8.5 x 11 in letter paper, for scale.</p></div>';
+  h += '<div class="ed-h">Pick a size</div>';
+  each(TRIMS, function (o) {
+    if (o[0] === '8.25x6' && !canLandscape(t) && t.trim !== '8.25x6') return;
+    var w = trimWH(o[0]), ms = 4;
+    var lead = '<span class="ed-mini-box"><span class="ed-mini" style="width:' + Math.round(w[0] * ms) + 'px;height:' + Math.round(w[1] * ms) + 'px"></span></span>';
+    h += optRow('data-trim', o[0], t.trim === o[0], trimName(o[0]), o[1], isLarge(o[0]) ? '<span class="tag warn">Large</span>' : '', lead);
+  });
+  if (!canLandscape(t)) h += '<p class="small muted">The landscape size shows up for children\'s picture books and coffee-table editions.</p>';
+  if (t.book.binding !== 'paperback' && !HC_TRIMS[t.trim]) h += noteBox('KDP hardcovers only come in 5.5 x 8.5, 6 x 9, 6.14 x 9.21, 7 x 10 and 8.25 x 11 in. Pick one of those, or switch to paperback on the Shape tab.');
+  return h + royBlock(t);
+}
+function tabShape(t) {
+  var b = t.book, h = '<div class="ed-h" style="margin-top:4px">Binding</div>';
+  each(BINDINGS, function (o) { h += optRow('data-bind', o[0], b.binding === o[0], o[1], o[2], o[0] === 'cloth' ? '<span class="tag warn">Not on KDP</span>' : ''); });
+  if (b.binding === 'cloth') h += noteBox('KDP cannot print cloth hardcovers. Plan this edition as a paperback or case laminate hardcover for Amazon, and look at other printers for a cloth version.');
+  if (b.binding !== 'paperback' && !HC_TRIMS[t.trim]) h += noteBox('Your size, ' + esc(trimName(t.trim)) + ', is not offered in hardcover. Hardcover sizes: 5.5 x 8.5, 6 x 9, 6.14 x 9.21, 7 x 10 and 8.25 x 11 in.');
+  h += '<div class="ed-h">Page direction</div>';
+  if (canLandscape(t)) {
+    h += segRow('data-orient', b.orientation, [['portrait', 'Portrait (tall)'], ['landscape', 'Landscape (wide)']], b.binding !== 'paperback' ? { landscape: 1 } : null) +
+      '<p class="small muted mt0">Landscape uses KDP\'s 8.25 x 6 in size.' + (b.binding !== 'paperback' ? ' It is paperback only.' : '') + '</p>';
+  } else h += '<p class="small muted mt0">Portrait (tall). Landscape is offered for children\'s picture books and coffee-table editions. Change the product idea on the Plan tab to use it.</p>';
+  h += '<div class="ed-h">Inside layout</div>' + segRow('data-cols', b.columns, [[1, 'One column'], [2, 'Two columns']]) +
+    '<p class="small muted mt0">' + (b.columns === 2 ? 'Two columns suit coffee-table and large books with lots of notes and pictures.' : 'One column is easiest to read and right for most novels.') + '</p>';
+  h += '<div class="ed-h">Thickness</div><div class="card">' +
+    '<label class="f"><span>Pages</span><input type="number" data-ek="pages" inputmode="numeric" value="' + esc(t.pages) + '"><em>Same number as on the Royalty screen.</em></label>' +
+    '<p class="small mt0" style="margin-bottom:0" id="ed-spine">' + spineText(t) + '</p></div>';
+  return h;
+}
+function tabQuality(t) {
+  var b = t.book, h = '<div class="ed-h" style="margin-top:4px">Ink</div>';
+  each(INKS, function (o) { h += optRow('data-ink', o[0], b.ink === o[0], o[1], o[2], o[0] === 'premium' ? '<span class="tag warn">Most cost</span>' : ''); });
+  if (b.ink === 'standard' && b.binding !== 'paperback') h += noteBox('Standard color is paperback only. Pick premium color or black and white for a hardcover.');
+  h += '<p class="small muted mt0">Ink is one choice for the whole book. KDP does not mix black and white pages with color pages.</p>';
+  h += '<div class="ed-h">Paper</div>' + segRow('data-paper', b.paper, [['white', 'White'], ['cream', 'Cream']], b.ink !== 'bw' ? { cream: 1 } : null) +
+    '<p class="small muted mt0">' + (b.ink !== 'bw' ? 'Color books print on white paper only. Cream is for black and white.' : 'Cream is softer on the eyes for novels. White shows pictures better.') + '</p>';
+  h += '<div class="ed-h">Cover finish</div>' + segRow('data-finish', b.finish, [['matte', 'Matte'], ['gloss', 'Gloss']]) +
+    '<p class="small muted mt0">' + (b.finish === 'gloss' ? 'Gloss is shiny and makes colors pop. Same price as matte.' : 'Matte is soft and classic, and shows fewer fingerprints. Same price as gloss.') + '</p>';
+  h += '<div class="ed-h">What it means for cost</div>' + noteBox(
+    b.ink === 'bw' ? 'Black and white is the cheapest way to print. White or cream paper and matte or gloss do not change the price.'
+      : 'Color printing costs much more than black and white, and the Royalty screen only covers black and white. Use the figure below as the lowest possible cost, then check KDP\'s calculator.', b.ink === 'bw');
+  return h + royBlock(t);
+}
+function tabText(t) {
+  var sec = edSec, cur = '', v = t.editor[sec] || '';
+  each(SECTIONS, function (s) { if (s[0] === sec) cur = s[2]; });
+  var h = segRow('data-sec', sec, [['intro', 'Intro'], ['notes', 'Notes'], ['backmatter', 'Back matter']]) +
+    '<div class="ed-h" style="margin-top:12px">' + esc(cur) + '</div>' +
+    '<div class="ed-tools">' +
+    '<button class="btn small ghost" data-md="bold"><strong>Bold</strong></button>' +
+    '<button class="btn small ghost" data-md="italic"><em>Italic</em></button>' +
+    '<button class="btn small ghost" data-md="heading">Heading</button>' +
+    '<button class="btn small ghost" data-md="list">List</button>' +
+    '<button class="btn small ghost" data-md="break">Page break</button></div>' +
+    '<textarea id="ed-text" class="ed-text" spellcheck="true" placeholder="' + esc({ intro: 'Start your introduction here. Who wrote the book, when, and why it still matters.', notes: 'Notes for each chapter. Use Heading for chapter names.', backmatter: 'Glossary, timeline, discussion questions, about this edition.' }[sec]) + '">' + esc(v) + '</textarea>' +
+    '<p class="ed-count" id="ed-count"></p>' +
+    '<div class="btns" style="margin-top:12px"><button class="btn small ghost" id="ed-load">Load from Plan tab</button></div>' +
+    '<p class="small muted">Saves as you type. Bold, Italic and the other buttons add simple marks: **bold**, *italic*, ## heading, - list. [Page break] starts a new page.</p>';
+  return h;
+}
+function tabArt(t) {
+  if (!canArt) return noteBox('This browser cannot import pictures. Try the latest Chrome on your phone.');
+  var used = 0; each(edArt, function (a) { used += num(a.size, 0); });
+  var h = '<div class="btns"><button class="btn" id="ed-import">Import art</button></div>' +
+    '<p class="small muted mt0" id="ed-art-status">Pick photos or drawings from this phone. They are shrunk to 1600 pixels and kept only on this phone. Nothing is uploaded.</p>';
+  if (artMode === 'idb') {
+    h += '<div class="card"><div class="small">Art for this title: <strong>' + edArt.length + (edArt.length === 1 ? ' picture' : ' pictures') + ', ' + sizeText(used) + '</strong></div>' +
+      '<div id="ed-space"><div class="small muted">Checking space on this phone...</div></div></div>';
+  } else {
+    var pct = Math.min(100, Math.round(used / ART_CAP * 100));
+    h += '<div class="card"><div class="small">Art for this title: <strong>' + kb(used) + '</strong> of ' + kb(ART_CAP) + '</div>' +
+      '<div class="ed-bar"><i class="' + (pct > 90 ? 'full' : '') + '" style="width:' + pct + '%"></i></div>' +
+      '<div class="small muted">All app data on this phone: about ' + kb(storageUsed()) + '. This browser cannot use the larger picture storage (often because of private browsing or an older browser), so art is limited to about 4,600 KB per title.</div></div>';
+  }
+  if (edArtLoading) return h + '<div class="empty" style="color:#3d362d;text-shadow:none"><span class="spinner"></span>Opening your art...</div>';
+  var sel = edArtSel && findArt(edArtSel);
+  if (sel) {
+    var po = {}; each(keys(PLACES), function (k) { po[k] = PLACES[k]; });
+    var numbered = sel.placement !== 'cover' && sel.placement !== 'frontispiece';
+    h += '<div class="card ed-artedit"><img src="' + srcOf(sel) + '" alt="">' +
+      '<div class="small muted" style="margin-bottom:10px">' + esc(sel.name) + ', ' + sel.width + ' x ' + sel.height + ' pixels</div>' +
+      '<label class="f"><span>Caption</span><input type="text" data-ak="caption" value="' + esc(sel.caption) + '" placeholder="e.g. Map of West Egg, 1925"></label>' +
+      '<label class="f"><span>Where it goes</span><select data-ak="placement">';
+    each(keys(po), function (k) { h += '<option value="' + k + '"' + (sel.placement === k ? ' selected' : '') + '>' + esc(po[k]) + '</option>'; });
+    h += '</select><em>Cover: the front cover. Frontispiece: faces the title page. The others go on the page you choose.</em></label>' +
+      (numbered ? '<label class="f"><span>Page number</span><input type="number" data-ak="page" inputmode="numeric" min="1" value="' + esc(sel.page) + '"><em>Which page of the book this picture is on.</em></label>' : '') +
+      '<div class="btns"><button class="btn small" id="ed-art-done">Done</button><button class="btn small ghost" id="ed-art-rot">Rotate</button><button class="btn small ghost" id="ed-art-del">Delete</button></div></div>';
+  }
+  if (!edArt.length) h += '<div class="empty" style="color:#3d362d;text-shadow:none">No art yet. Tap Import art to add photos or drawings from this phone.</div>';
+  else {
+    h += '<div class="ed-h">Your art (' + edArt.length + ')</div><p class="small muted mt0">Tap a picture to add a caption, pick its page, or delete it.</p><div class="ed-grid">';
+    each(edArt, function (a) {
+      h += '<button class="ed-thumb' + (a.id === edArtSel ? ' on' : '') + '" data-art="' + a.id + '"><img src="' + (a.thumb || srcOf(a)) + '" alt="' + esc(a.caption || a.name) + '"><span class="tag ' + (a.placement === 'cover' ? 'accent' : (a.page || a.placement === 'frontispiece' ? 'accent' : 'warn')) + '">' + esc(artLabel(a)) + '</span></button>';
+    });
+    h += '</div>';
+  }
+  return h;
+}
+function pvSize(t, maxW, maxH) {
+  var wh = trimWH(t.trim), s = Math.min(maxW / wh[0], maxH / wh[1]);
+  return { w: Math.round(wh[0] * s), h: Math.round(wh[1] * s), s: s };
+}
+function artPages() {
+  var fr = null, nums = [], loose = [];
+  each(edArt, function (a) {
+    if (a.placement === 'cover') return;
+    if (a.placement === 'frontispiece') { if (!fr) fr = a; return; }
+    if (num(a.page, 0) > 0) nums.push(a); else loose.push(a);
+  });
+  nums.sort(function (x, y) { return num(x.page, 0) - num(y.page, 0); });
+  var pages = [];
+  if (fr) pages.push({ label: 'Frontispiece, facing the title page', art: fr, kind: 'plate' });
+  each(nums, function (a) { pages.push({ label: 'Page ' + a.page + ', ' + PLACES[a.placement].toLowerCase(), num: a.page, art: a, kind: a.placement === 'in-chapter' ? 'text' : 'plate' }); });
+  return { pages: pages, loose: loose };
+}
+function tabPreview(t) {
+  var b = t.book, sz = pvSize(t, 230, 330), paper = (b.ink === 'bw' && b.paper === 'cream' ? ' cream' : '') + (b.ink === 'bw' ? ' pv-bw' : '');
+  var cover = null; each(edArt, function (a) { if (!cover && a.placement === 'cover') cover = a; });
+  var et = trim(t.editionTitle) || t.title || 'Untitled';
+  var spW = Math.max(4, Math.round(spineIn(t) * sz.s));
+  var h = '<p class="small muted mt0">A rough mock, not a print file. It shows your size, paper, cover finish and where your art sits.</p>' +
+    '<div class="tags" style="margin-bottom:6px"><span class="tag accent">' + esc(trimName(t.trim)) + '</span><span class="tag accent">' + esc(nameOf(BINDINGS, b.binding)) + '</span><span class="tag ' + (b.ink === 'bw' ? 'accent' : 'warn') + '">' + esc(nameOf(INKS, b.ink)) + '</span><span class="tag accent">' + (b.ink === 'bw' ? esc(cap1(b.paper)) + ' paper' : 'White paper') + '</span><span class="tag accent">' + esc(cap1(b.finish)) + ' cover</span></div>';
+  // cover and spine
+  h += '<div class="pv"><div class="pv-row"><div class="pv-spine" style="width:' + spW + 'px;height:' + sz.h + 'px">' + (num(t.pages, 0) >= 80 && spW >= 9 ? '<span>' + esc(et) + '</span>' : '') + '</div>' +
+    '<div class="pv-page pv-cover' + (b.binding === 'cloth' ? ' cloth' : '') + (b.finish === 'gloss' ? ' pv-gloss' : '') + '" style="width:' + sz.w + 'px;height:' + sz.h + 'px">' +
+    (cover && b.binding !== 'cloth' ? '<img src="' + srcOf(cover) + '" alt="">' : '') +
+    '<div class="pv-ct"><b>' + esc(et) + '</b><i>' + esc(t.author || '') + '</i></div></div></div>' +
+    '<div class="pv-cap">Front cover and spine' + (cover ? ', with your cover art' : '. Add cover art on the Art tab') + '</div></div>';
+  // title page
+  h += '<div class="pv"><div class="pv-row"><div class="pv-page' + paper + '" style="width:' + sz.w + 'px;height:' + sz.h + 'px"><div class="pv-in pv-title">' +
+    '<b>' + esc(et) + '</b>' + (trim(t.subtitle) ? '<i>' + esc(t.subtitle) + '</i>' : '') + '<span>by ' + esc(t.author || 'the author') + '</span>' +
+    '<i>Edited, with an introduction and notes</i><em>' + esc((t.title || '').toUpperCase() ? 'PUBLIC DOMAIN PRESS' : '') + '</em></div></div></div><div class="pv-cap">Title page</div></div>';
+  // intro page
+  var intro = t.editor.intro || t.plan.intro;
+  h += '<div class="pv"><div class="pv-row"><div class="pv-page' + paper + '" style="width:' + sz.w + 'px;height:' + sz.h + 'px"><div class="pv-in"><h4>Introduction</h4>' +
+    '<div class="' + (b.columns === 2 ? 'pv-two' : '') + '">' + (trim(intro) ? mdLite(intro, 1400) : '<p class="pv-empty">Your introduction will show here. Write it on the Text tab.</p>') + '</div>' +
+    '</div><div class="pv-fade"></div><div class="pv-num">1</div></div></div><div class="pv-cap">First page of the introduction' + (b.columns === 2 ? ', two columns' : '') + '</div></div>';
+  // art pages, flip through
+  var ap = artPages();
+  h += '<div class="ed-h">Pages with art</div>';
+  if (edArtLoading) h += '<p class="small muted mt0"><span class="spinner"></span>Opening your art...</p>';
+  else if (!ap.pages.length) h += '<p class="small muted mt0">' + (edArt.length ? 'Give your pictures a page number on the Art tab to see them here.' : 'No art yet. Import pictures on the Art tab, then pick a page for each.') + '</p>';
+  else {
+    if (pvIdx >= ap.pages.length) pvIdx = ap.pages.length - 1;
+    var pg = ap.pages[pvIdx], a = pg.art, inner;
+    if (pg.kind === 'text') {
+      inner = '<div class="pv-in"><div class="' + (b.columns === 2 ? 'pv-two' : '') + '">' + mdLite(t.editor.notes || 'Your chapter text runs around the picture on this page.', 260) + '</div>' +
+        '<img src="' + srcOf(a) + '" alt="" style="margin-top:8px;max-height:52%">' + (a.caption ? '<div class="pv-fig">' + esc(a.caption) + '</div>' : '') + '</div>';
+    } else {
+      inner = '<div class="pv-in" style="display:-webkit-box;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:center;justify-content:center">' +
+        '<img src="' + srcOf(a) + '" alt="" style="max-height:82%">' + (a.caption ? '<div class="pv-fig">' + esc(a.caption) + '</div>' : '') + '</div>';
+    }
+    h += '<div class="pv"><div class="pv-row"><div class="pv-page' + paper + '" style="width:' + sz.w + 'px;height:' + sz.h + 'px">' + inner +
+      (pg.num ? '<div class="pv-num">' + esc(pg.num) + '</div>' : '') + '</div></div>' +
+      '<div class="pv-cap"><strong>' + esc(pg.label) + '</strong>' + (b.ink === 'bw' ? '. Prints in black and white' : '') + '</div>' +
+      '<div class="btns" style="margin-top:12px;text-align:center"><button class="btn small ghost" id="pv-prev"' + (pvIdx ? '' : ' disabled') + '>Previous</button>' +
+      '<span class="small" style="display:inline-block;margin:0 10px 12px 4px">' + (pvIdx + 1) + ' of ' + ap.pages.length + '</span>' +
+      '<button class="btn small ghost" id="pv-next"' + (pvIdx < ap.pages.length - 1 ? '' : ' disabled') + '>Next</button></div></div>';
+    h += '<div class="card"><div class="eyebrow" style="margin-bottom:6px">Art by page</div>';
+    if (cover) h += '<div class="check"><span class="ct">Cover<span class="cd">' + esc(cover.caption || cover.name) + '</span></span></div>';
+    each(ap.pages, function (p2, i) {
+      h += '<button class="check" data-pv="' + i + '" style="width:100%;text-align:left"><span class="ct">' + (i === pvIdx ? '<strong>' + esc(p2.label) + '</strong>' : esc(p2.label)) + '<span class="cd">' + esc(p2.art.caption || p2.art.name) + '</span></span></button>';
+    });
+    each(ap.loose, function (a2) { h += '<div class="check"><span class="ct">No page yet<span class="cd">' + esc(a2.caption || a2.name) + '. Set a page on the Art tab.</span></span></div>'; });
+    h += '</div>';
+  }
+  h += '<div class="ed-h">Take it further</div><div class="btns"><button class="btn small ghost" id="ed-ex-md">Export outline (.md)</button><button class="btn small ghost" id="ed-ex-html">Print-ready outline (.html)</button></div>' +
+    '<p class="small muted mt0">The outline includes your Text tab writing and a list of your art. A full print-ready PDF is not built yet.</p>';
+  return h + royBlock(t);
+}
+function renderEditor() {
+  var t = find(edId); if (!t) return; fixBook(t);
+  var h = '<div class="eyebrow" style="margin-top:18px">Book editor</div><h1 class="d-title" style="margin-top:4px">' + esc(t.title || 'Untitled') + '</h1>' +
+    '<div class="d-sub" id="ed-sum">' + esc(bookSummary(t)) + '</div><div class="tabs2">';
+  each([['size', 'Size'], ['shape', 'Shape'], ['quality', 'Quality'], ['text', 'Text'], ['art', 'Art'], ['preview', 'Preview']], function (p) {
+    h += '<button data-etab="' + p[0] + '" class="' + (edTab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
+  });
+  h += '</div>';
+  if (edTab === 'size') h += tabSize(t);
+  else if (edTab === 'shape') h += tabShape(t);
+  else if (edTab === 'quality') h += tabQuality(t);
+  else if (edTab === 'text') h += tabText(t);
+  else if (edTab === 'art') h += tabArt(t);
+  else h += tabPreview(t);
+  $('edBody').innerHTML = h;
+  edSaved();
+  if (edTab === 'text') updCount();
+  if (edTab === 'art' && artMode === 'idb' && $('ed-space')) fillSpace('ed-space');
+  var on = document.querySelector('#edBody .tabs2 button.on'); if (on && on.scrollIntoView && on.offsetLeft > 200) { on.parentNode.scrollLeft = on.offsetLeft - 40; }
+}
+function updCount() {
+  var ta = $('ed-text'), c = $('ed-count'); if (!ta || !c) return;
+  var w = wordCount(ta.value);
+  c.textContent = commas(w) + (w === 1 ? ' word, ' : ' words, ') + commas(ta.value.length) + ' characters';
+}
+function textChanged() {
+  var t = find(edId), ta = $('ed-text'); if (!t || !ta) return;
+  t.editor[edSec] = ta.value; t.editor.updated = new Date().toISOString();
+  updCount(); edSaved('Saving...');
+  clearTimeout(edSaveT);
+  edSaveT = setTimeout(function () { edSaveT = null; save(); edSaved(); }, 500);
+}
+function mdInsert(kind) {
+  var ta = $('ed-text'); if (!ta) return;
+  var v = ta.value, s = ta.selectionStart || 0, e = ta.selectionEnd || s, before, after, ins, cs, ce;
+  if (kind === 'bold' || kind === 'italic') {
+    var m = kind === 'bold' ? '**' : '*', txt = v.slice(s, e) || (kind === 'bold' ? 'bold text' : 'italic text');
+    before = v.slice(0, s); after = v.slice(e); ins = m + txt + m; cs = s + m.length; ce = cs + txt.length;
+  } else if (kind === 'heading' || kind === 'list') {
+    var ls = v.lastIndexOf('\n', s - 1) + 1, le = v.indexOf('\n', e); if (le < 0) le = v.length;
+    before = v.slice(0, ls); after = v.slice(le);
+    var lines = (v.slice(ls, le) || (kind === 'heading' ? 'Heading' : 'List item')).split('\n');
+    for (var i = 0; i < lines.length; i++) {
+      if (kind === 'heading') lines[i] = '## ' + lines[i].replace(/^#+\s*/, '');
+      else if (!/^- /.test(lines[i])) lines[i] = '- ' + lines[i];
+    }
+    ins = lines.join('\n'); cs = ls + (kind === 'heading' ? 3 : 2); ce = ls + ins.length;
+  } else {
+    before = v.slice(0, s); after = v.slice(e);
+    ins = (before && !/\n\n$/.test(before) ? (/\n$/.test(before) ? '\n' : '\n\n') : '') + '[Page break]\n\n';
+    cs = ce = s + ins.length;
+  }
+  ta.value = before + ins + after;
+  try { ta.focus(); ta.setSelectionRange(cs, ce); } catch (x) {}
+  textChanged();
+}
+function loadFromPlan(t) {
+  var src = { intro: t.plan.intro, notes: t.plan.footnotes,
+    backmatter: [trim(t.plan.backmatter), trim(t.plan.glossary) ? '## Glossary\n\n' + trim(t.plan.glossary) : ''].join('\n\n') }[edSec];
+  if (!trim(src)) { toast('The Plan tab has nothing for this section yet.'); return; }
+  if (trim(t.editor[edSec]) && !window.confirm('Replace what you wrote here with your Plan tab notes?')) return;
+  t.editor[edSec] = trim(src); t.editor.updated = new Date().toISOString(); save(); renderEditor(); toast('Copied from the Plan tab');
+}
+function rotateArt(a) {
+  var tid = edId;
+  readImage(srcOf(a), function (img) {
+    if (!img) { toast('Could not rotate this picture.'); return; }
+    var big = shrink(img, 1600, 0.72, true);
+    readImage(big.url, function (img2) {
+      var th = img2 ? shrink(img2, 360, 0.7) : null;
+      var copy = metaOf(a); copy.width = big.w; copy.height = big.h; if (th) copy.thumb = th.url;
+      setImage(copy, big.url);
+      artPutMany([copy]).then(function () {
+        if (edId !== tid) return;
+        each(['width', 'height', 'thumb', 'size', '_blob', '_durl', 'data'], function (k) { a[k] = copy[k]; });
+        renderEditor();
+      }, function (e) { toast('Could not rotate: ' + artErrMsg(e)); });
+    });
+  });
+}
+function onEdClick(e) {
+  var t = find(edId); if (!t) return;
+  var b = t.book, c, v;
+  if ((c = closest(e.target, 'data-etab'))) { flushText(); edTab = c.getAttribute('data-etab'); edArtSel = null; renderEditor(); $('editor').scrollTop = 0; return; }
+  if ((c = closest(e.target, 'data-sec'))) { flushText(); edSec = c.getAttribute('data-sec'); renderEditor(); return; }
+  if ((c = closest(e.target, 'data-md'))) { mdInsert(c.getAttribute('data-md')); return; }
+  if ((c = closest(e.target, 'data-art'))) { edArtSel = c.getAttribute('data-art'); renderEditor(); var ed = document.querySelector('.ed-artedit'); if (ed) $('editor').scrollTop = Math.max(0, ed.offsetTop - 70); return; }
+  if ((c = closest(e.target, 'data-pv'))) { pvIdx = num(c.getAttribute('data-pv'), 0); renderEditor(); return; }
+  var changed = false;
+  if ((c = closest(e.target, 'data-trim'))) { t.trim = c.getAttribute('data-trim'); b.orientation = t.trim === '8.25x6' ? 'landscape' : 'portrait'; changed = true; }
+  else if ((c = closest(e.target, 'data-bind'))) { b.binding = c.getAttribute('data-bind'); changed = true; }
+  else if ((c = closest(e.target, 'data-orient'))) {
+    if (c.disabled) return;
+    v = c.getAttribute('data-orient');
+    if (v === 'landscape' && t.trim !== '8.25x6') { b.prevTrim = t.trim; t.trim = '8.25x6'; }
+    if (v === 'portrait' && t.trim === '8.25x6') t.trim = b.prevTrim && b.prevTrim !== '8.25x6' ? b.prevTrim : '8.5x8.5';
+    b.orientation = v; changed = true;
+  }
+  else if ((c = closest(e.target, 'data-cols'))) { b.columns = num(c.getAttribute('data-cols'), 1); changed = true; }
+  else if ((c = closest(e.target, 'data-ink'))) { b.ink = c.getAttribute('data-ink'); if (b.ink !== 'bw') b.paper = 'white'; changed = true; }
+  else if ((c = closest(e.target, 'data-paper'))) { if (c.disabled) return; b.paper = c.getAttribute('data-paper'); changed = true; }
+  else if ((c = closest(e.target, 'data-finish'))) { b.finish = c.getAttribute('data-finish'); changed = true; }
+  if (changed) { save(); syncCalc(t); var st = $('editor').scrollTop; renderEditor(); $('editor').scrollTop = st; return; }
+  var id = e.target.id || (closest(e.target, 'id') || {}).id;
+  if (id === 'ed-roy-btn') {
+    edRoy = true; renderEditor();
+    var rc = $('ed-roycard'); if (rc) $('editor').scrollTop = Math.max(0, rc.offsetTop - 120);
+    toast('Royalty worked out for ' + trimName(t.trim) + ', ' + num(t.pages, 0) + ' pages');
+  }
+  else if (id === 'ed-load') loadFromPlan(t);
+  else if (id === 'ed-import') { var f = $('artFile'); f.value = ''; f.click(); }
+  else if (id === 'ed-art-done') { flushText(); edArtSel = null; renderEditor(); }
+  else if (id === 'ed-art-rot') { var a = findArt(edArtSel); if (a) rotateArt(a); }
+  else if (id === 'ed-art-del') {
+    if (!window.confirm('Delete this picture from the book?')) return;
+    var gone = edArtSel, tid = edId; delete artDirty[gone];
+    artDelete(tid, gone).then(function () {
+      if (edId !== tid) return;
+      var keep = []; each(edArt, function (x) { if (x.id !== gone) keep.push(x); });
+      edArt = keep; edArtSel = null; renderEditor(); toast('Picture deleted');
+    }, function () { toast('Could not delete the picture. Try again.'); });
+  }
+  else if (id === 'pv-prev') { if (pvIdx > 0) pvIdx--; renderEditor(); }
+  else if (id === 'pv-next') { pvIdx++; renderEditor(); }
+  else if (id === 'ed-ex-md') download(slug(t.editionTitle || t.title) + '-outline.md', outlineMd(t), 'text/markdown');
+  else if (id === 'ed-ex-html') download(slug(t.editionTitle || t.title) + '-outline.html', outlineHtml(t), 'text/html');
+}
+function onEdInput(e) {
+  var el = e.target, t = find(edId); if (!t || !el) return;
+  if (el.id === 'ed-text') { if (e.type === 'input') textChanged(); return; }
+  var k = el.getAttribute && el.getAttribute('data-ek');
+  if (k) { t[k] = el.value === '' ? '' : num(el.value, 0); save(); syncCalc(t); edLive(t); return; }
+  var ak = el.getAttribute && el.getAttribute('data-ak');
+  if (ak) {
+    var a = findArt(edArtSel); if (!a) return;
+    a[ak] = ak === 'page' ? (el.value === '' ? '' : Math.max(1, Math.round(num(el.value, 1)))) : el.value;
+    if (ak === 'placement') {
+      if ((a.placement === 'cover' || a.placement === 'frontispiece')) a.page = ''; else if (!a.page) a.page = nextPage(edArt);
+      artDirty[a.id] = a; flushArt(); renderEditor(); return;
+    }
+    edSaved('Saving...');
+    clearTimeout(artSaveT);
+    artDirty[a.id] = a;
+    artSaveT = setTimeout(function () { artSaveT = null; flushArt(); }, 600);
+    if (ak === 'page' && e.type === 'change') { var thumbTag = document.querySelector('.ed-thumb[data-art="' + a.id + '"] .tag'); if (thumbTag) thumbTag.textContent = artLabel(a); }
+  }
+}
+
+/* Editor list in the bottom nav */
+function renderBooks() {
+  var el = $('booksList'); if (!el) return;
+  var h = '', n = 0;
+  each(['now', 'soon'], function (g) {
+    var part = '';
+    each(state.titles, function (t) {
+      if (t.group !== g) return; fixBook(t); n++;
+      var w = wordCount(t.editor.intro) + wordCount(t.editor.notes) + wordCount(t.editor.backmatter);
+      part += '<button class="item" data-ed="' + t.id + '"><div class="item-title">' + esc(t.title || 'Untitled') + '</div>' +
+        '<div class="item-sub">' + esc(t.author) + '</div>' +
+        '<div class="tags"><span class="tag accent">' + esc(trimName(t.trim)) + '</span><span class="tag ' + (t.book.ink === 'bw' ? 'accent' : 'warn') + '">' + esc(nameOf(INKS, t.book.ink)) + '</span></div>' +
+        '<div class="item-meta">' + (w ? commas(w) + ' words written' : 'Nothing written yet') + ' &middot; ' + (t.artCount ? t.artCount + (t.artCount === 1 ? ' picture' : ' pictures') : 'no art yet') + '</div></button>';
+    });
+    if (part) h += '<div class="section-title"><h2>' + GROUPS[g] + '</h2></div>' + part;
+  });
+  el.innerHTML = n ? h : '<div class="empty">No titles yet. Add one on the Titles screen.</div>';
 }
 
 function registerSW() {
@@ -1219,11 +2303,12 @@ function registerSW() {
 state = normalize(load());
 if (migrated) save();
 bind();
+initArt();
 renderList();
 tick(); setInterval(tick, 20000);
 calc();
 registerSW();
-window.__pd = { migrated: function () { return migrated; }, state: function () { return state; }, royalty: royalty, outlineMd: function (id) { return outlineMd(find(id)); } };
+window.__pd = { artMode: function () { return artMode; }, artBlobs: function () { return artBlobs; }, artMeta: function (id) { return artMeta(id); }, artTotals: artTotals, artMigrate: function () { return artMigrate; }, openEditor: openEditor, importFiles: importFiles, mdInsert: mdInsert, migrated: function () { return migrated; }, state: function () { return state; }, royalty: royalty, outlineMd: function (id) { return outlineMd(find(id)); } };
 window.__pdReady = true;
 })();
 </script>

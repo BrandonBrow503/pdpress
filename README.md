@@ -62,3 +62,32 @@ Fallback backgrounds (add a class to `<html>`): `bg-study1` uses `study-bg.jpg` 
 Fonts (self-hosted in fonts/, latin subset woff2 from Google Fonts, SIL Open Font License 1.1, license texts in fonts/OFL-*.txt): Federo (Cyreal), Marcellus SC (Astigmatic), Josefin Sans (Santiago Orozco), Poiret One (Denis Masharov), Limelight (Sorkin Type). Browsers without backdrop-filter get near-solid panels.
 
 Older previews preview-a/b/c.png are from v2.1 (variants B and C were retired).
+
+## Book editor (v2.4)
+
+Open any title, tap **Open book editor** (or use the **Editor** tab in the bottom bar). Tabs:
+
+- **Size**: KDP trims 5x8, 5.25x8, 5.5x8.5, 6x9, 6.14x9.21, 7x10, 8x10, 8.5x11, 8.5x8.5 square, plus 8.25x6 landscape for children's and coffee-table editions. Changing the size also changes it on the Royalty screen.
+- **Shape**: paperback, hardcover case laminate (KDP: 5 sizes, 75 to 550 pages), cloth (shown, but marked "Not on KDP"); one or two columns; spine width estimate.
+- **Quality**: ink (black and white, premium color, standard color) is one choice for the whole book; paper white/cream (cream only with black and white); matte/gloss cover.
+- **Text**: Intro, Notes, Back matter. Markdown toolbar (bold, italic, heading, list, page break), word count, autosave, "Copy from Plan tab".
+- **Art**: import pictures from the phone. Each is shrunk to 1600 px JPEG and kept only on this phone. Set a caption and a place: cover, frontispiece, or a page number.
+- **Preview**: a rough mock of cover, spine, title page, intro page, and every page with art (flip through or tap the list).
+- **Check royalty** (Size, Quality, Preview): uses the same KDP US paperback black-and-white math as the Royalty screen. For color or hardcover it still shows the black-and-white figure with a plain warning.
+
+Data (still in `pdpress.v2`, added fields only): `t.book = {binding, orientation, columns, ink, paper, finish}`, `t.editor = {intro, notes, backmatter, updated}`, `t.artCount`. Art lives in `pdpress.art.<titleId>` as `[{id, name, width, height, added, caption, placement, page, data, thumb}]`. Backups include art; reset and delete remove it.
+
+Limits: browsers give a site about 5 MB of storage, shared by all titles, so the app caps art at about 4.5 MB per title and refuses imports past that. The preview is not a print-ready PDF. Royalty figures cover black-and-white paperbacks only.
+
+## Art storage (v2.5)
+
+Pictures now live in **IndexedDB** (database `pdpress`, store `art`, keyed by `id`, index `titleId`), so the phone can hold far more art than the old ~5 MB localStorage limit. Titles, notes and editor text stay in localStorage `pdpress.v2` as before.
+
+- Each record: `{id, titleId, name, width, height, added, caption, placement, page, order, size, thumb, blob}`. The full picture is a Blob where the browser supports Blobs in IndexedDB (checked at startup); otherwise it is kept as a data URL in `data`. Thumbnails stay small data URLs.
+- **Migration**: on startup, any v2.4 `pdpress.art.<titleId>` keys are copied into IndexedDB, read back and checked, and only then removed. If anything fails, the old copy stays and the move is tried again next launch. Unreadable old keys are left alone.
+- **Space**: the Art tab and Backup screen show real numbers from `navigator.storage.estimate()`. There is no hard cap any more; the app warns when less than about 50 MB is free or more than 90% of the quota is used, and refuses only when a save actually fails.
+- **Keep my art**: on the first art import (and with the "Ask the phone to keep my art" button on the Backup screen) the app calls `navigator.storage.persist()` and says in plain words whether the phone agreed.
+- **Backups** still include all art (as data URLs in `art: {titleId: [...]}`), are built in pieces and downloaded as a .json file. Old v2.4 backups still restore. Reset and deleting a title remove that art from IndexedDB.
+- **Fallback**: if IndexedDB is not available (old browser, some private modes), the app uses the v2.4 localStorage storage with the 4.5 MB per-title cap and says so.
+
+Limits: quotas differ by phone and browser. Chrome can clear site data when the phone is very low on space unless persistence is granted. iPhone Safari may delete site data after about 7 days without use unless the app is added to the Home Screen. Keep downloading backups.
