@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en" class="deco-2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b2118">
+<meta name="description" content="Plan, check and price public-domain book editions. Watchlist, catalog search, KDP royalty estimates and outlines.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Public Domain Press</title>
+<style>
+/* Public Domain Press. Mobile-first, older-Android friendly:
+   no :has, inset, aspect-ratio, flex gap, min()/max()/clamp() in layout. */
+*, *:before, *:after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: #f5f1e8; color: #1d1b18;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px; line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+body { padding-bottom: 84px; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 18px; }
+h1, h2, h3 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Noto Serif", serif; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+a { color: #8c3b2a; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-appearance: none; appearance: none; background: none; border: 0; padding: 0; }
+.hidden { display: none !important; }
+.top { padding: 22px 0 6px; }
+.brand { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; }
+.mark { width: 30px; height: 30px; margin-right: 10px; -webkit-flex: none; flex: none; }
+.brand h1 { font-size: 20px; }
+.brand small { display: block; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12px; color: #7a7469; font-weight: 400; letter-spacing: 0.02em; }
+.eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #7a7469; font-weight: 600; }
+.section-title { margin: 26px 0 10px; display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: baseline; align-items: baseline; -webkit-justify-content: space-between; justify-content: space-between; }
+.section-title h2 { font-size: 22px; }
+.count { margin-top: 14px; background: #1d1b18; color: #f5f1e8; border-radius: 14px; padding: 20px 20px 18px; }
+.count .eyebrow { color: #b8ad98; }
+.count-row { display: -webkit-box; display: -webkit-flex; display: flex; margin-top: 10px; }
+.count-cell { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-left: 1px solid #3a3631; padding-left: 12px; }
+.count-cell:first-child { border-left: 0; padding-left: 0; }
+.count-num { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 34px; line-height: 1.1; }
+.count-lbl { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #b8ad98; }
+.count p { margin: 12px 0 0; font-size: 13px; color: #cfc6b4; }
+.card { background: #fbf9f4; border: 1px solid #e3dccd; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+.item { display: block; width: 100%; text-align: left; background: #fbf9f4; border: 1px solid #e3dccd; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+.item:active { border-color: #d2c9b6; background: #f8f4ec; }
+.item-head { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: flex-start; align-items: flex-start; }
+.item-title { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 18px; font-weight: 600; line-height: 1.25; padding-right: 10px; }
+.item-sub { color: #4a4640; font-size: 14px; margin-top: 2px; }
+.item-meta { margin-top: 8px; font-size: 13px; color: #7a7469; }
+.tags { margin-top: 8px; }
+.tag { display: inline-block; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; padding: 3px 7px; border-radius: 4px; margin: 0 5px 5px 0; border: 1px solid #e3dccd; color: #4a4640; background: #fff; }
+.tag.warn { color: #8a6516; border-color: #e6d4a6; background: #f4ead2; }
+.tag.accent { color: #8c3b2a; border-color: #e5cbc0; background: #f1e3dc; }
+.status { -webkit-flex: none; flex: none; font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 999px; border: 1px solid #d2c9b6; color: #4a4640; white-space: nowrap; background: #fff; }
+.st-1 { background: #f1e3dc; border-color: #e5cbc0; color: #8c3b2a; }
+.st-2 { background: #f4ead2; border-color: #e6d4a6; color: #8a6516; }
+.st-3 { background: #e3ece3; border-color: #c4d6c6; color: #3f6b4a; }
+.st-4 { background: #1d1b18; border-color: #1d1b18; color: #f5f1e8; }
+.seg { display: -webkit-box; display: -webkit-flex; display: flex; background: #ebe5d8; border-radius: 11px; padding: 3px; margin-top: 16px; }
+.seg button { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; padding: 9px 6px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #4a4640; text-align: center; }
+.seg button.on { background: #fbf9f4; color: #1d1b18; box-shadow: 0 1px 2px rgba(29,27,24,0.12); }
+.seg .n { font-weight: 400; color: #7a7469; margin-left: 4px; }
+.now { margin-top: 14px; background: #fbf9f4; border: 1px solid #e3dccd; border-radius: 14px; padding: 18px 20px; }
+.now h3 { font-size: 20px; margin-top: 6px; }
+.now p { margin: 6px 0 0; font-size: 14px; color: #4a4640; }
+.strip { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: space-between; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 1px solid #e3dccd; font-size: 14px; }
+.strip strong { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 17px; }
+.linkbtn { color: #8c3b2a; font-weight: 600; font-size: 14px; padding: 6px 0 6px 10px; }
+.count .btn { margin-top: 14px; background: #f5f1e8; color: #1d1b18; border-color: #f5f1e8; }
+.chips { white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -18px 12px; padding: 0 18px 2px; }
+.chips::-webkit-scrollbar, .tabs2::-webkit-scrollbar { display: none; }
+.chips, .tabs2 { scrollbar-width: none; }
+.chip { display: inline-block; font-size: 14px; padding: 7px 13px; border-radius: 999px; border: 1px solid #d2c9b6; margin-right: 6px; background: transparent; color: #4a4640; }
+.chip.on { background: #1d1b18; border-color: #1d1b18; color: #f5f1e8; }
+.chip .n { opacity: 0.55; margin-left: 3px; }
+label.f { display: block; margin-bottom: 14px; }
+label.f > span { display: block; font-size: 13px; font-weight: 600; color: #4a4640; margin-bottom: 5px; }
+label.f > em { display: block; font-style: normal; font-size: 12px; color: #7a7469; margin-top: 4px; }
+input[type=text], input[type=number], input[type=search], input[type=url], select, textarea {
+  display: block; width: 100%; background: #fff; border: 1px solid #d2c9b6; border-radius: 8px; padding: 11px 12px; font-size: 16px; color: #1d1b18;
+  -webkit-appearance: none; appearance: none; outline: none;
+}
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%237a7469' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
+textarea { min-height: 92px; resize: vertical; line-height: 1.45; }
+input:focus, select:focus, textarea:focus { border-color: #8c3b2a; box-shadow: 0 0 0 3px rgba(140,59,42,0.12); }
+.row2 { display: -webkit-box; display: -webkit-flex; display: flex; margin: 0 -6px; }
+.row2 > * { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; margin-left: 6px; margin-right: 6px; min-width: 0; }
+.btn { display: inline-block; font-size: 15px; font-weight: 600; padding: 11px 16px; border-radius: 9px; border: 1px solid #1d1b18; background: #1d1b18; color: #f5f1e8; text-align: center; }
+.btn.ghost { background: transparent; color: #1d1b18; border-color: #d2c9b6; }
+.btn.small { font-size: 13px; padding: 7px 11px; border-radius: 7px; }
+.btn[disabled] { opacity: 0.5; }
+.btns > .btn { margin: 0 8px 8px 0; }
+.check { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: flex-start; align-items: flex-start; padding: 12px 0; border-top: 1px solid #e3dccd; }
+.check:first-child { border-top: 0; padding-top: 2px; }
+.check:last-child { padding-bottom: 2px; }
+.check input[type=checkbox] { -webkit-flex: none; flex: none; width: 20px; height: 20px; margin: 2px 12px 0 0; accent-color: #8c3b2a; }
+.check .ct { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; font-size: 15px; }
+.check .cd { display: block; font-size: 13px; color: #7a7469; margin-top: 2px; }
+.dot { -webkit-flex: none; flex: none; width: 20px; height: 20px; border-radius: 50%; margin: 2px 12px 0 0; border: 1.5px solid #d2c9b6; position: relative; }
+.dot.ok { background: #3f6b4a; border-color: #3f6b4a; }
+.dot.ok:after { content: ""; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+.dot.na { border-style: dashed; }
+.note { font-size: 13px; color: #4a4640; background: #f4ead2; border: 1px solid #e6d4a6; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+.note.plain { background: transparent; border-color: #e3dccd; color: #7a7469; }
+.muted { color: #7a7469; }
+.small { font-size: 13px; }
+.mt0 { margin-top: 0; }
+.result { display: -webkit-box; display: -webkit-flex; display: flex; border: 1px solid #e3dccd; border-radius: 12px; background: #fff; margin-bottom: 12px; }
+.result > div { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; padding: 14px 16px; border-left: 1px solid #e3dccd; }
+.result > div:first-child { border-left: 0; }
+.big { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 30px; line-height: 1.15; }
+.big.pos { color: #3f6b4a; }
+.big.neg { color: #8c3b2a; }
+table.mini { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.mini td { padding: 7px 0; border-top: 1px solid #e3dccd; }
+table.mini tr:first-child td { border-top: 0; padding-top: 0; }
+table.mini td:last-child { text-align: right; }
+.formats { margin-top: 8px; font-size: 13px; color: #7a7469; }
+.formats a { margin-right: 12px; }
+.searchbar { display: -webkit-box; display: -webkit-flex; display: flex; }
+.searchbar input { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.searchbar .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; -webkit-flex: none; flex: none; }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #d2c9b6; border-top-color: #8c3b2a; border-radius: 50%; -webkit-animation: spin 0.8s linear infinite; animation: spin 0.8s linear infinite; vertical-align: -2px; margin-right: 8px; }
+@-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.sheet { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f5f1e8; z-index: 40; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 40px; }
+.sheet-bar { position: -webkit-sticky; position: sticky; top: 0; background: #f5f1e8; background: rgba(245,241,232,0.97); border-bottom: 1px solid #e3dccd; z-index: 2; }
+.sheet-bar .wrap { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: space-between; justify-content: space-between; height: 54px; }
+.back { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; font-weight: 600; font-size: 15px; color: #1d1b18; padding: 8px 0; }
+.back svg { margin-right: 6px; }
+.saved { font-size: 12px; color: #7a7469; }
+.tabs2 { display: -webkit-box; display: -webkit-flex; display: flex; border-bottom: 1px solid #e3dccd; margin: 10px -18px 18px; padding: 0 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tabs2 button { -webkit-flex: none; flex: none; padding: 12px 2px 10px; margin-right: 20px; font-size: 14px; font-weight: 600; color: #7a7469; border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs2 button.on { color: #1d1b18; border-bottom-color: #8c3b2a; }
+.d-title { font-size: 26px; line-height: 1.2; margin-top: 18px; }
+.d-sub { color: #4a4640; margin-top: 4px; }
+.nav { position: fixed; left: 0; right: 0; bottom: 0; background: #fbf9f4; background: rgba(251,249,244,0.97); border-top: 1px solid #e3dccd; z-index: 30; padding-bottom: env(safe-area-inset-bottom); }
+.nav .wrap { display: -webkit-box; display: -webkit-flex; display: flex; padding: 0 6px; }
+.nav button { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; padding: 9px 0 10px; color: #7a7469; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-align: center; }
+.nav button svg { display: block; margin: 0 auto 3px; }
+.nav button.on { color: #1d1b18; }
+.nav button.on svg { stroke: #8c3b2a; }
+.toast { position: fixed; left: 50%; bottom: 96px; -webkit-transform: translateX(-50%); transform: translateX(-50%); background: #1d1b18; color: #f5f1e8; font-size: 14px; padding: 10px 16px; border-radius: 9px; z-index: 60; opacity: 0; -webkit-transition: opacity .2s; transition: opacity .2s; pointer-events: none; max-width: 90%; text-align: center; }
+.toast.show { opacity: 1; }
+.empty { text-align: center; padding: 30px 10px; color: #7a7469; }
+hr.rule { border: 0; border-top: 1px solid #e3dccd; margin: 22px 0; }
+.foot { font-size: 12px; color: #7a7469; margin: 28px 0 10px; text-align: center; }
+.mono { font-family: ui-monospace, Menlo, Consolas, "Roboto Mono", monospace; font-size: 13px; }
+/* ---- Library glass theme (v2.1) ----
+   Photo: "Elegant Vintage Library Interior in London" by Gul Isik, Pexels License (pexels.com/photo/34415964).
+   Fallback photo: "Trinity College Dublin" by Dmitrij Paskevic (Unsplash), CC0 via Wikimedia Commons.
+   Warm paper glass over the photo. Browsers without backdrop-filter get
+   near-solid panels, so text stays readable on older Android. */
+html, body { background: #2b2118; }
+.bg { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; background: #2b2118 url("study-bg.jpg") center 60% no-repeat; background-size: cover; pointer-events: none; }
+/* Fallback photo: add class "bg-library" to <html> for the Trinity College Long Room shelves. */
+.bg-library .bg { background-image: url("library-bg.jpg"); background-position: center center; }
+.bg:after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(22,16,11,0.5); background: -webkit-linear-gradient(top, rgba(22,16,11,0.62) 0%, rgba(22,16,11,0.38) 45%, rgba(22,16,11,0.6) 100%); background: linear-gradient(180deg, rgba(22,16,11,0.62) 0%, rgba(22,16,11,0.38) 45%, rgba(22,16,11,0.6) 100%); }
+.view, #fatal { position: relative; z-index: 1; }
+#fatal { background: #f5f1e8; }
+.muted, .item-meta, label.f > em, .check .cd, .formats, .eyebrow, .saved { color: #655e53; }
+
+/* Text sitting directly on the photo */
+.top h1, .top h2, .section-title h2 { color: #fbf6ec; text-shadow: 0 1px 3px rgba(0,0,0,0.45); }
+.top .eyebrow, .brand small { color: #e2d6c1; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+.view > .wrap > p.muted, .foot, #sstatus, #list > .empty, #sresults > .empty { color: #eadfcc; text-shadow: 0 1px 2px rgba(0,0,0,0.55); }
+.mark rect:first-child { fill: #f5f1e8; }
+.mark path { stroke: #1d1b18; }
+.section-title .btn.ghost, #smore .btn.ghost { color: #fbf6ec; border-color: rgba(251,246,236,0.55); background: rgba(251,246,236,0.1); }
+.chip { color: #f3ead9; border-color: rgba(251,246,236,0.38); background: rgba(30,23,17,0.35); }
+.chip.on { background: #fbf6ec; border-color: #fbf6ec; color: #1d1b18; }
+
+/* A: warm paper glass. Solid-ish fallback first. */
+.card, .item, .now, .result, .note, .seg { background: rgba(251,248,241,0.95); border-color: rgba(255,255,255,0.6); box-shadow: 0 6px 22px rgba(15,10,6,0.22); }
+.note { background: rgba(246,236,212,0.96); border-color: rgba(230,212,166,0.9); }
+.note.plain { background: rgba(251,248,241,0.92); color: #4a4640; border-color: rgba(255,255,255,0.6); }
+.item:active { background: rgba(248,244,236,0.98); }
+.seg { border: 1px solid rgba(255,255,255,0.5); }
+.seg button.on { background: #1d1b18; color: #fbf6ec; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+.seg button.on .n { color: #c9bfae; }
+.count { background: rgba(22,18,14,0.9); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 6px 22px rgba(0,0,0,0.3); }
+.result > div { border-left-color: rgba(120,105,80,0.22); }
+.nav { background: rgba(251,248,241,0.97); border-top-color: rgba(255,255,255,0.6); }
+.sheet { background: #f5f1e8; }
+.sheet-bar { background: rgba(245,241,232,0.98); }
+.toast { box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .card, .item, .now, .result, .seg { background: rgba(250,245,235,0.84); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%); }
+  .note { background: rgba(246,236,212,0.84); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+  .note.plain { background: rgba(251,248,241,0.72); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+  .count { background: rgba(22,18,14,0.62); -webkit-backdrop-filter: blur(18px) saturate(130%); backdrop-filter: blur(18px) saturate(130%); }
+  .chip, .section-title .btn.ghost, #smore .btn.ghost { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .nav { background: rgba(251,248,241,0.78); -webkit-backdrop-filter: blur(20px) saturate(150%); backdrop-filter: blur(20px) saturate(150%); }
+  .sheet { background: rgba(245,241,232,0.93); -webkit-backdrop-filter: blur(26px) saturate(130%); backdrop-filter: blur(26px) saturate(130%); }
+  .sheet-bar { background: rgba(245,241,232,0.7); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+  /* Inside the detail sheet the sheet itself is already frosted; skip nested blur for speed. */
+  .sheet .card, .sheet .item, .sheet .result, .sheet .note { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255,255,255,0.6); }
+  .sheet .note { background: rgba(244,234,210,0.85); }
+}
+
+/* ---- Art deco layer (v2.2) ----
+   Fonts are self-hosted in fonts/ (SIL Open Font License 1.1, see fonts/OFL-*.txt).
+   Pick a style with a class on <html>: deco-1 (Poiret One + Josefin Sans),
+   deco-2 (Federo + Marcellus SC, stepped frames), deco-3 (Limelight + Josefin Sans). */
+@font-face { font-family: "Poiret One"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/poiret-one-latin.woff2") format("woff2"); }
+@font-face { font-family: "Limelight"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/limelight-latin.woff2") format("woff2"); }
+@font-face { font-family: "Federo"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/federo-latin.woff2") format("woff2"); }
+@font-face { font-family: "Marcellus SC"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/marcellus-sc-latin.woff2") format("woff2"); }
+@font-face { font-family: "Josefin Sans"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("fonts/josefin-sans-latin.woff2") format("woff2"); }
+
+/* More see-through glass; light text-shadow keeps dark text crisp over the blur. */
+.card, .item, .now, .result, .seg, .note, .note.plain { background: rgba(250,245,235,0.9); }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .card, .item, .now, .result, .seg { background: rgba(250,245,235,0.6); -webkit-backdrop-filter: blur(22px) saturate(150%); backdrop-filter: blur(22px) saturate(150%); }
+  .note { background: rgba(246,234,206,0.66); -webkit-backdrop-filter: blur(22px) saturate(140%); backdrop-filter: blur(22px) saturate(140%); }
+  .note.plain { background: rgba(250,245,235,0.56); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); }
+  .count { background: rgba(18,14,10,0.5); -webkit-backdrop-filter: blur(22px) saturate(140%); backdrop-filter: blur(22px) saturate(140%); }
+  .nav { background: rgba(250,245,235,0.66); -webkit-backdrop-filter: blur(24px) saturate(150%); backdrop-filter: blur(24px) saturate(150%); }
+  .sheet { background: rgba(245,240,229,0.86); }
+  .card, .item, .now, .result, .note { text-shadow: 0 1px 0 rgba(255,250,240,0.45); }
+  .item, .card, .now, .result, .note, .seg { border-color: rgba(255,248,232,0.55); }
+}
+.muted, .item-meta, label.f > em, .check .cd, .formats, .eyebrow, .saved { color: #574f44; }
+.item-sub, .now p, .d-sub { color: #3a352e; }
+
+/* Brass palette */
+.btn { font-family: "Josefin Sans", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.16em; font-weight: 600; font-size: 13px; line-height: 1.2; padding: 12px 18px 11px; border-radius: 0; border: 1px solid #b08d4a; background: #1d1813; color: #ecd9ae; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(201,164,92,0.55); -webkit-transition: background .15s, color .15s; transition: background .15s, color .15s; text-shadow: none; }
+.btn.small { font-size: 11px; padding: 9px 13px 8px; border-radius: 0; letter-spacing: 0.15em; }
+.btn.ghost { background: rgba(255,250,240,0.22); color: #5a4220; border-color: #a8843f; box-shadow: inset 0 0 0 2px transparent, inset 0 0 0 3px rgba(168,132,63,0.35); }
+.btn:active, .btn.ghost:active { background: #c9a45c; border-color: #c9a45c; color: #1d1813; }
+@media (hover: hover) { .btn:hover { color: #fff3d6; border-color: #d4b06a; } .btn.ghost:hover { background: rgba(201,164,92,0.18); color: #3d2c12; } }
+.section-title .btn.ghost, #smore .btn.ghost { color: #f0dcae; border-color: rgba(212,176,106,0.85); background: rgba(20,15,10,0.35); box-shadow: inset 0 0 0 2px transparent, inset 0 0 0 3px rgba(212,176,106,0.35); }
+.count .btn { background: transparent; color: #ecd9ae; border-color: #c9a45c; }
+.searchbar input { border-radius: 0; }
+.searchbar .btn { border-radius: 0; box-shadow: none; }
+.linkbtn { font-family: "Josefin Sans", -apple-system, Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-size: 12px; color: #7a5a22; border-bottom: 1px solid #b08d4a; padding: 4px 0 2px; margin-left: 10px; }
+.seg { border-radius: 0; padding: 4px; border: 1px solid rgba(176,141,74,0.7); }
+.seg button { border-radius: 0; font-family: "Josefin Sans", -apple-system, Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; padding: 11px 6px 9px; color: #3a352e; }
+.seg button.on { background: #1d1813; color: #ecd9ae; box-shadow: inset 0 0 0 1px #b08d4a; }
+.seg button.on .n { color: #b8a27a; }
+.chip { border-radius: 0; font-family: "Josefin Sans", -apple-system, Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; padding: 8px 12px 6px; border-color: rgba(212,176,106,0.7); }
+.chip.on { background: #ecd9ae; border-color: #ecd9ae; color: #1d1813; }
+.tabs2 button { font-family: "Josefin Sans", -apple-system, Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; }
+.tabs2 button.on { border-bottom-color: #b08d4a; }
+.nav button { font-family: "Josefin Sans", -apple-system, Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; }
+.nav button.on { color: #1d1813; }
+.nav button.on svg { stroke: #9a7432; }
+.status, .tag { border-radius: 0; }
+input[type=text], input[type=number], input[type=search], input[type=url], select, textarea { border-radius: 2px; border-color: #cdbd9c; }
+input:focus, select:focus, textarea:focus { border-color: #b08d4a; box-shadow: 0 0 0 3px rgba(176,141,74,0.2); }
+.card, .item, .now, .result, .note, .note.plain, .count { border-radius: 4px; }
+.mark rect:first-child { fill: #1d1813; stroke: #c9a45c; stroke-width: 1; }
+.mark path { stroke: #ecd9ae; }
+.check input[type=checkbox] { accent-color: #9a7432; }
+
+/* Headings: deco font only on display text; body stays in the clean sans. */
+.deco-1 h1, .deco-1 h2, .deco-1 .now h3, .deco-1 .d-title, .deco-1 .count-num, .deco-1 .big { font-family: "Poiret One", Georgia, serif; font-weight: 400; letter-spacing: 0.02em; }
+.deco-1 .brand h1 { font-size: 24px; }
+.deco-1 .top h2, .deco-1 .section-title h2 { font-size: 30px !important; }
+.deco-1 .now h3 { font-size: 25px; font-weight: 400; -webkit-text-stroke: 0.3px currentColor; }
+.deco-1 .card h3 { font-weight: 400; -webkit-text-stroke: 0.3px currentColor; font-size: 21px !important; }
+
+.deco-2 h1, .deco-2 h2, .deco-2 h3, .deco-2 .d-title, .deco-2 .count-num, .deco-2 .item-title, .deco-2 .big { font-family: "Federo", Georgia, serif; font-weight: 400; letter-spacing: 0.01em; }
+.deco-2 .btn, .deco-2 .seg button, .deco-2 .chip, .deco-2 .tabs2 button, .deco-2 .nav button, .deco-2 .linkbtn { font-family: "Marcellus SC", Georgia, serif; font-weight: 400; letter-spacing: 0.12em; text-transform: none; }
+.deco-2 .btn { font-size: 15px; position: relative; margin-top: 4px; margin-bottom: 4px; }
+.deco-2 .btn.small { font-size: 13px; }
+.deco-2 .seg button, .deco-2 .chip, .deco-2 .tabs2 button { font-size: 14px; }
+.deco-2 .tabs2 button { font-size: 13px; letter-spacing: 0.06em; margin-right: 16px; }
+.deco-2 .nav button { font-size: 12px; }
+.deco-2 .linkbtn { font-size: 15px; }
+/* Stepped frame: a second outline that steps out past each corner. */
+.deco-2 .btn:before, .deco-2 .btn:after { content: ""; position: absolute; pointer-events: none; border: 0 solid #b08d4a; }
+.deco-2 .btn:before { top: -4px; bottom: -4px; left: 7px; right: 7px; border-top-width: 1px; border-bottom-width: 1px; }
+.deco-2 .btn:after { left: -4px; right: -4px; top: 7px; bottom: 7px; border-left-width: 1px; border-right-width: 1px; }
+.deco-2 .btn.ghost:before, .deco-2 .btn.ghost:after { border-color: rgba(168,132,63,0.7); }
+.deco-2 .section-title .btn.ghost:before, .deco-2 .section-title .btn.ghost:after, .deco-2 #smore .btn.ghost:before, .deco-2 #smore .btn.ghost:after { border-color: rgba(212,176,106,0.8); }
+.deco-2 .searchbar .btn { margin: 0; }
+.deco-2 .searchbar .btn:before, .deco-2 .searchbar .btn:after { display: none; }
+.deco-2 .btns > .btn { margin: 4px 14px 12px 4px; }
+
+.deco-3 h1, .deco-3 h2, .deco-3 .now h3, .deco-3 .d-title, .deco-3 .count-num, .deco-3 .big { font-family: "Limelight", Georgia, serif; font-weight: 400; letter-spacing: 0.01em; }
+.deco-3 .card h3 { font-family: "Limelight", Georgia, serif; font-weight: 400; }
+.deco-3 .btn { border-width: 2px; box-shadow: inset 0 0 0 3px #1d1813, inset 0 0 0 4px rgba(201,164,92,0.7); }
+.deco-3 .btn.ghost { box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px rgba(168,132,63,0.45); }
+
+/* ---- v2.3: fireside photo, deco badges, larger type for easier reading ----
+   Background: "Brown Leather Armchairs Beside Fireplace" by Yosra, Pexels photo 14303851,
+   Pexels License (free commercial use). study-bg-2.jpg is a phone-shaped crop: the photo
+   sits in the top ~38% and fades into a blurred, darkened copy of the same photo below.
+   Fallbacks: class "bg-study1" (study-bg.jpg) or "bg-library" (library-bg.jpg) on <html>. */
+.bg { background-image: url("study-bg-2.jpg"); background-position: center top; }
+.bg-study1 .bg { background-image: url("study-bg.jpg"); background-position: center 60%; }
+.bg-library .bg { background-image: url("library-bg.jpg"); background-position: center center; }
+.bg:after { background: rgba(22,16,11,0.35); background: -webkit-linear-gradient(top, rgba(22,16,11,0.72) 0%, rgba(22,16,11,0.58) 12%, rgba(22,16,11,0.1) 20%, rgba(22,16,11,0.04) 30%, rgba(22,16,11,0.3) 40%, rgba(22,16,11,0.5) 100%); background: linear-gradient(180deg, rgba(22,16,11,0.72) 0%, rgba(22,16,11,0.58) 12%, rgba(22,16,11,0.1) 20%, rgba(22,16,11,0.04) 30%, rgba(22,16,11,0.3) 40%, rgba(22,16,11,0.5) 100%); }
+.bg-study1 .bg:after, .bg-library .bg:after { background: -webkit-linear-gradient(top, rgba(22,16,11,0.62) 0%, rgba(22,16,11,0.38) 45%, rgba(22,16,11,0.6) 100%); background: linear-gradient(180deg, rgba(22,16,11,0.62) 0%, rgba(22,16,11,0.38) 45%, rgba(22,16,11,0.6) 100%); }
+/* Open window onto the fireside on the Titles screen. */
+#v-watch .seg { margin-top: 190px; margin-top: 23vh; }
+.bg-study1 #v-watch .seg, .bg-library #v-watch .seg { margin-top: 16px; }
+
+/* Readability: bigger body, darker secondary text, less tracking. */
+html, body { font-size: 17px; }
+.brand h1 { font-size: 22px; }
+.brand small { font-size: 15px; }
+.eyebrow { font-size: 14px; letter-spacing: 0.06em; }
+.item-title { font-size: 20px; }
+.item-sub, .now p, .d-sub, .count p { font-size: 16px; }
+.item-sub, .now p, .d-sub { color: #2b2620; }
+.item-meta, .check .cd, label.f > em, .formats, .saved, .note, .small, .strip, table.mini, .toast, .back { font-size: 15px; }
+.muted, .item-meta, label.f > em, .check .cd, .formats, .eyebrow, .saved, .note.plain { color: #3d362d; }
+label.f > span { font-size: 15px; color: #2b2620; }
+.check .ct { font-size: 17px; }
+.count-lbl { font-size: 13px; letter-spacing: 0.06em; color: #d9cdb6; }
+.count p { color: #eee5d3; }
+.count .eyebrow { color: #e0d3b8; }
+.top .eyebrow, .brand small { color: #efe5d2; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.top h1 { text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+.foot { font-size: 14px; }
+.d-title { font-size: 28px; }
+.strip strong { font-size: 18px; }
+#sstatus, .empty { font-size: 16px; }
+/* Slightly more opaque glass so small text keeps 4.5:1 contrast over the photo. */
+.card, .item, .now, .result, .seg, .note, .note.plain { background: rgba(250,245,235,0.93); }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .card, .item, .now, .result, .seg { background: rgba(250,245,235,0.74); }
+  .note { background: rgba(246,234,206,0.8); }
+  .note.plain { background: rgba(250,245,235,0.72); }
+  .count { background: rgba(18,14,10,0.62); }
+  .nav { background: rgba(250,245,235,0.82); }
+  .sheet { background: rgba(245,240,229,0.9); }
+  .card, .item, .now, .result, .note { text-shadow: 0 1px 0 rgba(255,250,240,0.55); }
+}
+.nav button { color: #3d362d; }
+
+.deco-2 .btn { font-size: 16px; letter-spacing: 0.06em; }
+.deco-2 .btn.small { font-size: 15px; letter-spacing: 0.05em; padding: 10px 14px 9px; }
+.deco-2 .seg button { font-size: 15px; letter-spacing: 0.03em; padding: 11px 4px 9px; }
+.deco-2 .chip { font-size: 15px; letter-spacing: 0.04em; }
+.deco-2 .tabs2 button { font-size: 15px; letter-spacing: 0.03em; margin-right: 14px; color: #3d362d; }
+.deco-2 .tabs2 button.on { color: #1d1813; }
+.deco-2 .nav button { font-size: 13px; letter-spacing: 0.02em; }
+.deco-2 .linkbtn { font-size: 15px; letter-spacing: 0.05em; color: #5e4518; }
+.deco-2 .seg .n { margin-left: 3px; }
+
+/* Badges: same dark fill, brass double line and Marcellus SC as the deco buttons, but flatter
+   (no stepped corners, smaller padding) and marked with a small diamond so they read as labels.
+   Each status or tag type keeps its own accent colour. */
+.status, .tag { font-family: "Marcellus SC", Georgia, serif; font-weight: 400; text-transform: none; font-size: 14px; letter-spacing: 0.04em; line-height: 1.25; position: relative; display: inline-block; padding: 5px 10px 4px 23px; margin: 0 6px 6px 0; border-radius: 0; border: 1px solid #b08d4a; background: #1d1813; color: #ecd9ae; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(201,164,92,0.4); text-shadow: none; white-space: nowrap; vertical-align: middle; }
+.status:before, .tag:before { content: ""; position: absolute; left: 9px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: #c9a45c; -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+.item-head { display: block; }
+.item-title { padding-right: 0; }
+.item-head .status { margin: 10px 6px 0 0; }
+.tags { margin-top: 8px; }
+/* Status accents */
+.st-0 { color: #ddd3c1; border-color: #8f8572; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(160,148,126,0.4); }
+.st-0:before { background: transparent; border: 1px solid #c8bca6; }
+.st-1 { color: #f6d9c9; border-color: #c27c60; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(194,124,96,0.45); }
+.st-1:before { background: #e39575; }
+.st-2 { color: #f4e1b0; border-color: #c9a45c; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(201,164,92,0.5); }
+.st-2:before { background: #e9c46f; }
+.st-3 { color: #d6ecd9; border-color: #6f9a78; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(111,154,120,0.5); }
+.st-3:before { background: #93c79e; }
+.st-4 { color: #1d1813; background: #d2b26c; border-color: #8a6a2c; box-shadow: inset 0 0 0 2px #d2b26c, inset 0 0 0 3px rgba(29,24,19,0.55); }
+.st-4:before { background: #1d1813; }
+/* Tag accents: edition type in brass; caution flags in amber with a warm dark fill. */
+.tag.accent { color: #ecd9ae; border-color: #b08d4a; background: #1d1813; }
+.tag.warn { color: #ffd98a; border-color: #d9a63a; background: #2e2110; box-shadow: inset 0 0 0 2px #2e2110, inset 0 0 0 3px rgba(217,166,58,0.5); }
+.tag.warn:before { background: #f0b84a; }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<div id="fatal" class="hidden" style="padding:20px">
+  <h2>This browser could not start the app</h2>
+  <p>Try updating Chrome, or open the page in a different browser. Your saved data is not affected.</p>
+</div>
+
+<main id="v-watch" class="view">
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="#1d1b18"/><path d="M10 22V8h5.6c2.7 0 4.4 1.7 4.4 4.1s-1.7 4.1-4.4 4.1H10" fill="none" stroke="#f5f1e8" stroke-width="2"/><rect x="18" y="19.5" width="3" height="3" fill="#c46a54"/></svg>
+        <div><h1>Public Domain Press</h1><small>Plan, check and price new editions of free books</small></div>
+      </div>
+    </header>
+    <div class="seg" id="seg" role="tablist">
+      <button data-g="now" class="on">Publish now<span class="n" id="n-now"></span></button>
+      <button data-g="soon">Coming 2027<span class="n" id="n-soon"></span></button>
+    </div>
+    <section class="now" id="nowCard">
+      <div class="eyebrow">Free to publish today</div>
+      <h3>In the US public domain now</h3>
+      <p>Books published in 1930 or earlier. Start annotating, illustrating or designing these right away.</p>
+      <div class="strip"><span><strong id="cd-mini">0 days</strong> until 1931 books unlock</span><button class="linkbtn" data-g="soon">See list</button></div>
+    </section>
+    <section class="count hidden" id="soonCard" aria-live="polite">
+      <div class="eyebrow">Public Domain Day, United States</div>
+      <div class="count-row">
+        <div class="count-cell"><div class="count-num" id="cd-d">0</div><div class="count-lbl">Days</div></div>
+        <div class="count-cell"><div class="count-num" id="cd-h">0</div><div class="count-lbl">Hours</div></div>
+        <div class="count-cell"><div class="count-num" id="cd-m">0</div><div class="count-lbl">Minutes</div></div>
+      </div>
+      <p id="cd-text">Books published in 1931 become free to use in the US on January 1, 2027. Plan now, publish on day one.</p>
+      <button class="btn small hidden" id="moveAll">Move all to Publish now</button>
+    </section>
+    <div class="section-title"><h2 id="listTitle">Publish now</h2><button class="btn small ghost" id="addBtn">Add title</button></div>
+    <div class="chips" id="filters"></div>
+    <div id="list"></div>
+    <p class="foot">Dates and flags are research notes, not legal advice. Check the copyright page of the exact edition you use.</p>
+  </div>
+</main>
+
+<main id="v-search" class="view hidden">
+  <div class="wrap">
+    <header class="top"><div class="eyebrow">Free catalog</div><h2 style="font-size:26px;margin-top:4px">Find a source text</h2></header>
+    <p class="muted small" style="margin-top:6px">Searches the public Gutendex index of Project Gutenberg books that are free of US copyright. Needs internet.</p>
+    <form id="sform" class="searchbar" autocomplete="off">
+      <input type="search" id="sq" placeholder="Title or author, e.g. Austen" aria-label="Search">
+      <button class="btn" type="submit">Search</button>
+    </form>
+    <div class="note" style="margin-top:14px"><strong>Before you sell:</strong> "Project Gutenberg" is a trademark, and their files carry a license at the top and bottom. Delete both, and every mention of the name, from any text you publish. This app is not connected to or endorsed by Project Gutenberg.</div>
+    <div id="sstatus" class="small muted" style="margin-bottom:10px"></div>
+    <div id="sresults"></div>
+    <div id="smore" class="hidden" style="text-align:center;margin:8px 0 20px"><button class="btn ghost" id="smoreBtn">Load more</button></div>
+  </div>
+</main>
+
+<main id="v-calc" class="view hidden">
+  <div class="wrap">
+    <header class="top"><div class="eyebrow">Amazon KDP, US marketplace</div><h2 style="font-size:26px;margin-top:4px">Paperback royalty</h2></header>
+    <p class="muted small" style="margin-top:6px">Black and white interior, sold on Amazon.com. Approximate. Confirm in KDP before you publish.</p>
+    <div class="card" style="margin-top:14px">
+      <div class="row2">
+        <label class="f"><span>Pages</span><input type="number" id="c-pages" inputmode="numeric" min="24" max="828" value="240"></label>
+        <label class="f"><span>List price (USD)</span><input type="number" id="c-price" inputmode="decimal" step="0.01" min="0" value="14.99"></label>
+      </div>
+      <label class="f" style="margin-bottom:0"><span>Trim size</span>
+        <select id="c-trim">
+          <option value="5x8">5 x 8 in (regular)</option>
+          <option value="5.25x8">5.25 x 8 in (regular)</option>
+          <option value="5.5x8.5" selected>5.5 x 8.5 in (regular)</option>
+          <option value="6x9">6 x 9 in (regular)</option>
+          <option value="7x10">7 x 10 in (large)</option>
+          <option value="8x10">8 x 10 in (large)</option>
+          <option value="8.5x11">8.5 x 11 in (large)</option>
+        </select>
+        <em>Wider than 6.12 in or taller than 9 in counts as large trim and costs more to print.</em>
+      </label>
+    </div>
+    <div class="result">
+      <div><div class="eyebrow">Print cost</div><div class="big" id="r-print">$0.00</div></div>
+      <div><div class="eyebrow">You earn per sale</div><div class="big pos" id="r-roy">$0.00</div></div>
+    </div>
+    <div class="card">
+      <table class="mini">
+        <tr><td>Royalty rate</td><td id="r-rate">60%</td></tr>
+        <tr><td>Rate x list price</td><td id="r-gross">$0.00</td></tr>
+        <tr><td>Minus print cost</td><td id="r-minus">$0.00</td></tr>
+        <tr><td>Lowest price that breaks even</td><td id="r-min">$0.00</td></tr>
+        <tr><td>Price to earn $3 a copy</td><td id="r-t3">$0.00</td></tr>
+      </table>
+      <p class="small muted" id="r-formula" style="margin:12px 0 0"></p>
+    </div>
+    <div class="note plain">How it is worked out: 60% royalty when the list price is $9.99 or more, 50% below that, minus print cost. Regular trim prints for $2.30 up to 108 pages, otherwise $1.00 plus $0.012 a page. Large trim is $2.84 up to 108 pages, otherwise $1.00 plus $0.017 a page. Tax, other countries, expanded distribution and color are not included.</div>
+    <div class="card">
+      <div class="eyebrow" style="margin-bottom:8px">Save these numbers to a title</div>
+      <div class="row2">
+        <select id="c-title" aria-label="Title"></select>
+        <button class="btn ghost" id="c-save" style="-webkit-box-flex:0;-webkit-flex:none;flex:none">Save</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="v-data" class="view hidden">
+  <div class="wrap">
+    <header class="top"><div class="eyebrow">Your data</div><h2 style="font-size:26px;margin-top:4px">Backup and basics</h2></header>
+    <div class="card" style="margin-top:14px">
+      <p class="mt0 small">Everything is saved on this phone, in this browser only. Download a backup now and then, and before clearing your browser.</p>
+      <div class="btns"><button class="btn" id="bk-dl">Download backup</button><button class="btn ghost" id="bk-up">Restore from file</button></div>
+      <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
+      <p class="small muted" id="bk-info" style="margin-bottom:0"></p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:18px">Rules of thumb</h3>
+      <p class="small">In the US in 2026, books published in 1930 or earlier are free to use. On January 1, 2027, books from 1931 join them. That covers the original text and art as first published.</p>
+      <p class="small">Still protected: later revised editions, newer translations, forewords and notes added later, film versions, and trademarks such as series names and character brands.</p>
+      <p class="small">Amazon turns down public-domain books that look like the free copies. A real annotated or illustrated edition, with your added work clearly described, is what gets approved.</p>
+      <p class="small muted" style="margin-bottom:0">This app is a planning tool, not legal advice.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:18px">Start over</h3>
+      <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
+      <button class="btn ghost small" id="reset">Reset to starter list</button>
+    </div>
+    <p class="foot">Public Domain Press, version 2.3. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+  </div>
+</main>
+
+<div id="sheet" class="sheet hidden" role="dialog" aria-modal="true">
+  <div class="sheet-bar"><div class="wrap">
+    <button class="back" id="sheetBack"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1d1b18" stroke-width="1.8"><path d="M11 3L5 9l6 6"/></svg><span id="backLbl">Titles</span></button>
+    <span class="saved" id="savedNote">Saved</span>
+  </div></div>
+  <div class="wrap" id="sheetBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<nav class="nav" aria-label="Sections"><div class="wrap">
+  <button data-v="watch" class="on"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="14" height="16" rx="1.5"/><path d="M8 3v8l2.5-1.8L13 11V3"/></svg>Titles</button>
+  <button data-v="search"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9.5" cy="9.5" r="5.5"/><path d="M13.5 13.5L19 19"/></svg>Catalog</button>
+  <button data-v="calc"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="14" height="16" rx="1.5"/><path d="M7 7.5h8M7 11.5h2M11 11.5h4M7 15h2M11 15h4"/></svg>Royalty</button>
+  <button data-v="data"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="11" cy="5.5" rx="6.5" ry="2.5"/><path d="M4.5 5.5v11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-11M4.5 11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5"/></svg>Backup</button>
+</div></nav>
+<script>
+(function () {
+'use strict';
+var KEY = 'pdpress.v2', OLD_KEY = 'pdpress.v1';
+var PD_DAY = new Date(2027, 0, 1, 0, 0, 0);
+var STATUSES = ['Watching', 'Ready to annotate', 'Annotating', 'Ready to publish', 'Published'];
+var GROUPS = { now: 'Publish now', soon: 'Coming 2027' };
+var PRODUCTS = { annotated: 'Annotated edition', illustrated: 'Illustrated edition', both: 'Annotated and illustrated', children: "Children's picture book", coffee: 'Coffee-table edition', study: 'Study guide edition' };
+
+/* Publish now: already public domain in the US as of 2026 (published 1930 or earlier). Notes only, no book text. */
+var NOW_SEED = [
+  { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', year: 1925, product: 'annotated', rev: true,
+    flagNotes: 'Public domain in the US since 2021. Use the 1925 Scribner text. Later scholarly editions (for example the 1991 Cambridge edition) contain protected corrections and notes. The 1974 and 2013 films stay protected.',
+    notes: 'Jazz Age glossary, Long Island map, Prohibition and 1920s money explained. Art Deco design. Very crowded market: the annotation has to be strong.' },
+  { title: 'The Adventures of Sherlock Holmes', author: 'Arthur Conan Doyle', year: 1892, product: 'annotated', tm: true,
+    flagNotes: 'All Holmes stories are free in the US since 2023. The Conan Doyle estate holds trademarks in some uses; do not use estate logos or imply an official edition. Avoid looks taken from recent films or TV (for example BBC Sherlock).',
+    notes: 'Victorian London map, notes on forensics, telegrams and hansom cabs. Could include the original Sidney Paget illustrations from the Strand (1891-92).' },
+  { title: 'Dracula', author: 'Bram Stoker', year: 1897, product: 'both', tm: true,
+    flagNotes: 'Novel is free. The 1931 Universal film look (Bela Lugosi likeness, cape and medallion styling) is tied to Universal trademarks and likeness rights. Design your own Count.',
+    notes: 'Annotated and illustrated: Transylvania and Whitby maps, timeline of the letters and diary entries, Victorian technology notes.' },
+  { title: 'Frankenstein', author: 'Mary Shelley', year: 1818, product: 'annotated', tm: true,
+    flagNotes: 'Both the 1818 and the revised 1831 text are free; say which one you use. The flat-headed green creature with neck bolts is the Universal film design; do not copy it.',
+    notes: 'Compare 1818 vs 1831 changes in notes. Science background: galvanism, Arctic exploration.' },
+  { title: 'The Tale of Peter Rabbit', author: 'Beatrix Potter', year: 1902, product: 'children', tm: true,
+    flagNotes: 'Text and Potter\'s original illustrations are free in the US. Frederick Warne (Penguin) holds strong trademarks on Peter Rabbit names and character images used as branding. Do not use their cover design or logo, and keep "Peter Rabbit" out of any series name.',
+    notes: 'Facsimile-style restoration with a parents\' note about Potter as a naturalist. Possible garden and botanical companion pages.' },
+  { title: 'The Velveteen Rabbit', author: 'Margery Williams', year: 1922, product: 'children',
+    flagNotes: 'Original 1922 text and William Nicholson illustrations are free. Avoid later illustrated editions\' art.',
+    notes: 'Gift edition: restored Nicholson plates, keepsake page, short history of the book.' },
+  { title: 'Millions of Cats', author: 'Wanda Gag', year: 1928, product: 'children',
+    flagNotes: 'Free in the US since 2024. Scan from a genuine 1928 printing to get the original hand-lettered art.',
+    notes: 'Anniversary-style facsimile with a short author note. Pairs with Snippy and Snappy in 2027.' },
+  { title: 'The Little Engine That Could', author: 'Watty Piper (retold)', year: 1930, product: 'children', tm: true, rev: true,
+    flagNotes: 'The 1930 Platt and Munk edition with Lois Lenski\'s illustrations entered the US public domain on January 1, 2026. The 1954 edition with George and Doris Hauman art is still protected, so use only 1930 art. "The Little Engine That Could" is a registered trademark of the current publisher: describe the story plainly and use a distinct title treatment.',
+    notes: 'Highest-risk children\'s title on this list. Consider a new illustrated retelling under a different title instead of a facsimile.' },
+  { title: 'Winnie-the-Pooh', author: 'A. A. Milne', year: 1926, product: 'children', tm: true,
+    flagNotes: 'The 1926 book and E. H. Shepard\'s original drawings are free in the US since 2022. Disney\'s designs (red shirt Pooh, the cartoon style) and its trademarks are not. Tigger first appears in 1928 (The House at Pooh Corner, also free).',
+    notes: 'Use only Shepard\'s line art or your own art. Plain cover typography, no Disney colors.' },
+  { title: 'Alice\'s Adventures in Wonderland', author: 'Lewis Carroll', year: 1865, product: 'both', tm: true,
+    flagNotes: 'Text and John Tenniel\'s illustrations are free. Disney\'s 1951 character designs (blue dress with white pinafore styling, cartoon look) are protected.',
+    notes: 'Annotated: Victorian parodies, logic puzzles, Oxford background. Tenniel plates restored.' },
+  { title: 'The Wonderful Wizard of Oz', author: 'L. Frank Baum', year: 1900, product: 'illustrated', tm: true,
+    flagNotes: 'Book and W. W. Denslow\'s color art are free. The 1939 MGM film is protected, including the ruby slippers (the book has silver shoes) and the film character looks.',
+    notes: 'Full-color restoration of Denslow plates, or a new illustrated edition. Note the differences from the film.' },
+  { title: 'Peter and Wendy (Peter Pan)', author: 'J. M. Barrie', year: 1911, product: 'illustrated', tm: true,
+    flagNotes: 'Free in the US. The UK has a special perpetual royalty for Great Ormond Street Hospital on some uses there, so check before selling in the UK. Disney\'s Peter Pan and Tinker Bell designs are protected.',
+    notes: 'F. D. Bedford\'s 1911 illustrations are free to restore. Gift edition.' },
+  { title: 'The Wind in the Willows', author: 'Kenneth Grahame', year: 1908, product: 'illustrated', rev: true,
+    flagNotes: 'The 1908 text is free. E. H. Shepard\'s famous illustrations are from 1931, so they become free on January 1, 2027. Arthur Rackham\'s 1940 art is still protected. Today you need your own art or the original 1908 frontispiece.',
+    notes: 'Illustrated edition now with new art, or wait for the 1931 Shepard art next year.' },
+  { title: 'Art Forms in Nature (Kunstformen der Natur)', author: 'Ernst Haeckel', year: 1904, product: 'coffee', tr: true,
+    flagNotes: 'The 100 plates (1899-1904) are free. The captions are in German; translate them yourself or use a translation published 1930 or earlier. Faithful photos of flat public-domain art are generally not protected in the US, but follow each scan library\'s terms.',
+    notes: 'Large-trim coffee-table book. Group plates by theme, add short modern science captions.' },
+  { title: 'The Birds of America', author: 'John James Audubon', year: 1838, product: 'coffee', tm: true,
+    flagNotes: 'The 435 plates (1827-1838) are free; good scans are available from public libraries and museums. "Audubon" is used by the National Audubon Society as a trademark: credit Audubon as the artist only and do not imply any link to the Society.',
+    notes: 'Coffee-table selection by region or season. Add modern field notes and conservation status per species.' }
+];
+
+/* Coming 2027: 1931 titles. Research notes only, no book text. */
+var SEED = [
+  { title: 'The Glass Key', author: 'Dashiell Hammett', year: 1931, product: 'annotated',
+    flagNotes: 'Book published by Knopf in 1931; serialized in Black Mask in 1930. The 1935 and 1942 films are separate works and stay protected.',
+    notes: 'Annotate Prohibition-era politics, slang and gambling terms. Short intro on Hammett and hardboiled fiction.' },
+  { title: 'The Good Earth', author: 'Pearl S. Buck', year: 1931, product: 'annotated',
+    flagNotes: 'Published by John Day, 1931. The sequels (Sons, 1932; A House Divided, 1935) are not free yet. The 1937 film is separate.',
+    notes: 'Glossary of Chinese terms and places, timeline of rural China in the early 1900s, map of the region.' },
+  { title: 'The Waves', author: 'Virginia Woolf', year: 1931, product: 'annotated',
+    flagNotes: 'Hogarth Press (UK) and Harcourt (US), 1931. Use a 1931 printing; later scholarly editions add protected introductions and corrections.',
+    notes: 'Reader guide to the six voices, section-by-section notes, short essay on modernism.' },
+  { title: 'The Sittaford Mystery', author: 'Agatha Christie', year: 1931, product: 'annotated', tm: true,
+    flagNotes: 'US first edition was titled The Murder at Hazelmoor (Dodd, Mead, 1931). The Christie name and signature are registered trademarks; use the author name only as a plain credit, never as branding or a series look.',
+    notes: 'Notes on the Dartmoor setting, table-turning seances and 1930s village life.' },
+  { title: 'Five Red Herrings', author: 'Dorothy L. Sayers', year: 1931, product: 'annotated', tm: true,
+    flagNotes: 'US title Suspicious Characters (1931). Lord Peter Wimsey: mention the character in text but avoid using the name as a series brand on the cover.',
+    notes: 'Map of Galloway, railway timetable explainer, Scots dialect glossary, painting terms.' },
+  { title: 'Death Walks in Eastrepps', author: 'Francis Beeding', year: 1931, product: 'annotated',
+    flagNotes: 'Pen name of John Palmer and Hilary Saunders. Confirm the US edition you use is dated 1931.',
+    notes: 'Lesser-known Golden Age crime novel; intro on the two authors.' },
+  { title: 'Mourning Becomes Electra', author: "Eugene O'Neill", year: 1931, product: 'annotated',
+    flagNotes: 'Play trilogy, Liveright, 1931. The printed 1931 text becomes free; later acting editions may contain protected changes.',
+    notes: "Notes linking each part to Aeschylus' Oresteia. Civil War-era New England background." },
+  { title: 'Green Grow the Lilacs', author: 'Lynn Riggs', year: 1931, product: 'annotated', tm: true,
+    flagNotes: 'Play, Samuel French, 1931. It inspired the musical Oklahoma! (1943), whose title, songs and lyrics stay protected. Do not put Oklahoma! on the title or cover.',
+    notes: 'Notes on Indian Territory history and the older folk songs Riggs used.' },
+  { title: 'The Road Back', author: 'Erich Maria Remarque', year: 1931, product: 'annotated', tr: true,
+    flagNotes: 'German original Der Weg zurueck, 1930-31. Use only the 1931 English translation by A. W. Wheen. Any newer translation is protected.',
+    notes: 'Companion notes to All Quiet on the Western Front; postwar Germany timeline.' },
+  { title: 'Snippy and Snappy', author: 'Wanda Gag', year: 1931, product: 'children',
+    flagNotes: 'Picture book, Coward-McCann, 1931. The original art becomes free with the text. Scan from a genuine 1931 printing; later reprints may have reworked art.',
+    notes: 'Restored facsimile with a short note for parents about the author-artist.' },
+  { title: 'The Loving Spirit', author: 'Daphne du Maurier', year: 1931, product: 'annotated',
+    flagNotes: 'Her first novel, Heinemann (UK) and Doubleday (US), 1931. Later novels such as Rebecca (1938) stay protected.',
+    notes: 'Map of the Cornish setting, four-generation family tree, sailing glossary.' },
+  { title: 'The Chinaberry Tree', author: 'Jessie Redmon Fauset', year: 1931, product: 'annotated',
+    flagNotes: 'Frederick A. Stokes, 1931. Some reprints add a later foreword (protected); use the original front matter only.',
+    notes: 'Harlem Renaissance context, author biography, book club questions.' },
+  { title: 'Sanctuary', author: 'William Faulkner', year: 1931, product: 'annotated', rev: true,
+    flagNotes: 'Use the 1931 published text. The 1981 "original text" edition is a separate, protected edition.',
+    notes: 'Content note for mature themes. Map of Yoknapatawpha, character list.' },
+  { title: 'Shadows on the Rock', author: 'Willa Cather', year: 1931, product: 'illustrated',
+    flagNotes: 'Knopf, 1931. Only reuse illustrations that were published in 1931 or earlier.',
+    notes: 'Illustrated edition with new drawings of 17th-century Quebec; French terms glossary.' },
+  { title: 'The Secret of Shadow Ranch', author: 'Carolyn Keene', year: 1931, product: 'annotated', tm: true, rev: true,
+    flagNotes: 'Only the original 1931 text becomes free. The 1965 rewrite is protected. "Nancy Drew" is a registered trademark; keep it out of your title, series name and cover.',
+    notes: 'Higher-risk title. Keep only if you can get a genuine 1931 printing.' }
+];
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function uid() { return 't' + Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36); }
+function money(n) { if (!isFinite(n)) n = 0; var neg = n < 0; n = Math.abs(n); return (neg ? '-$' : '$') + n.toFixed(2); }
+function commas(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function num(v, d) { var n = parseFloat(v); return isFinite(n) ? n : d; }
+function each(a, f) { for (var i = 0; i < a.length; i++) f(a[i], i); }
+function keys(o) { var r = []; for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) r.push(k); return r; }
+function trim(s) { return String(s || '').replace(/^\s+|\s+$/g, ''); }
+var toastT;
+function toast(msg) { var t = $('toast'); t.textContent = msg; t.className = 'toast show'; clearTimeout(toastT); toastT = setTimeout(function () { t.className = 'toast'; }, 2200); }
+
+/* Storage, with in-memory fallback if the browser blocks it */
+var memStore = null, storageOk = true, migrated = false;
+function load() {
+  var raw = null;
+  try { raw = window.localStorage.getItem(KEY); } catch (e) { storageOk = false; raw = memStore; }
+  if (raw) { try { var d = JSON.parse(raw); if (d && d.titles) return d; } catch (e2) {} }
+  var old = null;
+  try { old = window.localStorage.getItem(OLD_KEY); } catch (e3) {}
+  if (old) { try { var o = JSON.parse(old); if (o && o.titles) { migrated = true; return migrateV1(o); } } catch (e4) {} }
+  return fresh();
+}
+function save() {
+  state.updated = new Date().toISOString();
+  var raw = JSON.stringify(state);
+  try { window.localStorage.setItem(KEY, raw); } catch (e) { storageOk = false; memStore = raw; }
+  var s = $('savedNote'); if (s) s.textContent = storageOk ? 'Saved on this phone' : 'Not saved: storage blocked';
+}
+function blankTitle(o) {
+  o = o || {};
+  return {
+    id: uid(), title: o.title || '', author: o.author || '', year: o.year || '', product: o.product || 'annotated',
+    group: o.group || 'now',
+    status: o.status || (o.group === 'soon' ? 'Watching' : 'Ready to annotate'),
+    flags: { trademark: !!o.tm, translation: !!o.tr, revised: !!o.rev },
+    flagNotes: o.flagNotes || '', notes: o.notes || '',
+    editionTitle: '', subtitle: '', description: '',
+    plan: { intro: '', glossary: '', footnotes: '', illustrations: '', backmatter: '' },
+    illusCount: 0, ai: 'none', aiAnswered: false, aiNote: '',
+    source: o.source || '', sourceUrl: o.sourceUrl || '', gutenbergId: o.gutenbergId || '',
+    stripped: false, flagsReviewed: false,
+    pages: 240, price: 14.99, trim: '5.5x8.5',
+    created: new Date().toISOString()
+  };
+}
+function seedTitles(skip) {
+  var t = [];
+  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; t.push(blankTitle(s)); } });
+  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; t.push(blankTitle(s)); } });
+  return t;
+}
+function fresh() { return { v: 2, titles: seedTitles(), group: 'now', filter: 'All' }; }
+/* Version 1 data: every title was on one watchlist, statuses Watching/Annotating/Ready/Published. */
+function migrateV1(d) {
+  var have = {};
+  each(d.titles || [], function (t) {
+    have[String(t.title || '').toLowerCase()] = 1;
+    if (!t.group) {
+      var y = parseInt(t.year, 10);
+      t.group = (t.gutenbergId || (y && y <= 1930)) ? 'now' : 'soon';
+    }
+    if (t.status === 'Ready') t.status = 'Ready to publish';
+  });
+  var add = [];
+  each(NOW_SEED, function (s) { if (!have[s.title.toLowerCase()]) { s.group = 'now'; add.push(blankTitle(s)); } });
+  d.titles = add.concat(d.titles || []);
+  d.v = 2; d.group = 'now'; d.filter = 'All'; d.migratedFrom = 1;
+  return d;
+}
+function normalize(d) {
+  if (!d.v || d.v < 2) d = migrateV1(d);
+  var base = blankTitle();
+  each(d.titles, function (t) {
+    each(keys(base), function (k) { if (t[k] === undefined) t[k] = base[k]; });
+    if (!t.id) t.id = uid();
+    if (!t.flags) t.flags = { trademark: false, translation: false, revised: false };
+    if (!t.plan) t.plan = {};
+    each(keys(base.plan), function (k) { if (t.plan[k] === undefined) t.plan[k] = ''; });
+    if (t.status === 'Ready') t.status = 'Ready to publish';
+    if (!GROUPS[t.group]) t.group = 'now';
+    if (STATUSES.indexOf(t.status) < 0) t.status = t.group === 'soon' ? 'Watching' : 'Ready to annotate';
+  });
+  if (!d.filter) d.filter = 'All';
+  if (!GROUPS[d.group]) d.group = 'now';
+  d.v = 2;
+  return d;
+}
+var state;
+
+function tick() {
+  var ms = PD_DAY.getTime() - new Date().getTime();
+  if (ms <= 0) {
+    $('cd-d').textContent = '0'; $('cd-h').textContent = '0'; $('cd-m').textContent = '0';
+    $('cd-text').textContent = 'Books published in 1931 are now free to use in the US. Move them to Publish now. Next: 1932 books on January 1, 2028.';
+    $('cd-mini').textContent = 'Now';
+    $('moveAll').className = 'btn small';
+    return;
+  }
+  var dd = Math.floor(ms / 86400000);
+  $('cd-mini').textContent = dd < 1 ? 'Under a day' : dd + (dd === 1 ? ' day' : ' days');
+  $('cd-d').textContent = Math.floor(ms / 86400000);
+  $('cd-h').textContent = Math.floor(ms % 86400000 / 3600000);
+  $('cd-m').textContent = Math.floor(ms % 3600000 / 60000);
+}
+
+function go(v) {
+  each(['watch', 'search', 'calc', 'data'], function (x) { $('v-' + x).className = 'view' + (x === v ? '' : ' hidden'); });
+  each(document.querySelectorAll('.nav button'), function (b) { b.className = b.getAttribute('data-v') === v ? 'on' : ''; });
+  if (v === 'calc') fillTitleSelect();
+  if (v === 'data') backupInfo();
+  if (v === 'watch') renderList();
+  window.scrollTo(0, 0);
+}
+
+function hasFlags(t) { return t.flags.trademark || t.flags.translation || t.flags.revised; }
+function flagTags(t) {
+  var h = '';
+  if (t.flags.trademark) h += '<span class="tag warn">Trademark caution</span>';
+  if (t.flags.translation) h += '<span class="tag warn">Translation year</span>';
+  if (t.flags.revised) h += '<span class="tag warn">Revised edition</span>';
+  return h;
+}
+function detailTags(t) {
+  return '<span class="status st-' + STATUSES.indexOf(t.status) + '">' + esc(t.status) + '</span>' +
+    '<span class="tag accent">' + esc(PRODUCTS[t.product] || t.product) + '</span>' + flagTags(t);
+}
+
+/* KDP differentiation checklist */
+function isIllustrated(t) { return t.product === 'illustrated' || t.product === 'both' || t.product === 'children' || t.product === 'coffee'; }
+function checklist(t) {
+  var et = (t.editionTitle || '') + ' ' + (t.subtitle || '');
+  var desc = trim(t.description);
+  var aiD = t.ai === 'generated' ? 'Marked: includes AI-generated text or images. KDP requires you to disclose this.'
+    : (t.ai === 'assisted' ? 'Marked: AI-assisted only (editing, ideas). KDP does not ask you to disclose assisted use.' : 'Marked: no AI used.');
+  return [
+    { label: 'Title or subtitle says (Annotated) or (Illustrated)', ok: /\((annotated|illustrated)\)/i.test(et),
+      d: 'Amazon wants the difference visible in the title. Set it on the Edition tab.' },
+    { label: 'Description opens with a bullet about your added content', ok: /^[-*\u2022]/.test(desc) && desc.length > 20,
+      d: 'For example: "- New 6,000-word introduction and 300 explanatory notes".' },
+    { label: 'At least 10 original illustrations', na: !isIllustrated(t), ok: num(t.illusCount, 0) >= 10,
+      d: isIllustrated(t) ? 'You have ' + num(t.illusCount, 0) + ' so far.' : 'Only needed for illustrated editions.' },
+    { label: 'AI question answered', ok: !!t.aiAnswered, d: t.aiAnswered ? aiD : 'Choose an answer below.' },
+    { label: 'Source license removed', ok: !!t.stripped,
+      d: 'Project Gutenberg header, footer and every mention of the name deleted, or text taken from your own scan. Tick it on the Legal tab.' },
+    { label: 'Legal cautions reviewed', ok: !hasFlags(t) || !!t.flagsReviewed,
+      d: hasFlags(t) ? 'This title has cautions. Read them on the Legal tab and tick when you are comfortable.' : 'No cautions flagged.' }
+  ];
+}
+function score(t) { var done = 0, total = 0; each(checklist(t), function (x) { if (x.na) return; total++; if (x.ok) done++; }); return { done: done, total: total }; }
+
+function renderFilters() {
+  var h = '';
+  each(['All'].concat(STATUSES), function (o) {
+    var n = 0; each(state.titles, function (t) { if (t.group === state.group && (o === 'All' || t.status === o)) n++; });
+    if (o !== 'All' && o !== state.filter && !n) return;
+    h += '<button class="chip' + (state.filter === o ? ' on' : '') + '" data-f="' + o + '">' + o + '<span class="n">' + n + '</span></button>';
+  });
+  $('filters').innerHTML = h;
+  var c = { now: 0, soon: 0 }; each(state.titles, function (t) { c[t.group]++; });
+  $('n-now').textContent = c.now; $('n-soon').textContent = c.soon;
+  each(document.querySelectorAll('#seg button'), function (b) { b.className = b.getAttribute('data-g') === state.group ? 'on' : ''; });
+  $('nowCard').className = 'now' + (state.group === 'now' ? '' : ' hidden');
+  $('soonCard').className = 'count' + (state.group === 'soon' ? '' : ' hidden');
+  $('listTitle').textContent = state.group === 'now' ? 'Publish now' : 'Coming 2027';
+}
+function renderList() {
+  renderFilters();
+  var h = '', shown = 0;
+  each(state.titles, function (t) {
+    if (t.group !== state.group) return;
+    if (state.filter !== 'All' && t.status !== state.filter) return;
+    shown++;
+    var sc = score(t), note = trim(t.notes);
+    h += '<button class="item" data-id="' + t.id + '">' +
+      '<div class="item-head"><div><div class="item-title">' + esc(t.title || 'Untitled') + '</div>' +
+      '<div class="item-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div></div>' +
+      '<span class="status st-' + STATUSES.indexOf(t.status) + '">' + t.status + '</span></div>' +
+      '<div class="tags"><span class="tag accent">' + esc(PRODUCTS[t.product] || t.product) + '</span>' + flagTags(t) + '</div>' +
+      '<div class="item-meta">Checklist ' + sc.done + ' of ' + sc.total + (note ? ' &middot; ' + esc(note.slice(0, 78)) + (note.length > 78 ? '...' : '') : '') + '</div>' +
+      '</button>';
+  });
+  if (!shown) h = '<div class="empty">' + (state.filter === 'All' ? 'No titles here yet. Tap Add title, or add one from the Catalog.' : 'No titles with this status yet.') + '</div>';
+  $('list').innerHTML = h;
+}
+function find(id) { for (var i = 0; i < state.titles.length; i++) if (state.titles[i].id === id) return state.titles[i]; return null; }
+/* Detail sheet */
+var openId = null, dtab = 'plan';
+function openTitle(id, tab) {
+  openId = id; dtab = tab || 'plan';
+  renderSheet();
+  $('sheet').className = 'sheet';
+  $('sheet').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeSheet() { $('sheet').className = 'sheet hidden'; openId = null; document.body.style.overflow = ''; renderList(); }
+function fld(label, key, val, type, hint, attrs) {
+  var input = type === 'textarea'
+    ? '<textarea data-k="' + key + '"' + (attrs || '') + '>' + esc(val) + '</textarea>'
+    : '<input type="' + (type || 'text') + '" data-k="' + key + '" value="' + esc(val) + '"' + (attrs || '') + '>';
+  return '<label class="f"><span>' + label + '</span>' + input + (hint ? '<em>' + hint + '</em>' : '') + '</label>';
+}
+function sel(label, key, val, opts, hint) {
+  var h = '<label class="f"><span>' + label + '</span><select data-k="' + key + '">';
+  each(keys(opts), function (k) { h += '<option value="' + esc(k) + '"' + (String(val) === k ? ' selected' : '') + '>' + esc(opts[k]) + '</option>'; });
+  return h + '</select>' + (hint ? '<em>' + hint + '</em>' : '') + '</label>';
+}
+function cb(key, on, label, d) {
+  return '<label class="check"><input type="checkbox" data-k="' + key + '"' + (on ? ' checked' : '') + '><span class="ct">' + label + (d ? '<span class="cd">' + d + '</span>' : '') + '</span></label>';
+}
+function eyebrow(t) { return '<div class="eyebrow" style="margin:22px 0 10px">' + t + '</div>'; }
+function renderSheet() {
+  var t = find(openId); if (!t) return;
+  var stOpts = {}; each(STATUSES, function (s) { stOpts[s] = s; });
+  var h = '<h1 class="d-title">' + esc(t.title || 'Untitled') + '</h1>' +
+    '<div class="d-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div>' +
+    '<div class="tags" id="d-tags">' + detailTags(t) + '</div><div class="tabs2">';
+  each([['plan', 'Plan'], ['edition', 'Edition'], ['legal', 'Legal'], ['check', 'Checklist'], ['export', 'Export']], function (p) {
+    h += '<button data-tab="' + p[0] + '" class="' + (dtab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
+  });
+  h += '</div>';
+  if (dtab === 'plan') {
+    h += sel('List', 'group', t.group, { now: 'Publish now (public domain today)', soon: 'Coming 2027 (1931 titles)' }) +
+      sel('Status', 'status', t.status, stOpts) + sel('Product idea', 'product', t.product, PRODUCTS) +
+      fld('Notes', 'notes', t.notes, 'textarea', 'Angle, audience, ideas.') +
+      eyebrow('Annotation plan') +
+      fld('Introduction', 'plan.intro', t.plan.intro, 'textarea', 'Who writes it, rough length, main points.') +
+      fld('Glossary', 'plan.glossary', t.plan.glossary, 'textarea', 'One term per line, e.g. "speakeasy: illegal bar".') +
+      fld('Footnotes and annotations', 'plan.footnotes', t.plan.footnotes, 'textarea', 'Chapter by chapter, or themes to explain.') +
+      fld('Illustrations, maps, photos', 'plan.illustrations', t.plan.illustrations, 'textarea', 'Each planned image and where it comes from.') +
+      fld('Back matter', 'plan.backmatter', t.plan.backmatter, 'textarea', 'Timeline, discussion questions, further reading.');
+  } else if (dtab === 'edition') {
+    var ex = (t.title || 'Title') + ' (Annotated)';
+    h += '<div class="row2">' + fld('Original title', 'title', t.title) + '<div style="-webkit-box-flex:0;-webkit-flex:none;flex:none;width:96px">' + fld('Year', 'year', t.year, 'number', '', ' inputmode="numeric"') + '</div></div>' +
+      fld('Author', 'author', t.author) +
+      fld('Your edition title', 'editionTitle', t.editionTitle, 'text', 'Include (Annotated) or (Illustrated).', ' placeholder="' + esc(ex) + '"') +
+      fld('Subtitle', 'subtitle', t.subtitle, 'text', 'Optional, e.g. With an introduction, glossary and 200 notes') +
+      fld('Store description', 'description', t.description, 'textarea', 'Start with a bullet list of what you added, then the story.', ' style="min-height:140px" placeholder="- New introduction by ...&#10;- 250 explanatory notes&#10;- Glossary and map&#10;&#10;About the book..."') +
+      fld('Original illustrations', 'illusCount', t.illusCount, 'number', 'Images you made or commissioned for this edition.', ' inputmode="numeric" min="0"') +
+      eyebrow('Print plan') +
+      '<div class="row2">' + fld('Pages', 'pages', t.pages, 'number', '', ' inputmode="numeric"') + fld('List price', 'price', t.price, 'number', '', ' inputmode="decimal" step="0.01"') + '</div>' +
+      '<p class="small muted mt0" id="d-roy"></p>';
+  } else if (dtab === 'legal') {
+    h += '<div class="card">' +
+      cb('flags.trademark', t.flags.trademark, 'Trademark caution', 'Series names, character brands or author signatures may be trademarks. Use them only as plain credits.') +
+      cb('flags.translation', t.flags.translation, 'Translation year matters', 'Only a translation published in the free year or earlier can be used.') +
+      cb('flags.revised', t.flags.revised, 'Revised edition caution', 'A later rewrite exists and is protected. Use the original printing only.') +
+      '</div>' +
+      fld('Legal and edition notes', 'flagNotes', t.flagNotes, 'textarea', '', ' style="min-height:120px"') +
+      eyebrow('Source text') +
+      fld('Where your text comes from', 'source', t.source, 'text', 'e.g. 1931 Knopf first printing, own scan') +
+      fld('Source link', 'sourceUrl', t.sourceUrl, 'url', '', ' inputmode="url"') +
+      '<div class="card">' +
+      cb('stripped', t.stripped, 'Project Gutenberg license and name removed', 'Header, footer and every mention of "Project Gutenberg" deleted from the text you will publish.') +
+      cb('flagsReviewed', t.flagsReviewed, 'I have reviewed the cautions', 'Tick when you are comfortable with any flags on this title.') +
+      '</div>';
+  } else if (dtab === 'check') {
+    var sc = score(t);
+    h += '<p class="small muted mt0">KDP often blocks public-domain books that look like free copies. These steps show reviewers your edition is different. ' + sc.done + ' of ' + sc.total + ' done.</p><div class="card">';
+    each(checklist(t), function (c) {
+      h += '<div class="check"><span class="dot ' + (c.na ? 'na' : (c.ok ? 'ok' : '')) + '"></span><span class="ct">' + esc(c.label) + '<span class="cd">' + esc(c.d) + '</span></span></div>';
+    });
+    h += '</div>' + eyebrow('AI disclosure') + '<div class="card">' +
+      sel('What best describes this edition?', 'ai', t.ai, { none: 'No AI used', assisted: 'AI-assisted only (editing, brainstorming)', generated: 'Includes AI-generated text or images' }) +
+      cb('aiAnswered', t.aiAnswered, 'This answer is final', 'Ticks automatically when you choose an answer.') +
+      '<div style="margin-top:10px">' + fld('AI note for your records', 'aiNote', t.aiNote, 'text', 'Which parts, which tools.') + '</div></div>';
+  } else if (dtab === 'export') {
+    h += '<p class="small muted mt0">Makes a starting outline of your book interior: front matter placeholders plus your plan and notes. It does not include the book text.</p>' +
+      '<div class="btns"><button class="btn" id="ex-md">Download outline (.md)</button><button class="btn ghost" id="ex-html">Print-ready outline (.html)</button></div>' +
+      '<p class="small muted">The .html file opens in any browser. Choose Print, then Save as PDF, for a clean PDF. Full book typesetting is planned for a later version.</p>' +
+      '<label class="f" style="margin-top:14px"><span>Preview</span><textarea id="ex-pre" class="mono" readonly style="min-height:260px"></textarea><em>You can also select and copy this text.</em></label>' +
+      '<hr class="rule"><button class="btn ghost small" id="del" style="color:#8c3b2a;border-color:#e5cbc0">Remove this title</button>';
+  }
+  $('sheetBody').innerHTML = h;
+  $('savedNote').textContent = storageOk ? 'Saved on this phone' : 'Not saved: storage blocked';
+  if (dtab === 'edition') updDetailRoyalty(t);
+  if (dtab === 'export') $('ex-pre').value = outlineMd(t);
+}
+function setPath(o, path, v) {
+  var p = path.split('.'), x = o;
+  for (var i = 0; i < p.length - 1; i++) { if (!x[p[i]]) x[p[i]] = {}; x = x[p[i]]; }
+  x[p[p.length - 1]] = v;
+}
+function onSheetInput(e) {
+  var el = e.target, k = el.getAttribute && el.getAttribute('data-k');
+  if (!k) return;
+  var t = find(openId); if (!t) return;
+  var v = el.type === 'checkbox' ? el.checked : el.value;
+  if (el.type === 'number') v = v === '' ? '' : num(v, 0);
+  setPath(t, k, v);
+  if (k === 'ai') t.aiAnswered = true;
+  save();
+  if (k === 'title' || k === 'author' || k === 'year') {
+    var tt = document.querySelector('.d-title'); if (tt) tt.textContent = t.title || 'Untitled';
+    var ds = document.querySelector('.d-sub'); if (ds) ds.textContent = t.author + (t.year ? ', ' + t.year : '');
+  }
+  if (k === 'pages' || k === 'price') updDetailRoyalty(t);
+  if (k === 'group') { state.group = t.group; state.filter = 'All'; save(); }
+  if (k.indexOf('flags.') === 0 || k === 'status' || k === 'product') $('d-tags').innerHTML = detailTags(t);
+  if (dtab === 'check' && e.type === 'change') renderSheet();
+}
+
+/* Royalty math: KDP US paperback, black and white ink */
+function isLarge(trimSize) { var p = String(trimSize).split('x'); return num(p[0], 0) > 6.12 || num(p[1], 0) > 9; }
+function printCost(pages, trimSize) {
+  var large = isLarge(trimSize);
+  pages = Math.max(24, Math.round(pages));
+  if (pages <= 108) return large ? 2.84 : 2.30;
+  return 1.00 + pages * (large ? 0.017 : 0.012);
+}
+function priceFor(target) {
+  // lowest list price whose royalty covers `target` dollars (print cost + desired earnings)
+  var at50 = target / 0.5;
+  if (at50 < 9.99) return at50;
+  return Math.max(9.99, target / 0.6);
+}
+function royalty(pages, price, trimSize) {
+  var pc = printCost(pages, trimSize), rate = price >= 9.99 ? 0.6 : 0.5;
+  return { print: pc, rate: rate, gross: price * rate, roy: price * rate - pc, breakeven: priceFor(pc), t3: priceFor(pc + 3), large: isLarge(trimSize) };
+}
+function up(n) { return Math.ceil(n * 100 - 1e-6) / 100; }
+function calc() {
+  var pages = num($('c-pages').value, 0), price = num($('c-price').value, 0), tr = $('c-trim').value;
+  var r = royalty(pages, price, tr);
+  $('r-print').textContent = money(r.print);
+  $('r-roy').textContent = money(r.roy);
+  $('r-roy').className = 'big ' + (r.roy >= 0 ? 'pos' : 'neg');
+  $('r-rate').textContent = Math.round(r.rate * 100) + '%';
+  $('r-gross').textContent = money(r.gross);
+  $('r-minus').textContent = '-' + money(r.print);
+  $('r-min').textContent = money(up(r.breakeven));
+  $('r-t3').textContent = money(up(r.t3));
+  var warn = '';
+  if (pages < 24) warn = 'KDP paperbacks need at least 24 pages. ';
+  if (pages > 828) warn = 'Black and white paperbacks top out at 828 pages. ';
+  var p = Math.max(24, Math.round(pages));
+  $('r-formula').textContent = warn + (p <= 108
+    ? (r.large ? 'Large trim, 108 pages or fewer: flat $2.84.' : 'Regular trim, 108 pages or fewer: flat $2.30.')
+    : '$1.00 + ' + p + ' pages x ' + (r.large ? '$0.017' : '$0.012') + ' = ' + money(r.print) + '.');
+}
+function updDetailRoyalty(t) {
+  var el = $('d-roy'); if (!el) return;
+  var r = royalty(num(t.pages, 0), num(t.price, 0), t.trim || '5.5x8.5');
+  el.innerHTML = 'Approximate: print ' + money(r.print) + ', you earn about <strong>' + money(r.roy) + '</strong> per Amazon.com sale at ' + esc(t.trim || '5.5x8.5') + ' in trim. Change the trim on the Royalty screen.';
+}
+function fillTitleSelect() {
+  var h = '';
+  each(state.titles, function (t) { h += '<option value="' + t.id + '">' + esc(t.title || 'Untitled') + '</option>'; });
+  $('c-title').innerHTML = h;
+}
+/* Catalog search via Gutendex */
+var sNext = null, sBusy = false, sLast = [];
+var GUTENDEX = 'https://gutendex.com/books/';
+function xhrJson(url, ok, fail) {
+  var x = new XMLHttpRequest();
+  x.open('GET', url, true);
+  x.timeout = 75000;
+  x.onload = function () {
+    if (x.status >= 200 && x.status < 300) { var d; try { d = JSON.parse(x.responseText); } catch (e) { fail('The catalog sent back something unreadable.'); return; } ok(d); }
+    else fail('The catalog answered with error ' + x.status + '.');
+  };
+  x.onerror = function () { fail('Could not reach the catalog. Check your connection.'); };
+  x.ontimeout = function () { fail('The catalog is slow right now. Try again in a minute.'); };
+  x.send();
+}
+function search(url, append) {
+  if (sBusy) return; sBusy = true;
+  $('sstatus').innerHTML = '<span class="spinner"></span>Searching. The free catalog can take up to a minute.';
+  $('smore').className = 'hidden';
+  if (!append) { $('sresults').innerHTML = ''; sLast = []; }
+  xhrJson(url, function (d) {
+    sBusy = false;
+    sNext = d.next ? String(d.next).replace(/^http:/, 'https:') : null;
+    sLast = sLast.concat(d.results || []);
+    $('sstatus').textContent = (d.count || 0) + (d.count === 1 ? ' result' : ' results') + ', most downloaded first';
+    renderResults();
+    $('smore').className = sNext ? '' : 'hidden';
+  }, function (msg) {
+    sBusy = false;
+    $('sstatus').innerHTML = esc(msg) + ' <a href="https://www.gutenberg.org/ebooks/search/?query=' + encodeURIComponent($('sq').value) + '" target="_blank" rel="noopener">Search gutenberg.org directly</a>';
+    $('smore').className = sNext && append ? '' : 'hidden';
+  });
+}
+var FMT = [['text/html', 'HTML'], ['application/epub+zip', 'EPUB'], ['application/x-mobipocket-ebook', 'Kindle'], ['text/plain', 'Plain text']];
+function personName(n) { var p = String(n || '').split(', '); return p.length === 2 ? p[1] + ' ' + p[0] : String(n || ''); }
+function authorStr(b) {
+  var a = [];
+  each(b.authors || [], function (x) {
+    a.push(personName(x.name) + (x.birth_year || x.death_year ? ' (' + (x.birth_year || '?') + '-' + (x.death_year || '?') + ')' : ''));
+  });
+  return a.join(', ') || 'Unknown author';
+}
+function renderResults() {
+  var h = '';
+  if (!sLast.length) h = '<div class="empty">Nothing found. Try fewer words, or just the author\'s last name.</div>';
+  each(sLast, function (b) {
+    var f = '', fk = keys(b.formats || {});
+    each(FMT, function (pair) {
+      for (var i = 0; i < fk.length; i++) {
+        if (fk[i].indexOf(pair[0]) === 0 && !/\.zip$/.test(b.formats[fk[i]])) { f += '<a href="' + esc(b.formats[fk[i]]) + '" target="_blank" rel="noopener">' + pair[1] + '</a>'; return; }
+      }
+    });
+    var inList = false; each(state.titles, function (t) { if (String(t.gutenbergId) === String(b.id)) inList = true; });
+    h += '<div class="card">' +
+      '<div class="item-title">' + esc(b.title) + '</div>' +
+      '<div class="item-sub">' + esc(authorStr(b)) + '</div>' +
+      '<div class="item-meta">ID ' + esc(b.id) + ' &middot; ' + commas(b.download_count || 0) + ' downloads in the last 30 days</div>' +
+      (f ? '<div class="formats">' + f + '</div>' : '') +
+      '<div style="margin-top:12px"><button class="btn small' + (inList ? ' ghost" disabled' : '"') + ' data-add="' + esc(b.id) + '">' + (inList ? 'On watchlist' : 'Add to watchlist') + '</button></div>' +
+      '</div>';
+  });
+  $('sresults').innerHTML = h;
+}
+function addFromCatalog(id) {
+  var b = null; each(sLast, function (x) { if (String(x.id) === String(id)) b = x; });
+  if (!b) return;
+  var a = (b.authors && b.authors[0]) || {};
+  var t = blankTitle({
+    title: b.title, author: personName(a.name), year: '', group: 'now',
+    source: 'Project Gutenberg ebook ' + b.id + ' (remove the license and name before publishing)',
+    sourceUrl: 'https://www.gutenberg.org/ebooks/' + b.id, gutenbergId: b.id,
+    notes: b.subjects && b.subjects.length ? 'Subjects: ' + b.subjects.slice(0, 4).join('; ') : ''
+  });
+  state.titles.unshift(t); save(); renderResults(); toast('Added to watchlist');
+}
+
+/* Export: outline in Markdown, and a print-ready HTML version */
+function q(s) { return '"' + String(s == null ? '' : s).replace(/"/g, "'") + '"'; }
+function outlineMd(t) {
+  var et = trim(t.editionTitle) || (t.title + (isIllustrated(t) ? ' (Illustrated)' : ' (Annotated)'));
+  var yr = t.year || '[year]', o = [];
+  o.push('---', 'title: ' + q(et));
+  if (trim(t.subtitle)) o.push('subtitle: ' + q(t.subtitle));
+  o.push('original_title: ' + q(t.title), 'original_author: ' + q(t.author), 'original_year: ' + yr,
+    'editor: "[Your name or imprint]"', 'edition: ' + q(PRODUCTS[t.product] || t.product),
+    'trim: ' + q((t.trim || '5.5x8.5') + ' in'), 'target_pages: ' + (t.pages || ''), 'list_price_usd: ' + (t.price || ''),
+    'ai_content: ' + q({ none: 'none', assisted: 'assisted only', generated: 'AI-generated, disclose in KDP' }[t.ai] || 'not answered'),
+    '---', '');
+  o.push('# ' + et, '', '## Front matter', '');
+  o.push('### Half title', '', et, '');
+  o.push('### Title page', '', et); if (trim(t.subtitle)) o.push(trim(t.subtitle)); o.push('by ' + (t.author || '[Author]'), 'Edited, with an introduction and notes, by [Your name]', '');
+  o.push('### Copyright page', '',
+    'The original text was first published in ' + yr + ' and is in the public domain in the United States.', '',
+    'Introduction, notes, glossary, illustrations and arrangement copyright ' + new Date().getFullYear() + ' [Your name]. All rights reserved.', '',
+    'Source text: ' + (trim(t.source) || '[the printing you used]'), '',
+    'This edition is not affiliated with or endorsed by the author\'s estate or any trademark holder.', '');
+  o.push('### Contents', '', '[Filled in when the interior is typeset]', '');
+  o.push('### Introduction', '', trim(t.plan.intro) || '[Plan your introduction on the Plan tab]', '');
+  o.push('### A note on the text', '', '[Which printing you used, what you corrected, and what you kept as first printed.]', '');
+  o.push('## The text', '', '[Insert the cleaned ' + yr + ' text here, chapter by chapter. No Project Gutenberg header, footer, license or name.]', '');
+  if (trim(t.plan.footnotes)) o.push('### Annotation plan', '', trim(t.plan.footnotes), '');
+  if (trim(t.plan.illustrations) || num(t.illusCount, 0)) o.push('### Illustrations (' + num(t.illusCount, 0) + ' original)', '', trim(t.plan.illustrations) || '[List planned images]', '');
+  o.push('## Back matter', '', '### Glossary', '', trim(t.plan.glossary) || '[Terms]', '');
+  o.push('### Further material', '', trim(t.plan.backmatter) || '[Timeline, discussion questions, further reading]', '');
+  o.push('### About the editor', '', '[Short bio]', '');
+  o.push('---', '', '## Working notes (not for print)', '', 'Status: ' + t.status);
+  var fl = []; if (t.flags.trademark) fl.push('trademark'); if (t.flags.translation) fl.push('translation year'); if (t.flags.revised) fl.push('revised edition');
+  o.push('Legal cautions: ' + (fl.length ? fl.join(', ') : 'none flagged'));
+  if (trim(t.flagNotes)) o.push('', trim(t.flagNotes));
+  if (trim(t.notes)) o.push('', 'Notes: ' + trim(t.notes));
+  if (trim(t.description)) o.push('', 'Store description draft:', '', trim(t.description));
+  o.push('', 'KDP checklist:', '');
+  each(checklist(t), function (c) { o.push('- [' + (c.na ? '-' : (c.ok ? 'x' : ' ')) + '] ' + c.label); });
+  o.push('');
+  return o.join('\n');
+}
+function mdToHtml(md) {
+  var body = md.replace(/^---\n[\s\S]*?\n---\n/, ''), out = [], para = [], list = [];
+  function flush() {
+    if (para.length) { out.push('<p>' + para.join('<br>') + '</p>'); para = []; }
+    if (list.length) { out.push('<ul>' + list.join('') + '</ul>'); list = []; }
+  }
+  each(body.split('\n'), function (l) {
+    var m;
+    if (/^---$/.test(l)) { flush(); out.push('<hr>'); }
+    else if ((m = /^(#{1,3}) (.*)$/.exec(l))) { flush(); var n = m[1].length; out.push('<h' + n + (n === 2 ? ' class="part"' : '') + '>' + esc(m[2]) + '</h' + n + '>'); }
+    else if ((m = /^- \[(.)\] (.*)$/.exec(l))) { list.push('<li>' + (m[1] === 'x' ? 'Done: ' : m[1] === '-' ? 'Not needed: ' : 'To do: ') + esc(m[2]) + '</li>'); }
+    else if (/^\s*$/.test(l)) flush();
+    else para.push(esc(l));
+  });
+  flush();
+  return out.join('\n');
+}
+function outlineHtml(t) {
+  return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(t.editionTitle || t.title) + ' - outline</title><style>' +
+    '@page{size:5.5in 8.5in;margin:0.75in 0.6in}body{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;color:#1d1b18;max-width:34em;margin:2em auto;padding:0 1em;line-height:1.55;font-size:11.5pt}' +
+    'h1{font-size:24pt;font-weight:600;text-align:center;margin:2.5em 0 1.5em}h2.part{font-size:10pt;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin:3em 0 1.5em;page-break-before:always}' +
+    'h3{font-size:14pt;font-weight:600;margin:2em 0 .6em}p{margin:0 0 .9em}hr{border:0;border-top:1px solid #ccc;margin:3em 0}ul{font-family:Arial,sans-serif;font-size:10pt}' +
+    '@media print{body{margin:0;max-width:none}}</style></head><body>' + mdToHtml(outlineMd(t)) + '</body></html>';
+}
+function slug(s) { return String(s || 'title').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'title'; }
+function download(name, text, mime) {
+  try {
+    var blob = new Blob([text], { type: mime + ';charset=utf-8' });
+    if (window.navigator.msSaveBlob) { window.navigator.msSaveBlob(blob, name); return; }
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = name; a.style.display = 'none';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 2000);
+    toast('Downloaded ' + name);
+  } catch (e) { toast('Download not supported here. Copy the preview text instead.'); }
+}
+
+function backupInfo() {
+  $('bk-info').textContent = state.titles.length + ' titles saved' +
+    (state.updated ? '. Last change ' + new Date(state.updated).toLocaleString() : '') +
+    (storageOk ? '.' : '. Warning: this browser is blocking storage, so changes are lost when you close it.');
+}
+
+function closest(el, attr) { while (el && el !== document) { if (el.getAttribute && el.getAttribute(attr) != null) return el; el = el.parentNode; } return null; }
+function bind() {
+  each(document.querySelectorAll('.nav button'), function (b) { b.addEventListener('click', function () { go(b.getAttribute('data-v')); }); });
+  $('filters').addEventListener('click', function (e) { var c = closest(e.target, 'data-f'); if (!c) return; state.filter = c.getAttribute('data-f'); save(); renderList(); });
+  $('list').addEventListener('click', function (e) { var c = closest(e.target, 'data-id'); if (c) openTitle(c.getAttribute('data-id')); });
+  $('addBtn').addEventListener('click', function () { var t = blankTitle({ year: state.group === 'soon' ? 1931 : '', group: state.group }); state.titles.unshift(t); save(); openTitle(t.id, 'edition'); });
+  function pickGroup(e) { var c = closest(e.target, 'data-g'); if (!c) return; state.group = c.getAttribute('data-g'); state.filter = 'All'; save(); renderList(); window.scrollTo(0, 0); }
+  $('seg').addEventListener('click', pickGroup);
+  $('nowCard').addEventListener('click', pickGroup);
+  $('moveAll').addEventListener('click', function () {
+    var n = 0; each(state.titles, function (t) { if (t.group === 'soon') { t.group = 'now'; if (t.status === 'Watching') t.status = 'Ready to annotate'; n++; } });
+    state.group = 'now'; state.filter = 'All'; save(); renderList(); toast(n + ' titles moved to Publish now');
+  });
+  $('sheetBack').addEventListener('click', closeSheet);
+  $('sheetBody').addEventListener('input', onSheetInput);
+  $('sheetBody').addEventListener('change', onSheetInput);
+  $('sheetBody').addEventListener('click', function (e) {
+    var tb = closest(e.target, 'data-tab');
+    if (tb) { dtab = tb.getAttribute('data-tab'); renderSheet(); return; }
+    var t = find(openId); if (!t) return;
+    var id = e.target.id;
+    if (id === 'ex-md') download(slug(t.editionTitle || t.title) + '-outline.md', outlineMd(t), 'text/markdown');
+    else if (id === 'ex-html') download(slug(t.editionTitle || t.title) + '-outline.html', outlineHtml(t), 'text/html');
+    else if (id === 'del') {
+      if (!window.confirm('Remove "' + (t.title || 'Untitled') + '" and its notes?')) return;
+      var a = []; each(state.titles, function (x) { if (x.id !== t.id) a.push(x); });
+      state.titles = a; save(); closeSheet(); toast('Removed');
+    }
+  });
+  $('sform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var qq = trim($('sq').value);
+    if (!qq) { $('sstatus').textContent = 'Type a title or author first.'; return; }
+    $('sq').blur();
+    search(GUTENDEX + '?search=' + encodeURIComponent(qq) + '&copyright=false&languages=en', false);
+  });
+  $('smoreBtn').addEventListener('click', function () { if (sNext) search(sNext, true); });
+  $('sresults').addEventListener('click', function (e) { var b = closest(e.target, 'data-add'); if (b && !b.disabled) addFromCatalog(b.getAttribute('data-add')); });
+  each(['c-pages', 'c-price', 'c-trim'], function (id) { $(id).addEventListener('input', calc); $(id).addEventListener('change', calc); });
+  $('c-title').addEventListener('change', function () {
+    var t = find($('c-title').value); if (!t) return;
+    $('c-pages').value = t.pages; $('c-price').value = t.price; $('c-trim').value = t.trim || '5.5x8.5'; calc();
+  });
+  $('c-save').addEventListener('click', function () {
+    var t = find($('c-title').value); if (!t) return;
+    t.pages = num($('c-pages').value, 0); t.price = num($('c-price').value, 0); t.trim = $('c-trim').value;
+    save(); toast('Saved to ' + (t.title || 'title'));
+  });
+  $('bk-dl').addEventListener('click', function () {
+    var d = new Date(), stamp = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    download('pdpress-backup-' + stamp + '.json', JSON.stringify(state, null, 2), 'application/json');
+  });
+  $('bk-up').addEventListener('click', function () { $('bk-file').click(); });
+  $('bk-file').addEventListener('change', function () {
+    var f = $('bk-file').files && $('bk-file').files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      var d = null;
+      try { d = JSON.parse(r.result); } catch (e) {}
+      $('bk-file').value = '';
+      if (!d || !d.titles || typeof d.titles.length !== 'number') { toast('That file is not a Public Domain Press backup.'); return; }
+      if (!window.confirm('Replace your ' + state.titles.length + ' titles with the ' + d.titles.length + ' in this file?' + (!d.v || d.v < 2 ? ' This is an older backup; the new Publish now titles will be added too.' : ''))) return;
+      state = normalize(d); save(); renderList(); backupInfo(); toast('Restored ' + state.titles.length + ' titles');
+    };
+    r.readAsText(f);
+  });
+  $('reset').addEventListener('click', function () {
+    if (!window.confirm('Reset to the starter lists? Your own titles and notes will be removed. Download a backup first if unsure.')) return;
+    state = fresh(); save(); renderList(); backupInfo(); toast('Starter list restored');
+  });
+  document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.keyCode === 27) && openId) closeSheet(); });
+}
+
+function registerSW() {
+  try {
+    if (!('serviceWorker' in navigator)) return;
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost') return;
+    navigator.serviceWorker.register('./sw.js').then(null, function () {});
+  } catch (e) {}
+}
+
+state = normalize(load());
+if (migrated) save();
+bind();
+renderList();
+tick(); setInterval(tick, 20000);
+calc();
+registerSW();
+window.__pd = { migrated: function () { return migrated; }, state: function () { return state; }, royalty: royalty, outlineMd: function (id) { return outlineMd(find(id)); } };
+window.__pdReady = true;
+})();
+</script>
+<script>
+setTimeout(function () { if (!window.__pdReady) { var f = document.getElementById('fatal'); if (f) f.className = ''; } }, 1500);
+</script>
+</body>
+</html>
