@@ -147,3 +147,152 @@ W = English Wikipedia article; IA = Internet Archive record; HT = HathiTrust rec
 Left out on purpose: The Pocket Book of Boners (a 1941 compilation; the 1931 volumes and Dr. Seuss trademarks need item-by-item checks), Cavalcade (British play, first printing date unclear), Maigret's Pietr-le-Letton and Tintin in the Congo (French originals only, strong trademarks, Tintin's racist content), Bambi (1923 German book with a disputed US copyright history), If It Had Happened Otherwise (British book; the US version was revised), the Disney Mickey Mouse book (Disney trademarks).
 
 Tests: `test_pdpress.py`, `test_editor.py`, `test_storage.py`, `test_audience.py` (in /workspace).
+
+## Ten at a time, more suggestions, and counts for books you are editing (v2.7)
+
+- **Ten suggestions per section.** Every Suggested area (each list, each Readers choice and each Fame choice) shows 10 cards, then a **Load more suggestions** button at the bottom that adds 10 more. A line above the button says how many are showing ("Showing 20 of 48 checked suggestions."). When nothing is left, the button is replaced by a plain line, for example "That's every 1931 title we've checked for kids so far." Paging is remembered per list, readers and fame choice while the app is open.
+- **Bigger checked pool.** 120 more titles, years checked the same way as v2.6 (table below). With the starter titles, Publish now has 48 for Kids, 43 for Teens and 50 for Adults; Coming 2027 has 7 for Kids, 8 for Teens and 27 for Adults (counts include untouched starter titles; checked suggestions alone are 39/42/45 for Publish now and 6/7/14 for Coming 2027). The 1931 lists are short on purpose: only titles whose 1931 first publication could be confirmed are included.
+- **Live Project Gutenberg results (Publish now only).** After the checked titles run out, Load more asks gutendex.com (topic children for Kids, adventure for Teens, fiction for Adults, any for All; English; not copyrighted), skipping anything already on your list, already suggested or hidden. These cards say "From Project Gutenberg, publication year not checked. Confirm it was first published in 1930 or earlier before you publish." and show only the author's life years, never a guessed publication year. Offline or on an error, a plain message appears and the button stays so you can try again. Live results are not used for Coming 2027, and not when Well known or Obscure is selected (Gutenberg does not say how famous a book is).
+- **Counts only count books you are editing.** Every number on the Titles screen (Publish now, Coming 2027, All/Kids/Teens/Adults, All/Well known/Obscure, status chips) and the Editor list count only books on your list. When the count is 0 no number is shown.
+- **What "editing" means.** A title is on your list (`editing: true`) if you added it (Add title, a suggestion's Add to my list, a Catalog search result), or changed anything about it: notes, plan fields, edition fields, legal ticks, status, Book editor text, art, or book settings. Every save checks this, so any edit counts.
+- **Starter titles moved to Suggested.** The 30 titles that came with the app stay saved exactly as before, but untouched ones show as "Starter title" cards at the top of Suggested (All readers shows all of them; 10 at a time). "Add to my list" puts that same record on your list (no copy), "Hide" hides it, "Show hidden" brings it back. Empty list message: "You're not editing any books here yet. Pick one from the suggestions below."
+- **Migration.** Saved v2.6 data has no `editing` flag, so it is worked out once on load: any title that is not one of the 30 starters is editing; a starter is editing if anything differs from how it shipped (notes, plan, status, editor text, art, book settings and so on). Nothing is deleted.
+- Service worker cache: `pdpress-v9`.
+
+### Titles added in v2.7 (checked October 2026)
+
+W = English Wikipedia article for the book (or the page named).
+
+**Publish now**
+
+| Title | Author | Year | Readers | Fame | Source |
+|---|---|---|---|---|---|
+| The Jungle Book | Rudyard Kipling | 1894 | Kids | Well known | W: The Jungle Book (1894) |
+| Black Beauty | Anna Sewell | 1877 | Kids | Well known | W: Black Beauty (1877) |
+| A Child's Garden of Verses | Robert Louis Stevenson | 1885 | Kids | Well known | W: A Child's Garden of Verses (1885) |
+| When We Were Very Young | A. A. Milne | 1924 | Kids | Well known | W: When We Were Very Young (1924) |
+| Now We Are Six | A. A. Milne | 1927 | Kids | Well known | W: Now We Are Six (1927) |
+| Through the Looking-Glass | Lewis Carroll | 1871 | Kids | Well known | W: Through the Looking-Glass (December 1871) |
+| The Marvelous Land of Oz | L. Frank Baum | 1904 | Kids | Obscure | W: The Marvelous Land of Oz (July 1904) |
+| Ozma of Oz | L. Frank Baum | 1907 | Kids | Obscure | W: Ozma of Oz (1907) |
+| The Princess and the Goblin | George MacDonald | 1872 | Kids | Obscure | W: The Princess and the Goblin (1872, Strahan) |
+| At the Back of the North Wind | George MacDonald | 1871 | Kids | Obscure | W: At the Back of the North Wind (book 1871) |
+| The Water-Babies | Charles Kingsley | 1863 | Kids | Obscure | W: The Water-Babies (1863) |
+| Five Children and It | E. Nesbit | 1902 | Kids | Obscure | W: Five Children and It (1902) |
+| The Railway Children | E. Nesbit | 1906 | Kids | Well known | W: The Railway Children (book 1906) |
+| A Little Princess | Frances Hodgson Burnett | 1905 | Kids | Well known | W: A Little Princess (1905 novel) |
+| Pollyanna | Eleanor H. Porter | 1913 | Kids | Well known | W: Pollyanna (1913) |
+| Heidi | Johanna Spyri | 1881 | Kids | Well known | W: Heidi (1880-1881) |
+| The Adventures of Pinocchio | Carlo Collodi | 1883 | Kids | Well known | W: The Adventures of Pinocchio (1883) |
+| The Happy Prince and Other Tales | Oscar Wilde | 1888 | Kids | Well known | W: The Happy Prince and Other Tales (May 1888) |
+| Peter Pan in Kensington Gardens | J. M. Barrie | 1906 | Kids | Obscure | W: Peter Pan in Kensington Gardens (1906) |
+| The Tale of Squirrel Nutkin | Beatrix Potter | 1903 | Kids | Obscure | W: The Tale of Squirrel Nutkin (August 1903) |
+| The Tale of Benjamin Bunny | Beatrix Potter | 1904 | Kids | Well known | W: The Tale of Benjamin Bunny (September 1904) |
+| The Tale of Jemima Puddle-Duck | Beatrix Potter | 1908 | Kids | Well known | W: The Tale of Jemima Puddle-Duck (1908) |
+| The Voyages of Doctor Dolittle | Hugh Lofting | 1922 | Kids | Obscure | W: The Voyages of Doctor Dolittle (1922) |
+| Rootabaga Stories | Carl Sandburg | 1922 | Kids | Obscure | W: Rootabaga Stories (1922) |
+| Little Lord Fauntleroy | Frances Hodgson Burnett | 1886 | Kids | Obscure | W: Little Lord Fauntleroy (Scribner, Oct 7, 1886) |
+| The Story of the Treasure Seekers | E. Nesbit | 1899 | Kids | Obscure | W: The Story of the Treasure Seekers (1899) |
+| The Wonderful Adventures of Nils | Selma Lagerlof | 1906 | Kids | Obscure | W: The Wonderful Adventures of Nils (1906-07) |
+| Shen of the Sea | Arthur Bowie Chrisman | 1925 | Kids | Obscure | W: Shen of the Sea (Dutton 1925) |
+| Tales from Silver Lands | Charles Finger | 1924 | Kids | Obscure | W: Tales from Silver Lands (Doubleday 1924) |
+| The Boxcar Children | Gertrude Chandler Warner | 1924 | Kids | Well known | W: The Boxcar Children (1924 edition) |
+| Milly-Molly-Mandy Stories | Joyce Lankester Brisley | 1928 | Kids | Obscure | W: Milly-Molly-Mandy (first collection 1928) |
+| The Reluctant Dragon | Kenneth Grahame | 1898 | Kids | Obscure | W: The Reluctant Dragon (1898 story) |
+| Little Women | Louisa May Alcott | 1868 | Teens | Well known | W: Little Women (1868-69) |
+| The Adventures of Tom Sawyer | Mark Twain | 1876 | Teens | Well known | W: The Adventures of Tom Sawyer (June 9, 1876) |
+| Adventures of Huckleberry Finn | Mark Twain | 1885 | Teens | Well known | W: Adventures of Huckleberry Finn (US Feb 1885) |
+| Kidnapped | Robert Louis Stevenson | 1886 | Teens | Well known | W: Kidnapped (1886) |
+| The Prince and the Pauper | Mark Twain | 1882 | Teens | Well known | W: The Prince and the Pauper (Canada 1881, US 1882) |
+| Around the World in Eighty Days | Jules Verne | 1872 | Teens | Well known | W: Around the World in Eighty Days (1872) |
+| The Time Machine | H. G. Wells | 1895 | Teens | Well known | W: The Time Machine (1895) |
+| The War of the Worlds | H. G. Wells | 1898 | Teens | Well known | W: The War of the Worlds (1898) |
+| The Hound of the Baskervilles | Arthur Conan Doyle | 1902 | Teens | Well known | W: The Hound of the Baskervilles (25 March 1902) |
+| The Lost World | Arthur Conan Doyle | 1912 | Teens | Obscure | W: The Lost World (Doyle novel, 1912) |
+| King Solomon's Mines | H. Rider Haggard | 1885 | Teens | Obscure | W: King Solomon's Mines (1885) |
+| The Prisoner of Zenda | Anthony Hope | 1894 | Teens | Obscure | W: The Prisoner of Zenda (1894) |
+| The Scarlet Pimpernel | Baroness Orczy | 1905 | Teens | Well known | W: The Scarlet Pimpernel (1905) |
+| Tarzan of the Apes | Edgar Rice Burroughs | 1912 | Teens | Well known | W: Tarzan of the Apes (October 1912) |
+| White Fang | Jack London | 1906 | Teens | Well known | W: White Fang (Macmillan, October 1906) |
+| The Red Badge of Courage | Stephen Crane | 1895 | Teens | Well known | W: The Red Badge of Courage (3 October 1895) |
+| Captains Courageous | Rudyard Kipling | 1897 | Teens | Obscure | W: Captains Courageous (1897) |
+| Kim | Rudyard Kipling | 1901 | Teens | Obscure | W: Kim (1901) |
+| Rebecca of Sunnybrook Farm | Kate Douglas Wiggin | 1903 | Teens | Obscure | W: Rebecca of Sunnybrook Farm (1903) |
+| Daddy-Long-Legs | Jean Webster | 1912 | Teens | Obscure | W: Daddy-Long-Legs (1912) |
+| The Dark Frigate | Charles Boardman Hawes | 1923 | Teens | Obscure | W: The Dark Frigate (1923) |
+| Hans Brinker, or The Silver Skates | Mary Mapes Dodge | 1865 | Teens | Obscure | W: Hans Brinker (1865) |
+| The Story of Mankind | Hendrik Willem van Loon | 1921 | Teens | Obscure | W: The Story of Mankind (1921) |
+| The Merry Adventures of Robin Hood | Howard Pyle | 1883 | Teens | Well known | W: The Merry Adventures of Robin Hood (1883) |
+| Otto of the Silver Hand | Howard Pyle | 1888 | Teens | Obscure | W: Otto of the Silver Hand (Scribner 1888) |
+| Men of Iron | Howard Pyle | 1891 | Teens | Obscure | W: Men of Iron (1891) |
+| Penrod | Booth Tarkington | 1914 | Teens | Obscure | W: Penrod (1914) |
+| Swallows and Amazons | Arthur Ransome | 1930 | Teens | Obscure | W: Swallows and Amazons (Jonathan Cape, 21 July 1930) |
+| The Tower Treasure | Franklin W. Dixon | 1927 | Teens | Well known | W: The Tower Treasure (June 1, 1927) |
+| The Great Airport Mystery | Franklin W. Dixon | 1930 | Teens | Obscure | W: The Great Airport Mystery (May 1, 1930) |
+| The Hidden Staircase | Carolyn Keene | 1930 | Teens | Well known | W: The Hidden Staircase (1930) |
+| Anne of Avonlea | L. M. Montgomery | 1909 | Teens | Obscure | W: Anne of Avonlea (1909) |
+| Seventeen | Booth Tarkington | 1916 | Teens | Obscure | W: Seventeen (Harper, March 1916) |
+| Bob, Son of Battle | Alfred Ollivant | 1898 | Teens | Obscure | W: Owd Bob (1898; US title Bob, Son of Battle) |
+| Pride and Prejudice | Jane Austen | 1813 | Adults | Well known | W: Pride and Prejudice (1813) |
+| Jane Eyre | Charlotte Bronte | 1847 | Adults | Well known | W: Jane Eyre (19 October 1847; US January 1848) |
+| Wuthering Heights | Emily Bronte | 1847 | Adults | Well known | W: Wuthering Heights (1847) |
+| Moby-Dick | Herman Melville | 1851 | Adults | Well known | W: Moby-Dick (1851) |
+| The Picture of Dorian Gray | Oscar Wilde | 1890 | Adults | Well known | W: The Picture of Dorian Gray (1890) |
+| Strange Case of Dr Jekyll and Mr Hyde | Robert Louis Stevenson | 1886 | Adults | Well known | W: Strange Case of Dr Jekyll and Mr Hyde (1886) |
+| The Age of Innocence | Edith Wharton | 1920 | Adults | Well known | W: The Age of Innocence (25 October 1920) |
+| Babbitt | Sinclair Lewis | 1922 | Adults | Obscure | W: Babbitt (1922) |
+| Main Street | Sinclair Lewis | 1920 | Adults | Obscure | W: Main Street (1920) |
+| The House of Mirth | Edith Wharton | 1905 | Adults | Obscure | W: The House of Mirth (October 14, 1905) |
+| Ethan Frome | Edith Wharton | 1911 | Adults | Well known | W: Ethan Frome (1911) |
+| My Antonia | Willa Cather | 1918 | Adults | Well known | W: My Antonia (1918) |
+| O Pioneers! | Willa Cather | 1913 | Adults | Obscure | W: O Pioneers! (1913) |
+| The Awakening | Kate Chopin | 1899 | Adults | Well known | W: The Awakening (22 April 1899) |
+| The Yellow Wallpaper | Charlotte Perkins Gilman | 1892 | Adults | Well known | W: The Yellow Wallpaper (January 1892) |
+| The Turn of the Screw | Henry James | 1898 | Adults | Well known | W: The Turn of the Screw (1898) |
+| The Mysterious Affair at Styles | Agatha Christie | 1920 | Adults | Well known | W: The Mysterious Affair at Styles (October 1920) |
+| The Murder of Roger Ackroyd | Agatha Christie | 1926 | Adults | Well known | W: The Murder of Roger Ackroyd (1926) |
+| The Thirty-Nine Steps | John Buchan | 1915 | Adults | Obscure | W: The Thirty-Nine Steps (1915) |
+| Winesburg, Ohio | Sherwood Anderson | 1919 | Adults | Obscure | W: Winesburg, Ohio (1919) |
+| A Room with a View | E. M. Forster | 1908 | Adults | Well known | W: A Room with a View (1908) |
+| Howards End | E. M. Forster | 1910 | Adults | Obscure | W: Howards End (1910) |
+| A Passage to India | E. M. Forster | 1924 | Adults | Well known | W: A Passage to India (1924) |
+| The Prophet | Kahlil Gibran | 1923 | Adults | Well known | W: The Prophet (Knopf 1923) |
+| The Waste Land | T. S. Eliot | 1922 | Adults | Well known | W: The Waste Land (October 1922) |
+| Passing | Nella Larsen | 1929 | Adults | Well known | W: Passing (1929) |
+| The Sound and the Fury | William Faulkner | 1929 | Adults | Well known | W: The Sound and the Fury (1929) |
+| Look Homeward, Angel | Thomas Wolfe | 1929 | Adults | Obscure | W: Look Homeward, Angel (1929) |
+| All Quiet on the Western Front | Erich Maria Remarque | 1929 | Adults | Well known | W: All Quiet on the Western Front (1929); Standard Ebooks (A. W. Wheen translation) |
+| Red Harvest | Dashiell Hammett | 1929 | Adults | Obscure | W: Red Harvest (1929) |
+| Home to Harlem | Claude McKay | 1928 | Adults | Obscure | W: Claude McKay (Home to Harlem, 1928) |
+| The Book of Tea | Okakura Kakuzo | 1906 | Adults | Obscure | W: The Book of Tea (1906) |
+| Mrs Beeton's Book of Household Management | Isabella Beeton | 1861 | Adults | Obscure | W: Mrs Beeton's Book of Household Management (1861) |
+| Flatland | Edwin A. Abbott | 1884 | Adults | Obscure | W: Flatland (1884) |
+| Is Sex Necessary? | James Thurber and E. B. White | 1929 | Adults | Obscure | W: Is Sex Necessary? (1929) |
+| Charlie Chan Carries On | Earl Derr Biggers | 1930 | Adults | Obscure | W: Charlie Chan Carries On (1930) |
+| The Rubaiyat of Omar Khayyam | Edward FitzGerald (translator) | 1859 | Adults | Well known | W: The Rubaiyat of Omar Khayyam (1859) |
+
+**Coming 2027 (1931)**
+
+| Title | Author | Year | Readers | Fame | Source |
+|---|---|---|---|---|---|
+| Boy of the South Seas | Eunice Tietjens | 1931 | Kids | Obscure | W: Boy of the South Seas (1931) |
+| Pirates in Oz | Ruth Plumly Thompson | 1931 | Kids | Obscure | W: Pirates in Oz (May 1931, Reilly & Lee) |
+| Truce of the Wolf and Other Tales of Old Italy | Mary Gould Davis | 1931 | Kids | Obscure | W: Mary Gould Davis (published 1931) |
+| Swallowdale | Arthur Ransome | 1931 | Teens | Obscure | W: Swallowdale (Jonathan Cape 1931) |
+| Out of the Flame | Eloise Lownsbery | 1931 | Teens | Obscure | W: Out of the Flame (1931) |
+| The Blanket of the Dark | John Buchan | 1931 | Teens | Obscure | W: The Blanket of the Dark (1931) |
+| Black No More | George S. Schuyler | 1931 | Adults | Obscure | W: Black No More (1931) |
+| God Sends Sunday | Arna Bontemps | 1931 | Adults | Obscure | W: 1931 in literature |
+| The Dream Life of Balso Snell | Nathanael West | 1931 | Adults | Obscure | W: The Dream Life of Balso Snell (1931) |
+| Axel's Castle | Edmund Wilson | 1931 | Adults | Obscure | W: Axel's Castle (1931) |
+| The Dutch Shoe Mystery | Ellery Queen | 1931 | Adults | Obscure | W: The Dutch Shoe Mystery (1931) |
+| Babylon Revisited | F. Scott Fitzgerald | 1931 | Adults | Well known | W: Babylon Revisited (21 February 1931) |
+| The Whisperer in Darkness | H. P. Lovecraft | 1931 | Adults | Obscure | W: The Whisperer in Darkness (August 1931) |
+| Joy of Cooking (1931 edition) | Irma S. Rombauer | 1931 | Adults | Well known | W: Joy of Cooking (privately published 1931) |
+| Living My Life (volume 1) | Emma Goldman | 1931 | Adults | Obscure | W: Living My Life (1931 and 1934) |
+| The Cape Cod Mystery | Phoebe Atwood Taylor | 1931 | Adults | Obscure | W: The Cape Cod Mystery (Bobbs-Merrill 1931) |
+| These 13 | William Faulkner | 1931 | Adults | Obscure | W: These 13 (1931) |
+
+Left out on purpose in v2.7: Jane's Island (sources disagree, 1930 or 1931), Tarzan the Invincible and A Fighting Man of Mars (magazine 1930, book 1931, plus a strongly enforced trademark), Back Street (copyright records for both 1930 and 1931), The Book of Dragons (1900 or 1901), The Jungle (serial 1905 vs. book 1906), The House on the Cliff (year not confirmed), Castle Skull (only indirect sources), and Old Mother West Wind, Johnny Crow's Garden, The Real Mother Goose and Pelle's New Suit (could not confirm the first US publication year).
+
+Tests: `test_pdpress.py`, `test_editor.py`, `test_storage.py`, `test_audience.py`, `test_suggest.py` (in /workspace). `test_suggest.py` mocks gutendex.com.

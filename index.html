@@ -478,6 +478,16 @@ label.f > span { font-size: 15px; color: #2b2620; }
 .pd-wait.free { background: rgba(240,233,214,0.96); color: #1d1813; box-shadow: none; }
 .pd-wait.free .pw-h { color: #3f5a2c; }
 .pd-wait.free p { color: #2b2620; }
+/* v2.7 paging and counts */
+.n:empty { display: none; }
+.deco-2 .seg .n, .deco-2 .chip .n { font-family: "Josefin Sans", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-weight: 600; letter-spacing: 0; }
+.sug-more { margin: 4px 0 8px; }
+.sug-more .btn { display: block; width: 100%; }
+.sug-wrap .sug-more .btn.ghost { color: #f0dcae; border-color: rgba(212,176,106,0.85); background: rgba(20,15,10,0.62); box-shadow: inset 0 0 0 2px transparent, inset 0 0 0 3px rgba(212,176,106,0.35); }
+.sug-wrap .sub-note.end { font-style: italic; }
+.sug-wrap .sub-note.err { border-color: #c9a45c; color: #ffe2b8; }
+.tag.start { background: #efe4c8; color: #4a3714; border-color: #b08d4a; }
+.sug.gx { border-left-color: #8a7a5a; }
 </style>
 </head>
 <body>
@@ -628,7 +638,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.6. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.7. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -692,7 +702,8 @@ var SEED_TAGS = {
 /* Suggested titles. Every year below was checked in October 2026. Sources:
    W = English Wikipedia article for the book (or its author, where named); D = Wikipedia "2027 in public domain"
    (which follows Duke CSPD); IA = Internet Archive scan record; HT = HathiTrust catalog record.
-   now: first published 1930 or earlier. soon: first published 1931, free in the US on January 1, 2027. */
+   now: first published 1930 or earlier. soon: first published 1931, free in the US on January 1, 2027.
+   Version 2.7 added 120 more, checked the same way in October 2026. */
 var SUGGEST = [
   { id: 's-justso', g: 'now', a: 'kids', f: 'wellknown', title: 'Just So Stories', author: 'Rudyard Kipling', year: 1902, product: 'illustrated',
     idea: 'Illustrated read-aloud edition: keep Kipling\'s own 1902 drawings and add new color plates.',
@@ -795,7 +806,367 @@ var SUGGEST = [
     caution: 'Free on January 1, 2027. Use a 1931 printing; later printings may add material.', src: 'W: James Truslow Adams (The Epic of America, 1931)' },
   { id: 's-shadow', g: 'soon', a: 'adults', f: 'obscure', title: 'The Living Shadow', author: 'Walter B. Gibson (Maxwell Grant)', year: 1931, product: 'annotated', tm: true,
     idea: 'Annotated pulp edition: 1930s New York crime and the radio show behind it.',
-    caution: 'First appeared in The Shadow Magazine, April 1, 1931. The Shadow name and look are trademarks: get advice before using them on a cover.', src: 'W: The Living Shadow (April 1, 1931); W: 2027 in public domain' }
+    caution: 'First appeared in The Shadow Magazine, April 1, 1931. The Shadow name and look are trademarks: get advice before using them on a cover.', src: 'W: The Living Shadow (April 1, 1931); W: 2027 in public domain' },
+  { id: 's-jungle', g: 'now', a: 'kids', f: 'wellknown', title: "The Jungle Book", author: "Rudyard Kipling", year: 1894, product: 'illustrated',
+    idea: "Illustrated edition of the Mowgli stories with all-new art.",
+    caution: "Free in the US. Disney film looks and songs are protected; draw your own versions.", src: "W: The Jungle Book (1894)" },
+  { id: 's-blackbeauty', g: 'now', a: 'kids', f: 'wellknown', title: "Black Beauty", author: "Anna Sewell", year: 1877, product: 'illustrated',
+    idea: "Illustrated edition with a horse-care glossary and notes on Victorian London cabs.",
+    caution: "Free in the US. Crowded market, so the art has to stand out.", src: "W: Black Beauty (1877)" },
+  { id: 's-childgarden', g: 'now', a: 'kids', f: 'wellknown', title: "A Child's Garden of Verses", author: "Robert Louis Stevenson", year: 1885, product: 'children',
+    idea: "Illustrated poem book, one poem per spread.",
+    caution: "Free in the US. Old illustrated editions are free too; art by later illustrators is protected.", src: "W: A Child's Garden of Verses (1885)" },
+  { id: 's-veryyoung', g: 'now', a: 'kids', f: 'wellknown', title: "When We Were Very Young", author: "A. A. Milne", year: 1924, product: 'children', tm: true,
+    idea: "Poem collection with E. H. Shepard's 1924 drawings restored.",
+    caution: "Free in the US. Still protected in the UK until 2027. Disney owns Pooh trademarks: no Disney look.", src: "W: When We Were Very Young (1924)" },
+  { id: 's-nowsix', g: 'now', a: 'kids', f: 'wellknown', title: "Now We Are Six", author: "A. A. Milne", year: 1927, product: 'children', tm: true,
+    idea: "Poem collection with Shepard's 1927 drawings.",
+    caution: "Free in the US since 2023. Pooh appears: use Shepard's drawings only, never Disney designs.", src: "W: Now We Are Six (1927)" },
+  { id: 's-lookingglass', g: 'now', a: 'kids', f: 'wellknown', title: "Through the Looking-Glass", author: "Lewis Carroll", year: 1871, product: 'both',
+    idea: "Annotated and illustrated: the chess game explained, with Tenniel's plates or new art.",
+    caution: "Free in the US. Avoid Disney looks.", src: "W: Through the Looking-Glass (December 1871)" },
+  { id: 's-landofoz', g: 'now', a: 'kids', f: 'obscure', title: "The Marvelous Land of Oz", author: "L. Frank Baum", year: 1904, product: 'illustrated',
+    idea: "Illustrated edition with John R. Neill's 1904 art restored.",
+    caution: "Free in the US. Looks from the 1939 MGM film (ruby slippers and so on) are protected.", src: "W: The Marvelous Land of Oz (July 1904)" },
+  { id: 's-ozmaofoz', g: 'now', a: 'kids', f: 'obscure', title: "Ozma of Oz", author: "L. Frank Baum", year: 1907, product: 'illustrated',
+    idea: "Illustrated edition with Neill's 1907 color plates.",
+    caution: "Free in the US. Avoid MGM film looks.", src: "W: Ozma of Oz (1907)" },
+  { id: 's-princessgoblin', g: 'now', a: 'kids', f: 'obscure', title: "The Princess and the Goblin", author: "George MacDonald", year: 1872, product: 'illustrated',
+    idea: "Illustrated read-aloud with Arthur Hughes's 1872 drawings or new art.",
+    caution: "Free in the US.", src: "W: The Princess and the Goblin (1872, Strahan)" },
+  { id: 's-northwind', g: 'now', a: 'kids', f: 'obscure', title: "At the Back of the North Wind", author: "George MacDonald", year: 1871, product: 'annotated',
+    idea: "Read-aloud edition with notes on Victorian London cab life.",
+    caution: "Free in the US. Long and religious in places; consider a gentle abridgment, and say so.", src: "W: At the Back of the North Wind (book 1871)" },
+  { id: 's-waterbabies', g: 'now', a: 'kids', f: 'obscure', title: "The Water-Babies", author: "Charles Kingsley", year: 1863, product: 'annotated',
+    idea: "Annotated edition explaining the Victorian science and satire.",
+    caution: "Free in the US. Contains prejudiced passages about the Irish and others; abridge with care and say so.", src: "W: The Water-Babies (1863)" },
+  { id: 's-fivechildren', g: 'now', a: 'kids', f: 'obscure', title: "Five Children and It", author: "E. Nesbit", year: 1902, product: 'illustrated',
+    idea: "Illustrated chapter book with new art of the Psammead.",
+    caution: "Free in the US.", src: "W: Five Children and It (1902)" },
+  { id: 's-railwaychildren', g: 'now', a: 'kids', f: 'wellknown', title: "The Railway Children", author: "E. Nesbit", year: 1906, product: 'illustrated',
+    idea: "Illustrated edition with notes on Edwardian railways.",
+    caution: "Free in the US. Film versions are protected.", src: "W: The Railway Children (book 1906)" },
+  { id: 's-littleprincess', g: 'now', a: 'kids', f: 'wellknown', title: "A Little Princess", author: "Frances Hodgson Burnett", year: 1905, product: 'illustrated',
+    idea: "Illustrated gift edition of the 1905 novel.",
+    caution: "Free in the US. Use the 1905 novel text. Films are protected.", src: "W: A Little Princess (1905 novel)" },
+  { id: 's-pollyanna', g: 'now', a: 'kids', f: 'wellknown', title: "Pollyanna", author: "Eleanor H. Porter", year: 1913, product: 'illustrated',
+    idea: "Illustrated edition with a short note on the \"glad game\".",
+    caution: "Free in the US. The Disney film is protected.", src: "W: Pollyanna (1913)" },
+  { id: 's-heidi', g: 'now', a: 'kids', f: 'wellknown', title: "Heidi", author: "Johanna Spyri", year: 1881, product: 'illustrated', tr: true,
+    idea: "Illustrated edition with an Alps map and Swiss words explained.",
+    caution: "Swiss German original, 1880 to 1881. Use a pre-1931 English translation or your own; modern translations are protected.", src: "W: Heidi (1880-1881)" },
+  { id: 's-pinocchio', g: 'now', a: 'kids', f: 'wellknown', title: "The Adventures of Pinocchio", author: "Carlo Collodi", year: 1883, product: 'illustrated', tr: true, tm: true,
+    idea: "Illustrated edition of the original, darker story.",
+    caution: "Italian original 1883. Use a pre-1931 English translation or your own. Disney designs are protected.", src: "W: The Adventures of Pinocchio (1883)" },
+  { id: 's-happyprince', g: 'now', a: 'kids', f: 'wellknown', title: "The Happy Prince and Other Tales", author: "Oscar Wilde", year: 1888, product: 'children',
+    idea: "Illustrated story collection for reading aloud.",
+    caution: "Free in the US.", src: "W: The Happy Prince and Other Tales (May 1888)" },
+  { id: 's-kensington', g: 'now', a: 'kids', f: 'obscure', title: "Peter Pan in Kensington Gardens", author: "J. M. Barrie", year: 1906, product: 'coffee',
+    idea: "Gift edition built around Arthur Rackham's 1906 plates.",
+    caution: "Free in the US. Peter Pan has special rights in the UK; check before selling there.", src: "W: Peter Pan in Kensington Gardens (1906)" },
+  { id: 's-nutkin', g: 'now', a: 'kids', f: 'obscure', title: "The Tale of Squirrel Nutkin", author: "Beatrix Potter", year: 1903, product: 'children', tm: true,
+    idea: "Small-format picture book with the 1903 art restored.",
+    caution: "Text and 1903 art are free in the US. Beatrix Potter and Peter Rabbit are trademarks of Frederick Warne; no official-looking design.", src: "W: The Tale of Squirrel Nutkin (August 1903)" },
+  { id: 's-benjamin', g: 'now', a: 'kids', f: 'wellknown', title: "The Tale of Benjamin Bunny", author: "Beatrix Potter", year: 1904, product: 'children', tm: true,
+    idea: "Small-format picture book with the 1904 art restored.",
+    caution: "Free in the US. Frederick Warne trademarks: no official-looking design.", src: "W: The Tale of Benjamin Bunny (September 1904)" },
+  { id: 's-jemima', g: 'now', a: 'kids', f: 'wellknown', title: "The Tale of Jemima Puddle-Duck", author: "Beatrix Potter", year: 1908, product: 'children', tm: true,
+    idea: "Small-format picture book with the 1908 art restored.",
+    caution: "Free in the US. Frederick Warne trademarks: no official-looking design.", src: "W: The Tale of Jemima Puddle-Duck (1908)" },
+  { id: 's-voyagesdolittle', g: 'now', a: 'kids', f: 'obscure', title: "The Voyages of Doctor Dolittle", author: "Hugh Lofting", year: 1922, product: 'illustrated', tm: true, rev: true,
+    idea: "Illustrated chapter book with Lofting's own drawings.",
+    caution: "1923 Newbery Medal. Use the 1922 text; the 1988 revision is protected. Some racist passages need care.", src: "W: The Voyages of Doctor Dolittle (1922)" },
+  { id: 's-rootabaga', g: 'now', a: 'kids', f: 'obscure', title: "Rootabaga Stories", author: "Carl Sandburg", year: 1922, product: 'illustrated',
+    idea: "Illustrated read-aloud of the nonsense stories.",
+    caution: "Free in the US. Check the copyright page of the edition you scan.", src: "W: Rootabaga Stories (1922)" },
+  { id: 's-fauntleroy', g: 'now', a: 'kids', f: 'obscure', title: "Little Lord Fauntleroy", author: "Frances Hodgson Burnett", year: 1886, product: 'illustrated',
+    idea: "Illustrated edition with Reginald Birch's 1886 drawings.",
+    caution: "Free in the US.", src: "W: Little Lord Fauntleroy (Scribner, Oct 7, 1886)" },
+  { id: 's-treasureseekers', g: 'now', a: 'kids', f: 'obscure', title: "The Story of the Treasure Seekers", author: "E. Nesbit", year: 1899, product: 'illustrated',
+    idea: "Illustrated chapter book about the Bastable children.",
+    caution: "Free in the US.", src: "W: The Story of the Treasure Seekers (1899)" },
+  { id: 's-nils', g: 'now', a: 'kids', f: 'obscure', title: "The Wonderful Adventures of Nils", author: "Selma Lagerlof", year: 1906, product: 'illustrated', tr: true,
+    idea: "Illustrated edition with a map of the goose flight over Sweden.",
+    caution: "Swedish original 1906 to 1907. Use a pre-1931 English translation or your own.", src: "W: The Wonderful Adventures of Nils (1906-07)" },
+  { id: 's-shensea', g: 'now', a: 'kids', f: 'obscure', title: "Shen of the Sea", author: "Arthur Bowie Chrisman", year: 1925, product: 'annotated',
+    idea: "Annotated story collection with a careful introduction.",
+    caution: "1926 Newbery Medal. Written by an outsider about an imagined China, with stereotypes; context is needed.", src: "W: Shen of the Sea (Dutton 1925)" },
+  { id: 's-silverlands', g: 'now', a: 'kids', f: 'obscure', title: "Tales from Silver Lands", author: "Charles Finger", year: 1924, product: 'illustrated',
+    idea: "Illustrated folktale collection with cultural notes.",
+    caution: "1925 Newbery Medal. Retold South American tales; credit the cultures and add notes.", src: "W: Tales from Silver Lands (Doubleday 1924)" },
+  { id: 's-boxcar', g: 'now', a: 'kids', f: 'wellknown', title: "The Boxcar Children", author: "Gertrude Chandler Warner", year: 1924, product: 'annotated', tm: true, rev: true,
+    idea: "The original 1924 version, with notes on how it differs from the famous rewrite.",
+    caution: "Only the 1924 original is free; the 1942 rewrite is protected and The Boxcar Children is a trademark. Use a different main title design.", src: "W: The Boxcar Children (1924 edition)" },
+  { id: 's-millymolly', g: 'now', a: 'kids', f: 'obscure', title: "Milly-Molly-Mandy Stories", author: "Joyce Lankester Brisley", year: 1928, product: 'children',
+    idea: "Picture-story collection with the author's own drawings.",
+    caution: "British book (1928). Free in the US; still protected in the UK, so sell in the US only.", src: "W: Milly-Molly-Mandy (first collection 1928)" },
+  { id: 's-reluctant', g: 'now', a: 'kids', f: 'obscure', title: "The Reluctant Dragon", author: "Kenneth Grahame", year: 1898, product: 'children',
+    idea: "Picture book of the story with new art.",
+    caution: "A chapter of Dream Days (1898). The 1941 Disney film is protected.", src: "W: The Reluctant Dragon (1898 story)" },
+  { id: 's-littlewomen', g: 'now', a: 'teens', f: 'wellknown', title: "Little Women", author: "Louisa May Alcott", year: 1868, product: 'annotated',
+    idea: "Annotated: Civil War home front, 1860s money and manners.",
+    caution: "Free in the US. First published in two parts (1868 and 1869). Films are protected.", src: "W: Little Women (1868-69)" },
+  { id: 's-tomsawyer', g: 'now', a: 'teens', f: 'wellknown', title: "The Adventures of Tom Sawyer", author: "Mark Twain", year: 1876, product: 'annotated',
+    idea: "Annotated: Mississippi River towns in the 1840s, slang glossary.",
+    caution: "Free in the US. Racial slurs and stereotypes: annotate rather than cut silently.", src: "W: The Adventures of Tom Sawyer (June 9, 1876)" },
+  { id: 's-huckfinn', g: 'now', a: 'teens', f: 'wellknown', title: "Adventures of Huckleberry Finn", author: "Mark Twain", year: 1885, product: 'annotated',
+    idea: "Annotated with a strong introduction on race and the river.",
+    caution: "UK December 1884, US February 1885. Heavy use of a racial slur; a strong introduction is needed.", src: "W: Adventures of Huckleberry Finn (US Feb 1885)" },
+  { id: 's-kidnapped', g: 'now', a: 'teens', f: 'wellknown', title: "Kidnapped", author: "Robert Louis Stevenson", year: 1886, product: 'annotated',
+    idea: "Annotated: Scots glossary, Highlands map, the Jacobites.",
+    caution: "Free in the US.", src: "W: Kidnapped (1886)" },
+  { id: 's-princepauper', g: 'now', a: 'teens', f: 'wellknown', title: "The Prince and the Pauper", author: "Mark Twain", year: 1882, product: 'annotated',
+    idea: "Annotated: Tudor London and the real Edward VI.",
+    caution: "First published in Canada in 1881, US 1882. Free in the US.", src: "W: The Prince and the Pauper (Canada 1881, US 1882)" },
+  { id: 's-eighty', g: 'now', a: 'teens', f: 'wellknown', title: "Around the World in Eighty Days", author: "Jules Verne", year: 1872, product: 'annotated', tr: true,
+    idea: "Annotated with a route map and 1872 timetables.",
+    caution: "French original 1872. Use an old English translation or your own; modern translations are protected.", src: "W: Around the World in Eighty Days (1872)" },
+  { id: 's-timemachine', g: 'now', a: 'teens', f: 'wellknown', title: "The Time Machine", author: "H. G. Wells", year: 1895, product: 'annotated',
+    idea: "Annotated: Victorian science and class ideas explained.",
+    caution: "Free in the US. Films are protected.", src: "W: The Time Machine (1895)" },
+  { id: 's-warworlds', g: 'now', a: 'teens', f: 'wellknown', title: "The War of the Worlds", author: "H. G. Wells", year: 1898, product: 'annotated',
+    idea: "Annotated with maps of the Martian landings in Surrey and London.",
+    caution: "Free in the US. The 1938 radio script and the films are protected.", src: "W: The War of the Worlds (1898)" },
+  { id: 's-hound', g: 'now', a: 'teens', f: 'wellknown', title: "The Hound of the Baskervilles", author: "Arthur Conan Doyle", year: 1902, product: 'annotated', tm: true,
+    idea: "Annotated: Dartmoor map and Victorian forensics.",
+    caution: "Free in the US. Conan Doyle estate trademarks: no official-looking edition.", src: "W: The Hound of the Baskervilles (25 March 1902)" },
+  { id: 's-lostworld', g: 'now', a: 'teens', f: 'obscure', title: "The Lost World", author: "Arthur Conan Doyle", year: 1912, product: 'illustrated',
+    idea: "Illustrated edition with dinosaur plates and the expedition map.",
+    caution: "Free in the US. Avoid confusion with the protected Jurassic Park sequel of the same name.", src: "W: The Lost World (Doyle novel, 1912)" },
+  { id: 's-solomon', g: 'now', a: 'teens', f: 'obscure', title: "King Solomon's Mines", author: "H. Rider Haggard", year: 1885, product: 'annotated',
+    idea: "Annotated with an introduction on colonial adventure fiction.",
+    caution: "Free in the US. Colonial attitudes and racial language; needs context.", src: "W: King Solomon's Mines (1885)" },
+  { id: 's-zenda', g: 'now', a: 'teens', f: 'obscure', title: "The Prisoner of Zenda", author: "Anthony Hope", year: 1894, product: 'annotated',
+    idea: "Annotated swashbuckler with a map of Ruritania.",
+    caution: "Free in the US.", src: "W: The Prisoner of Zenda (1894)" },
+  { id: 's-pimpernel', g: 'now', a: 'teens', f: 'wellknown', title: "The Scarlet Pimpernel", author: "Baroness Orczy", year: 1905, product: 'annotated',
+    idea: "Annotated: French Revolution timeline and real people.",
+    caution: "Free in the US. The stage musical is protected.", src: "W: The Scarlet Pimpernel (1905)" },
+  { id: 's-tarzan', g: 'now', a: 'teens', f: 'wellknown', title: "Tarzan of the Apes", author: "Edgar Rice Burroughs", year: 1912, product: 'annotated', tm: true,
+    idea: "Annotated with an introduction on how the story has aged.",
+    caution: "Text is free (magazine 1912). \"Tarzan\" is a trademark that Edgar Rice Burroughs, Inc. enforces; get advice before using it on a cover. Racist content.", src: "W: Tarzan of the Apes (October 1912)" },
+  { id: 's-whitefang', g: 'now', a: 'teens', f: 'wellknown', title: "White Fang", author: "Jack London", year: 1906, product: 'annotated',
+    idea: "Annotated: Yukon map and wolf-dog facts. Pairs with The Call of the Wild.",
+    caution: "Free in the US.", src: "W: White Fang (Macmillan, October 1906)" },
+  { id: 's-redbadge', g: 'now', a: 'teens', f: 'wellknown', title: "The Red Badge of Courage", author: "Stephen Crane", year: 1895, product: 'study',
+    idea: "Study edition with Civil War battle maps and discussion questions.",
+    caution: "Free in the US. Crowded school market.", src: "W: The Red Badge of Courage (3 October 1895)" },
+  { id: 's-captains', g: 'now', a: 'teens', f: 'obscure', title: "Captains Courageous", author: "Rudyard Kipling", year: 1897, product: 'annotated',
+    idea: "Annotated: Grand Banks fishing terms and schooner diagrams.",
+    caution: "Free in the US.", src: "W: Captains Courageous (1897)" },
+  { id: 's-kim', g: 'now', a: 'teens', f: 'obscure', title: "Kim", author: "Rudyard Kipling", year: 1901, product: 'annotated',
+    idea: "Annotated with an India map and notes on the Great Game.",
+    caution: "Free in the US. Colonial views need context.", src: "W: Kim (1901)" },
+  { id: 's-rebecca', g: 'now', a: 'teens', f: 'obscure', title: "Rebecca of Sunnybrook Farm", author: "Kate Douglas Wiggin", year: 1903, product: 'illustrated',
+    idea: "Illustrated edition with notes on 1890s Maine.",
+    caution: "Free in the US.", src: "W: Rebecca of Sunnybrook Farm (1903)" },
+  { id: 's-daddylonglegs', g: 'now', a: 'teens', f: 'obscure', title: "Daddy-Long-Legs", author: "Jean Webster", year: 1912, product: 'illustrated',
+    idea: "Edition that keeps Webster's own stick-figure drawings.",
+    caution: "Free in the US. The musical and films are protected.", src: "W: Daddy-Long-Legs (1912)" },
+  { id: 's-darkfrigate', g: 'now', a: 'teens', f: 'obscure', title: "The Dark Frigate", author: "Charles Boardman Hawes", year: 1923, product: 'annotated',
+    idea: "Annotated pirate story with sailing terms explained.",
+    caution: "1924 Newbery Medal. Free in the US.", src: "W: The Dark Frigate (1923)" },
+  { id: 's-hansbrinker', g: 'now', a: 'teens', f: 'obscure', title: "Hans Brinker, or The Silver Skates", author: "Mary Mapes Dodge", year: 1865, product: 'annotated',
+    idea: "Annotated with a map of Holland's canals and Dutch words.",
+    caution: "Free in the US.", src: "W: Hans Brinker (1865)" },
+  { id: 's-mankind', g: 'now', a: 'teens', f: 'obscure', title: "The Story of Mankind", author: "Hendrik Willem van Loon", year: 1921, product: 'annotated',
+    idea: "Annotated world history with the author's own drawings.",
+    caution: "1922 Newbery Medal. Use the 1921 text only; later updated editions are protected. Dated views in places.", src: "W: The Story of Mankind (1921)" },
+  { id: 's-robinhood', g: 'now', a: 'teens', f: 'wellknown', title: "The Merry Adventures of Robin Hood", author: "Howard Pyle", year: 1883, product: 'illustrated',
+    idea: "Illustrated edition with Pyle's own drawings and a Sherwood map.",
+    caution: "Free in the US. Disney looks are protected.", src: "W: The Merry Adventures of Robin Hood (1883)" },
+  { id: 's-otto', g: 'now', a: 'teens', f: 'obscure', title: "Otto of the Silver Hand", author: "Howard Pyle", year: 1888, product: 'illustrated',
+    idea: "Illustrated medieval story with Pyle's drawings.",
+    caution: "Free in the US.", src: "W: Otto of the Silver Hand (Scribner 1888)" },
+  { id: 's-menofiron', g: 'now', a: 'teens', f: 'obscure', title: "Men of Iron", author: "Howard Pyle", year: 1891, product: 'illustrated',
+    idea: "Illustrated knight's story with armor diagrams.",
+    caution: "Free in the US.", src: "W: Men of Iron (1891)" },
+  { id: 's-penrod', g: 'now', a: 'teens', f: 'obscure', title: "Penrod", author: "Booth Tarkington", year: 1914, product: 'annotated',
+    idea: "Annotated comic sketches of a 1910s boyhood.",
+    caution: "Free in the US. Racist caricatures in some chapters; address them in notes.", src: "W: Penrod (1914)" },
+  { id: 's-swallows', g: 'now', a: 'teens', f: 'obscure', title: "Swallows and Amazons", author: "Arthur Ransome", year: 1930, product: 'illustrated',
+    idea: "Illustrated edition with a sailing glossary and Lake District map.",
+    caution: "British book (July 21, 1930). Free in the US since 2026; still protected in the UK, so sell in the US only.", src: "W: Swallows and Amazons (Jonathan Cape, 21 July 1930)" },
+  { id: 's-towertreasure', g: 'now', a: 'teens', f: 'wellknown', title: "The Tower Treasure", author: "Franklin W. Dixon", year: 1927, product: 'annotated', tm: true, rev: true,
+    idea: "Annotated original 1927 text: the first Hardy Boys book.",
+    caution: "Only the 1927 text is free; the 1959 revision is protected. Hardy Boys is a trademark.", src: "W: The Tower Treasure (June 1, 1927)" },
+  { id: 's-airport', g: 'now', a: 'teens', f: 'obscure', title: "The Great Airport Mystery", author: "Franklin W. Dixon", year: 1930, product: 'annotated', tm: true, rev: true,
+    idea: "Annotated original text with notes on 1930 airmail flying.",
+    caution: "Only the 1930 text is free; the 1965 revision is protected. Hardy Boys is a trademark.", src: "W: The Great Airport Mystery (May 1, 1930)" },
+  { id: 's-staircase', g: 'now', a: 'teens', f: 'wellknown', title: "The Hidden Staircase", author: "Carolyn Keene", year: 1930, product: 'annotated', tm: true, rev: true,
+    idea: "Annotated original 1930 text.",
+    caution: "Only the 1930 text is free; the 1959 revision is protected. Nancy Drew is a trademark.", src: "W: The Hidden Staircase (1930)" },
+  { id: 's-avonlea', g: 'now', a: 'teens', f: 'obscure', title: "Anne of Avonlea", author: "L. M. Montgomery", year: 1909, product: 'annotated', tm: true,
+    idea: "Annotated sequel. Pairs with Anne of Green Gables.",
+    caution: "Free in the US. Anne of Green Gables trademark caution in Canada.", src: "W: Anne of Avonlea (1909)" },
+  { id: 's-seventeen', g: 'now', a: 'teens', f: 'obscure', title: "Seventeen", author: "Booth Tarkington", year: 1916, product: 'annotated',
+    idea: "Annotated comedy of first love in 1910s Indiana.",
+    caution: "Free in the US.", src: "W: Seventeen (Harper, March 1916)" },
+  { id: 's-bobson', g: 'now', a: 'teens', f: 'obscure', title: "Bob, Son of Battle", author: "Alfred Ollivant", year: 1898, product: 'annotated',
+    idea: "Annotated sheepdog story with a dialect glossary.",
+    caution: "Free in the US. British title: Owd Bob.", src: "W: Owd Bob (1898; US title Bob, Son of Battle)" },
+  { id: 's-pride', g: 'now', a: 'adults', f: 'wellknown', title: "Pride and Prejudice", author: "Jane Austen", year: 1813, product: 'annotated',
+    idea: "Annotated: Regency money, manners and estates explained.",
+    caution: "Free in the US. Extremely crowded market; the annotation must be special.", src: "W: Pride and Prejudice (1813)" },
+  { id: 's-janeeyre', g: 'now', a: 'adults', f: 'wellknown', title: "Jane Eyre", author: "Charlotte Bronte", year: 1847, product: 'annotated',
+    idea: "Annotated with notes on governesses and Victorian law.",
+    caution: "Free in the US. Crowded market.", src: "W: Jane Eyre (19 October 1847; US January 1848)" },
+  { id: 's-wuthering', g: 'now', a: 'adults', f: 'wellknown', title: "Wuthering Heights", author: "Emily Bronte", year: 1847, product: 'annotated',
+    idea: "Annotated with a family tree, timeline and Yorkshire dialect glossary.",
+    caution: "Free in the US. Crowded market.", src: "W: Wuthering Heights (1847)" },
+  { id: 's-mobydick', g: 'now', a: 'adults', f: 'wellknown', title: "Moby-Dick", author: "Herman Melville", year: 1851, product: 'annotated',
+    idea: "Annotated: whaling terms, ship diagrams, the real Essex disaster.",
+    caution: "Free in the US.", src: "W: Moby-Dick (1851)" },
+  { id: 's-doriangray', g: 'now', a: 'adults', f: 'wellknown', title: "The Picture of Dorian Gray", author: "Oscar Wilde", year: 1890, product: 'annotated',
+    idea: "Annotated, with notes on the 1890 and 1891 versions.",
+    caution: "Free in the US. The 1890 magazine and 1891 book texts differ; say which you use.", src: "W: The Picture of Dorian Gray (1890)" },
+  { id: 's-jekyll', g: 'now', a: 'adults', f: 'wellknown', title: "Strange Case of Dr Jekyll and Mr Hyde", author: "Robert Louis Stevenson", year: 1886, product: 'both',
+    idea: "Annotated and illustrated gothic edition.",
+    caution: "Free in the US. Film looks are protected.", src: "W: Strange Case of Dr Jekyll and Mr Hyde (1886)" },
+  { id: 's-ageinnocence', g: 'now', a: 'adults', f: 'wellknown', title: "The Age of Innocence", author: "Edith Wharton", year: 1920, product: 'annotated',
+    idea: "Annotated: 1870s New York society, houses and opera.",
+    caution: "Free in the US. The 1993 film is protected.", src: "W: The Age of Innocence (25 October 1920)" },
+  { id: 's-babbitt', g: 'now', a: 'adults', f: 'obscure', title: "Babbitt", author: "Sinclair Lewis", year: 1922, product: 'annotated',
+    idea: "Annotated satire with a 1920s business slang glossary.",
+    caution: "Free in the US.", src: "W: Babbitt (1922)" },
+  { id: 's-mainstreet', g: 'now', a: 'adults', f: 'obscure', title: "Main Street", author: "Sinclair Lewis", year: 1920, product: 'annotated',
+    idea: "Annotated small-town satire with period photos.",
+    caution: "Free in the US.", src: "W: Main Street (1920)" },
+  { id: 's-housemirth', g: 'now', a: 'adults', f: 'obscure', title: "The House of Mirth", author: "Edith Wharton", year: 1905, product: 'annotated',
+    idea: "Annotated: Gilded Age money and marriage.",
+    caution: "Free in the US.", src: "W: The House of Mirth (October 14, 1905)" },
+  { id: 's-ethanfrome', g: 'now', a: 'adults', f: 'wellknown', title: "Ethan Frome", author: "Edith Wharton", year: 1911, product: 'study',
+    idea: "Study edition with discussion questions.",
+    caution: "Free in the US. Short: add real study material.", src: "W: Ethan Frome (1911)" },
+  { id: 's-myantonia', g: 'now', a: 'adults', f: 'wellknown', title: "My Antonia", author: "Willa Cather", year: 1918, product: 'annotated',
+    idea: "Annotated: Nebraska prairie life and Czech settlers.",
+    caution: "Free in the US. Pairs with Shadows on the Rock on your 2027 list.", src: "W: My Antonia (1918)" },
+  { id: 's-opioneers', g: 'now', a: 'adults', f: 'obscure', title: "O Pioneers!", author: "Willa Cather", year: 1913, product: 'annotated',
+    idea: "Annotated with homesteading notes and photos.",
+    caution: "Free in the US.", src: "W: O Pioneers! (1913)" },
+  { id: 's-awakening', g: 'now', a: 'adults', f: 'wellknown', title: "The Awakening", author: "Kate Chopin", year: 1899, product: 'study',
+    idea: "Study edition with notes on Creole New Orleans.",
+    caution: "Free in the US.", src: "W: The Awakening (22 April 1899)" },
+  { id: 's-yellowwallpaper', g: 'now', a: 'adults', f: 'wellknown', title: "The Yellow Wallpaper", author: "Charlotte Perkins Gilman", year: 1892, product: 'illustrated',
+    idea: "Small illustrated gift edition with an essay on the rest cure.",
+    caution: "Free in the US. Very short: add real content so it is not a thin copy.", src: "W: The Yellow Wallpaper (January 1892)" },
+  { id: 's-turnscrew', g: 'now', a: 'adults', f: 'wellknown', title: "The Turn of the Screw", author: "Henry James", year: 1898, product: 'annotated',
+    idea: "Annotated ghost story with the competing readings explained.",
+    caution: "Free in the US.", src: "W: The Turn of the Screw (1898)" },
+  { id: 's-styles', g: 'now', a: 'adults', f: 'wellknown', title: "The Mysterious Affair at Styles", author: "Agatha Christie", year: 1920, product: 'annotated', tm: true,
+    idea: "Annotated: the first Poirot, with notes on wartime poisons.",
+    caution: "Free in the US; still protected in the UK and EU. Agatha Christie and Poirot are trademarks: author credit only.", src: "W: The Mysterious Affair at Styles (October 1920)" },
+  { id: 's-ackroyd', g: 'now', a: 'adults', f: 'wellknown', title: "The Murder of Roger Ackroyd", author: "Agatha Christie", year: 1926, product: 'annotated', tm: true,
+    idea: "Annotated with a spoiler-safe notes section at the back.",
+    caution: "Free in the US since 2022; still protected in the UK and EU. Christie trademarks: author credit only.", src: "W: The Murder of Roger Ackroyd (1926)" },
+  { id: 's-thirtynine', g: 'now', a: 'adults', f: 'obscure', title: "The Thirty-Nine Steps", author: "John Buchan", year: 1915, product: 'annotated',
+    idea: "Annotated spy story with a Scottish route map.",
+    caution: "Free in the US. The Hitchcock film is protected.", src: "W: The Thirty-Nine Steps (1915)" },
+  { id: 's-winesburg', g: 'now', a: 'adults', f: 'obscure', title: "Winesburg, Ohio", author: "Sherwood Anderson", year: 1919, product: 'study',
+    idea: "Study edition with a town map and character guide.",
+    caution: "Free in the US.", src: "W: Winesburg, Ohio (1919)" },
+  { id: 's-roomview', g: 'now', a: 'adults', f: 'wellknown', title: "A Room with a View", author: "E. M. Forster", year: 1908, product: 'annotated',
+    idea: "Annotated: Florence map and Edwardian manners.",
+    caution: "Free in the US. The 1985 film is protected.", src: "W: A Room with a View (1908)" },
+  { id: 's-howardsend', g: 'now', a: 'adults', f: 'obscure', title: "Howards End", author: "E. M. Forster", year: 1910, product: 'annotated',
+    idea: "Annotated with notes on class and property in 1910 England.",
+    caution: "Free in the US.", src: "W: Howards End (1910)" },
+  { id: 's-passage', g: 'now', a: 'adults', f: 'wellknown', title: "A Passage to India", author: "E. M. Forster", year: 1924, product: 'annotated',
+    idea: "Annotated: the Raj and the independence movement.",
+    caution: "Free in the US since 2020. Still protected in some countries; sell in the US.", src: "W: A Passage to India (1924)" },
+  { id: 's-prophet', g: 'now', a: 'adults', f: 'wellknown', title: "The Prophet", author: "Kahlil Gibran", year: 1923, product: 'coffee',
+    idea: "Gift edition with Gibran's own 1923 drawings.",
+    caution: "Free in the US since 2019. Crowded gift market; the design must stand out.", src: "W: The Prophet (Knopf 1923)" },
+  { id: 's-wasteland', g: 'now', a: 'adults', f: 'wellknown', title: "The Waste Land", author: "T. S. Eliot", year: 1922, product: 'annotated',
+    idea: "Annotated: every reference explained, line by line.",
+    caution: "Free in the US. Use the 1922 text with Eliot's own notes. Still protected in the UK; sell in the US.", src: "W: The Waste Land (October 1922)" },
+  { id: 's-passing', g: 'now', a: 'adults', f: 'wellknown', title: "Passing", author: "Nella Larsen", year: 1929, product: 'annotated',
+    idea: "Annotated Harlem edition. Pairs with Quicksand.",
+    caution: "Free in the US since 2025. The 2021 film is protected.", src: "W: Passing (1929)" },
+  { id: 's-soundfury', g: 'now', a: 'adults', f: 'wellknown', title: "The Sound and the Fury", author: "William Faulkner", year: 1929, product: 'annotated',
+    idea: "Annotated with a timeline that untangles the four sections.",
+    caution: "Free in the US since 2025. Faulkner's later appendix is protected.", src: "W: The Sound and the Fury (1929)" },
+  { id: 's-lookhomeward', g: 'now', a: 'adults', f: 'obscure', title: "Look Homeward, Angel", author: "Thomas Wolfe", year: 1929, product: 'annotated',
+    idea: "Annotated with notes on the real Asheville people.",
+    caution: "Use the 1929 text; the restored original published in 2000 as O Lost is protected.", src: "W: Look Homeward, Angel (1929)" },
+  { id: 's-allquiet', g: 'now', a: 'adults', f: 'wellknown', title: "All Quiet on the Western Front", author: "Erich Maria Remarque", year: 1929, product: 'annotated', tr: true,
+    idea: "Annotated: trench maps, German army terms.",
+    caution: "German original 1929. Use the 1929 A. W. Wheen English translation; later translations are protected.", src: "W: All Quiet on the Western Front (1929); Standard Ebooks (A. W. Wheen translation)" },
+  { id: 's-redharvest', g: 'now', a: 'adults', f: 'obscure', title: "Red Harvest", author: "Dashiell Hammett", year: 1929, product: 'annotated',
+    idea: "Annotated noir with a slang glossary.",
+    caution: "Free in the US since 2025.", src: "W: Red Harvest (1929)" },
+  { id: 's-hometoharlem', g: 'now', a: 'adults', f: 'obscure', title: "Home to Harlem", author: "Claude McKay", year: 1928, product: 'annotated',
+    idea: "Annotated Harlem Renaissance edition with a 1920s Harlem map.",
+    caution: "Free in the US.", src: "W: Claude McKay (Home to Harlem, 1928)" },
+  { id: 's-booktea', g: 'now', a: 'adults', f: 'obscure', title: "The Book of Tea", author: "Okakura Kakuzo", year: 1906, product: 'coffee',
+    idea: "Coffee-table edition with photos of tea houses and utensils.",
+    caution: "Free in the US. Use only free photos or your own.", src: "W: The Book of Tea (1906)" },
+  { id: 's-beeton', g: 'now', a: 'adults', f: 'obscure', title: "Mrs Beeton's Book of Household Management", author: "Isabella Beeton", year: 1861, product: 'coffee',
+    idea: "Coffee-table selection with the color plates and modern notes.",
+    caution: "Free in the US. Victorian recipes and advice: say what you changed.", src: "W: Mrs Beeton's Book of Household Management (1861)" },
+  { id: 's-flatland', g: 'now', a: 'adults', f: 'obscure', title: "Flatland", author: "Edwin A. Abbott", year: 1884, product: 'illustrated',
+    idea: "Illustrated edition with new diagrams of the dimensions.",
+    caution: "Free in the US.", src: "W: Flatland (1884)" },
+  { id: 's-sexnecessary', g: 'now', a: 'adults', f: 'obscure', title: "Is Sex Necessary?", author: "James Thurber and E. B. White", year: 1929, product: 'annotated',
+    idea: "Annotated humor edition with Thurber's 1929 drawings.",
+    caution: "Free in the US since 2025. Use only the 1929 drawings.", src: "W: Is Sex Necessary? (1929)" },
+  { id: 's-charliechan', g: 'now', a: 'adults', f: 'obscure', title: "Charlie Chan Carries On", author: "Earl Derr Biggers", year: 1930, product: 'annotated',
+    idea: "Annotated mystery with an introduction on the character's history.",
+    caution: "Free in the US since 2026. The character is criticized as a stereotype; a thoughtful introduction helps. Films are protected.", src: "W: Charlie Chan Carries On (1930)" },
+  { id: 's-rubaiyat', g: 'now', a: 'adults', f: 'wellknown', title: "The Rubaiyat of Omar Khayyam", author: "Edward FitzGerald (translator)", year: 1859, product: 'coffee', tr: true,
+    idea: "Coffee-table edition, one quatrain per page with new art.",
+    caution: "Free in the US. Use the FitzGerald translation; later translations are protected.", src: "W: The Rubaiyat of Omar Khayyam (1859)" },
+  { id: 's-boysouthseas', g: 'soon', a: 'kids', f: 'obscure', title: "Boy of the South Seas", author: "Eunice Tietjens", year: 1931, product: 'illustrated',
+    idea: "Illustrated chapter book with a Marquesas map.",
+    caution: "Free on January 1, 2027. 1932 Newbery Honor. Written by an outsider; add cultural context.", src: "W: Boy of the South Seas (1931)" },
+  { id: 's-piratesoz', g: 'soon', a: 'kids', f: 'obscure', title: "Pirates in Oz", author: "Ruth Plumly Thompson", year: 1931, product: 'illustrated',
+    idea: "Illustrated Oz adventure with John R. Neill's 1931 art.",
+    caution: "Free on January 1, 2027. Avoid looks from the MGM film.", src: "W: Pirates in Oz (May 1931, Reilly & Lee)" },
+  { id: 's-truce', g: 'soon', a: 'kids', f: 'obscure', title: "Truce of the Wolf and Other Tales of Old Italy", author: "Mary Gould Davis", year: 1931, product: 'illustrated',
+    idea: "Illustrated Italian folktale collection.",
+    caution: "Free on January 1, 2027. 1932 Newbery Honor.", src: "W: Mary Gould Davis (published 1931)" },
+  { id: 's-swallowdale', g: 'soon', a: 'teens', f: 'obscure', title: "Swallowdale", author: "Arthur Ransome", year: 1931, product: 'illustrated',
+    idea: "Illustrated sequel to Swallows and Amazons, with a moorland map.",
+    caution: "British book (1931). Free in the US on January 1, 2027; still protected in the UK, so sell in the US only.", src: "W: Swallowdale (Jonathan Cape 1931)" },
+  { id: 's-outflame', g: 'soon', a: 'teens', f: 'obscure', title: "Out of the Flame", author: "Eloise Lownsbery", year: 1931, product: 'annotated',
+    idea: "Annotated story set in the court of Francis I.",
+    caution: "Free on January 1, 2027. 1932 Newbery Honor.", src: "W: Out of the Flame (1931)" },
+  { id: 's-blanket', g: 'soon', a: 'teens', f: 'obscure', title: "The Blanket of the Dark", author: "John Buchan", year: 1931, product: 'annotated',
+    idea: "Annotated Tudor adventure with a timeline.",
+    caution: "British book (Hodder and Stoughton, 1931). Free in the US on January 1, 2027.", src: "W: The Blanket of the Dark (1931)" },
+  { id: 's-blacknomore', g: 'soon', a: 'adults', f: 'obscure', title: "Black No More", author: "George S. Schuyler", year: 1931, product: 'annotated',
+    idea: "Annotated Harlem Renaissance satire with notes on the real people it mocks.",
+    caution: "Free on January 1, 2027.", src: "W: Black No More (1931)" },
+  { id: 's-godsunday', g: 'soon', a: 'adults', f: 'obscure', title: "God Sends Sunday", author: "Arna Bontemps", year: 1931, product: 'annotated',
+    idea: "Annotated first novel of a Harlem Renaissance poet.",
+    caution: "Free on January 1, 2027.", src: "W: 1931 in literature" },
+  { id: 's-balsosnell', g: 'soon', a: 'adults', f: 'obscure', title: "The Dream Life of Balso Snell", author: "Nathanael West", year: 1931, product: 'annotated',
+    idea: "Annotated edition of West's strange first novel.",
+    caution: "Free on January 1, 2027.", src: "W: The Dream Life of Balso Snell (1931)" },
+  { id: 's-axel', g: 'soon', a: 'adults', f: 'obscure', title: "Axel's Castle", author: "Edmund Wilson", year: 1931, product: 'annotated',
+    idea: "Annotated guide to modernist writers, with reading lists.",
+    caution: "Free on January 1, 2027.", src: "W: Axel's Castle (1931)" },
+  { id: 's-dutchshoe', g: 'soon', a: 'adults', f: 'obscure', title: "The Dutch Shoe Mystery", author: "Ellery Queen", year: 1931, product: 'annotated', tm: true,
+    idea: "Annotated fair-play mystery with a hospital floor plan.",
+    caution: "Free on January 1, 2027. The Ellery Queen name is a trademark: author credit only.", src: "W: The Dutch Shoe Mystery (1931)" },
+  { id: 's-babylon', g: 'soon', a: 'adults', f: 'wellknown', title: "Babylon Revisited", author: "F. Scott Fitzgerald", year: 1931, product: 'illustrated',
+    idea: "Small illustrated gift edition with notes on Paris after the crash.",
+    caution: "First printed in The Saturday Evening Post, February 21, 1931. Short: add real content or pair it with other free stories.", src: "W: Babylon Revisited (21 February 1931)" },
+  { id: 's-whisperer', g: 'soon', a: 'adults', f: 'obscure', title: "The Whisperer in Darkness", author: "H. P. Lovecraft", year: 1931, product: 'illustrated',
+    idea: "Illustrated horror novella with a Vermont map.",
+    caution: "Weird Tales, August 1931. Free on January 1, 2027 at the latest.", src: "W: The Whisperer in Darkness (August 1931)" },
+  { id: 's-joycooking', g: 'soon', a: 'adults', f: 'wellknown', title: "Joy of Cooking (1931 edition)", author: "Irma S. Rombauer", year: 1931, product: 'coffee', tm: true,
+    idea: "Facsimile-style 1931 edition with notes on Depression-era cooking.",
+    caution: "Only the privately printed 1931 edition is free. Later editions are protected and Joy of Cooking is a trademark: use a different main title.", src: "W: Joy of Cooking (privately published 1931)" },
+  { id: 's-livingmylife', g: 'soon', a: 'adults', f: 'obscure', title: "Living My Life (volume 1)", author: "Emma Goldman", year: 1931, product: 'annotated',
+    idea: "Annotated first volume with notes on the people and events.",
+    caution: "Only volume 1 is from 1931; check which volume your source contains.", src: "W: Living My Life (1931 and 1934)" },
+  { id: 's-capecod', g: 'soon', a: 'adults', f: 'obscure', title: "The Cape Cod Mystery", author: "Phoebe Atwood Taylor", year: 1931, product: 'annotated',
+    idea: "Annotated cozy mystery with a 1930s Cape Cod map.",
+    caution: "Free on January 1, 2027.", src: "W: The Cape Cod Mystery (Bobbs-Merrill 1931)" },
+  { id: 's-these13', g: 'soon', a: 'adults', f: 'obscure', title: "These 13", author: "William Faulkner", year: 1931, product: 'annotated',
+    idea: "Annotated story collection.",
+    caution: "Free on January 1, 2027. \"A Rose for Emily\" in it was first printed in 1930 and is already free.", src: "W: These 13 (1931)" }
 ];
 
 /* Publish now: already public domain in the US as of 2026 (published 1930 or earlier). Notes only, no book text. */
@@ -919,7 +1290,38 @@ function load() {
   if (old) { try { var o = JSON.parse(old); if (o && o.titles) { migrated = true; return migrateV1(o); } } catch (e4) {} }
   return fresh();
 }
+/* "Editing" = a book on my list. Starter titles that ship with the app stay off the list (and out of every
+   count) until they are added or changed in any way: notes, plan, status, editor text, art or book settings. */
+var SEED_BY = null;
+function seedFor(t) {
+  if (!SEED_BY) { SEED_BY = {}; each(NOW_SEED.concat(SEED), function (s) { SEED_BY[s.title.toLowerCase()] = s; }); }
+  return SEED_BY[String(t.title || '').toLowerCase()] || null;
+}
+function untouchedSeed(t) {
+  var s = seedFor(t); if (!s) return false;
+  var o = {}; each(keys(s), function (k) { o[k] = s[k]; });
+  o.group = t.group; o.audience = t.audience; o.fame = t.fame; delete o.status;
+  var b = newTitle(o), same = true;
+  each(['title', 'author', 'year', 'product', 'notes', 'flagNotes', 'editionTitle', 'subtitle', 'description', 'illusCount', 'ai', 'aiAnswered', 'aiNote',
+    'source', 'sourceUrl', 'gutenbergId', 'stripped', 'flagsReviewed', 'pages', 'price', 'trim', 'status'], function (k) {
+    if (String(t[k] == null ? '' : t[k]) !== String(b[k] == null ? '' : b[k])) same = false;
+  });
+  each(['flags', 'plan', 'book'], function (g) {
+    var x = t[g] || {}, y = b[g] || {};
+    each(keys(y), function (k) { if (String(x[k] == null ? '' : x[k]) !== String(y[k] == null ? '' : y[k])) same = false; });
+  });
+  var e = t.editor || {};
+  if (trim(e.intro) || trim(e.notes) || trim(e.backmatter)) same = false;
+  if (t.artCount > 0) same = false;
+  if (typeof artIdx === 'object' && artIdx && artIdx[t.id] && artIdx[t.id].length) same = false;
+  return same;
+}
+function markEditing() {
+  if (!state || !state.titles) return;
+  each(state.titles, function (t) { if (!t.editing && !untouchedSeed(t)) t.editing = true; });
+}
 function save() {
+  markEditing();
   state.updated = new Date().toISOString();
   var raw = JSON.stringify(state);
   try { window.localStorage.setItem(KEY, raw); } catch (e) { storageOk = false; memStore = raw; }
@@ -940,6 +1342,7 @@ function blankTitle(o) {
     source: o.source || '', sourceUrl: o.sourceUrl || '', gutenbergId: o.gutenbergId || '',
     stripped: false, flagsReviewed: false,
     pages: 240, price: 14.99, trim: '5.5x8.5',
+    editing: o.editing === false ? false : true,
     created: new Date().toISOString()
   };
 }
@@ -947,8 +1350,8 @@ function newTitle(o) { var t = blankTitle(o); fixBook(t); return t; }
 function tagSeed(s) { var g = SEED_TAGS[String(s.title || '').toLowerCase()]; if (g) { if (!AUDIENCES[s.audience]) s.audience = g[0]; if (!FAMES[s.fame]) s.fame = g[1]; } return s; }
 function seedTitles(skip) {
   var t = [];
-  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; t.push(newTitle(tagSeed(s))); } });
-  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; t.push(newTitle(tagSeed(s))); } });
+  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; var a = newTitle(tagSeed(s)); a.editing = false; t.push(a); } });
+  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; var b = newTitle(tagSeed(s)); b.editing = false; t.push(b); } });
   return t;
 }
 function fresh() { return { v: 2, titles: seedTitles(), group: 'now', filter: 'All', audience: 'all', fame: 'all', hiddenSug: [] }; }
@@ -964,7 +1367,7 @@ function migrateV1(d) {
     if (t.status === 'Ready') t.status = 'Ready to publish';
   });
   var add = [];
-  each(NOW_SEED, function (s) { if (!have[s.title.toLowerCase()]) { s.group = 'now'; add.push(blankTitle(tagSeed(s))); } });
+  each(NOW_SEED, function (s) { if (!have[s.title.toLowerCase()]) { s.group = 'now'; var nt = blankTitle(tagSeed(s)); nt.editing = false; add.push(nt); } });
   d.titles = add.concat(d.titles || []);
   d.v = 2; d.group = 'now'; d.filter = 'All'; d.migratedFrom = 1;
   return d;
@@ -973,6 +1376,7 @@ function normalize(d) {
   if (!d.v || d.v < 2) d = migrateV1(d);
   var base = blankTitle();
   each(d.titles, function (t) {
+    var hadFlag = typeof t.editing === 'boolean';
     if (!AUDIENCES[t.audience] || !FAMES[t.fame]) {
       var tg = SEED_TAGS[String(t.title || '').toLowerCase()];
       if (!AUDIENCES[t.audience]) t.audience = tg ? tg[0] : 'adults';
@@ -987,6 +1391,7 @@ function normalize(d) {
     if (t.status === 'Ready') t.status = 'Ready to publish';
     if (!GROUPS[t.group]) t.group = 'now';
     if (STATUSES.indexOf(t.status) < 0) t.status = t.group === 'soon' ? 'Watching' : 'Ready to annotate';
+    if (!hadFlag) t.editing = !untouchedSeed(t);
   });
   if (!d.filter) d.filter = 'All';
   if (!GROUPS[d.group]) d.group = 'now';
@@ -1109,29 +1514,31 @@ function score(t) { var done = 0, total = 0; each(checklist(t), function (x) { i
 
 function audOk(t) { return !state.audience || state.audience === 'all' || t.audience === state.audience; }
 function fameOk(t) { return !state.fame || state.fame === 'all' || t.fame === state.fame; }
+/* Zero-safe count badge: no number at all when nothing is being edited. */
+function cnt(n) { return n ? String(n) : ''; }
 function renderFilters() {
   var h = '';
   each(['All'].concat(STATUSES), function (o) {
-    var n = 0; each(state.titles, function (t) { if (t.group === state.group && audOk(t) && fameOk(t) && (o === 'All' || t.status === o)) n++; });
+    var n = 0; each(state.titles, function (t) { if (t.editing && t.group === state.group && audOk(t) && fameOk(t) && (o === 'All' || t.status === o)) n++; });
     if (o !== 'All' && o !== state.filter && !n) return;
-    h += '<button class="chip' + (state.filter === o ? ' on' : '') + '" data-f="' + o + '">' + o + '<span class="n">' + n + '</span></button>';
+    h += '<button class="chip' + (state.filter === o ? ' on' : '') + '" data-f="' + o + '">' + o + '<span class="n">' + cnt(n) + '</span></button>';
   });
   $('filters').innerHTML = h;
   var fh = '', fa = state.fame || 'all';
   each(['all', 'wellknown', 'obscure'], function (o) {
-    var n = 0; each(state.titles, function (t) { if (t.group === state.group && audOk(t) && (o === 'all' || t.fame === o)) n++; });
-    fh += '<button class="chip' + (fa === o ? ' on' : '') + '" data-fame="' + o + '">' + (o === 'all' ? 'All' : FAMES[o]) + '<span class="n">' + n + '</span></button>';
+    var n = 0; each(state.titles, function (t) { if (t.editing && t.group === state.group && audOk(t) && (o === 'all' || t.fame === o)) n++; });
+    fh += '<button class="chip' + (fa === o ? ' on' : '') + '" data-fame="' + o + '">' + (o === 'all' ? 'All' : FAMES[o]) + '<span class="n">' + cnt(n) + '</span></button>';
   });
   $('fame').innerHTML = fh;
   $('fameWhy').innerHTML = fa === 'obscure' ? '<b>Obscure:</b> little competition, but you need a strong angle to find readers.'
     : (fa === 'wellknown' ? '<b>Well known:</b> sells on name recognition, but lots of competition.'
     : '<b>Well known</b> titles sell on name recognition but face lots of competition. <b>Obscure</b> titles have little competition but need a strong angle.');
   var ca = { all: 0, kids: 0, teens: 0, adults: 0 };
-  each(state.titles, function (t) { if (t.group !== state.group || !fameOk(t)) return; ca.all++; if (ca[t.audience] !== undefined) ca[t.audience]++; });
-  each(keys(ca), function (k) { $('na-' + k).textContent = ca[k]; });
+  each(state.titles, function (t) { if (!t.editing || t.group !== state.group || !fameOk(t)) return; ca.all++; if (ca[t.audience] !== undefined) ca[t.audience]++; });
+  each(keys(ca), function (k) { $('na-' + k).textContent = cnt(ca[k]); });
   each(document.querySelectorAll('#aud button'), function (b) { b.className = b.getAttribute('data-a') === (state.audience || 'all') ? 'on' : ''; });
-  var c = { now: 0, soon: 0 }; each(state.titles, function (t) { if (audOk(t) && fameOk(t)) c[t.group]++; });
-  $('n-now').textContent = c.now; $('n-soon').textContent = c.soon;
+  var c = { now: 0, soon: 0 }; each(state.titles, function (t) { if (t.editing && audOk(t) && fameOk(t)) c[t.group]++; });
+  $('n-now').textContent = cnt(c.now); $('n-soon').textContent = cnt(c.soon);
   each(document.querySelectorAll('#seg button'), function (b) { b.className = b.getAttribute('data-g') === state.group ? 'on' : ''; });
   $('nowCard').className = 'now' + (state.group === 'now' ? '' : ' hidden');
   $('soonCard').className = 'count' + (state.group === 'soon' ? '' : ' hidden');
@@ -1141,7 +1548,7 @@ function renderList() {
   renderFilters();
   var h = '', shown = 0;
   each(state.titles, function (t) {
-    if (t.group !== state.group || !audOk(t) || !fameOk(t)) return;
+    if (!t.editing || t.group !== state.group || !audOk(t) || !fameOk(t)) return;
     if (state.filter !== 'All' && t.status !== state.filter) return;
     shown++;
     var sc = score(t), note = trim(t.notes);
@@ -1153,12 +1560,25 @@ function renderList() {
       '<div class="item-meta">Checklist ' + sc.done + ' of ' + sc.total + (note ? ' &middot; ' + esc(note.slice(0, 78)) + (note.length > 78 ? '...' : '') : '') + '</div>' +
       '</button>';
   });
-  if (!shown) h = '<div class="empty">' + (state.filter !== 'All' ? 'No titles with this status yet.' : ((state.audience && state.audience !== 'all') || (state.fame && state.fame !== 'all') ? 'No titles match these choices yet. See the suggestions below, or tap Add title.' : 'No titles here yet. Tap Add title, or add one from the Catalog.')) + '</div>';
+  if (!shown) h = '<div class="empty">' + (state.filter !== 'All' ? 'None of your books has this status yet.' : 'You\'re not editing any books here yet. Pick one from the suggestions below.') + '</div>';
   $('list').innerHTML = h;
   renderSuggest();
 }
 /* Suggested titles for the chosen list and readers, minus ones already on the list or hidden. */
-function onList(title) { var k = String(title).toLowerCase(), r = false; each(state.titles, function (t) { if (String(t.title || '').toLowerCase() === k) r = true; }); return r; }
+/* Suggested titles for the chosen list and readers, minus ones already on the list or hidden.
+   Order: untouched starter titles, then checked suggestions, then (Publish now only) live Project Gutenberg results. */
+function normT(s) { return trim(String(s || '').toLowerCase().replace(/\([^)]*\)/g, ' ').split(/[:;\u2014]|\s\$b\s/)[0].replace(/[^a-z0-9]+/g, ' ').replace(/\s(complete|unabridged)$/, '')); }
+/* Every way a title can match: its main part and any part in brackets, e.g. "Peter and Wendy (Peter Pan)". */
+function titleKeys(s) {
+  var r = [normT(s)], m = String(s || '').match(/\(([^)]*)\)/g) || [];
+  each(m, function (x) { var k = normT(x.slice(1, -1)); if (k) r.push(k); });
+  return r;
+}
+function onList(title) {
+  var k = String(title).toLowerCase(), nk = normT(title), r = false;
+  each(state.titles, function (t) { var x = String(t.title || '').toLowerCase(); if (x === k || (nk && normT(x) === nk)) r = true; });
+  return r;
+}
 function sugFor() {
   var out = [], hid = state.hiddenSug || [];
   each(SUGGEST, function (x) {
@@ -1169,30 +1589,132 @@ function sugFor() {
   });
   return out;
 }
+function starters() {
+  var out = [], hid = state.hiddenSug || [];
+  each(state.titles, function (t) { if (!t.editing && t.group === state.group && audOk(t) && fameOk(t) && hid.indexOf(t.id) < 0) out.push(t); });
+  return out;
+}
+var SUG_PAGE = 10, sugN = {}, GX = {}, SUG_NORM = null;
+function sugKey() { return state.group + '|' + (state.audience || 'all') + '|' + (state.fame || 'all'); }
+function gxOn() { return state.group === 'now' && (!state.fame || state.fame === 'all'); }
+function gxUrl(a) { return GUTENDEX + '?languages=en&copyright=false' + ({ kids: '&topic=children', teens: '&topic=adventure', adults: '&topic=fiction' }[a] || ''); }
+function gxSt() { var a = state.audience || 'all'; if (!GX[a]) GX[a] = { items: [], next: gxUrl(a), done: false, busy: false, err: '' }; return GX[a]; }
+function gxList() {
+  if (!SUG_NORM) { SUG_NORM = {}; each(SUGGEST, function (x) { each(titleKeys(x.title), function (k) { SUG_NORM[k] = 1; }); }); }
+  var out = [], seen = {}, hid = state.hiddenSug || [], mine = {};
+  each(state.titles, function (t) { each(titleKeys(t.title), function (k) { mine[k] = 1; }); });
+  each(gxSt().items, function (b) {
+    var n = normT(b && b.title);
+    if (!n || seen[n] || SUG_NORM[n] || mine[n] || hid.indexOf('gx-' + b.id) >= 0 || b.copyright === true) return;
+    seen[n] = 1; out.push(b);
+  });
+  return out;
+}
+function gxFetch(need) {
+  var st = gxSt();
+  if (st.busy || st.done) return;
+  if (navigator.onLine === false) { st.err = 'You seem to be offline, so no more suggestions can load from Project Gutenberg. Connect and try again.'; renderSuggest(); return; }
+  st.busy = true; st.err = ''; renderSuggest();
+  xhrJson(st.next, function (d) {
+    st.busy = false;
+    st.items = st.items.concat((d && d.results) || []);
+    st.next = d && d.next ? String(d.next).replace(/^http:/, 'https:') : null;
+    if (!st.next) st.done = true;
+    if (gxList().length < need && !st.done) gxFetch(need); else renderSuggest();
+  }, function () {
+    st.busy = false;
+    st.err = 'Could not load more suggestions from Project Gutenberg. Check your connection and try again.';
+    renderSuggest();
+  });
+}
+function loadMoreSug() {
+  var k = sugKey(), n = (sugN[k] || SUG_PAGE) + SUG_PAGE, cur = starters().length + sugFor().length;
+  sugN[k] = n;
+  if (gxOn() && n > cur && gxList().length < n - cur && !gxSt().done) gxFetch(n - cur);
+  else renderSuggest();
+}
+function lifeYears(a) {
+  if (!a) return '';
+  var b = a.birth_year, d = a.death_year;
+  if (b == null && d == null) return '';
+  return ' (' + (b == null ? '?' : (b < 0 ? -b + ' BC' : b)) + '-' + (d == null ? '' : (d < 0 ? -d + ' BC' : d)) + ')';
+}
+function sugTags(a, f, product, tm, tr, rev) {
+  return '<span class="tag aud">' + esc(AUDIENCES[a] || 'Adults') + '</span><span class="tag' + (f === 'obscure' ? ' fame-o' : '') + '">' + esc(FAMES[f] || 'Well known') + '</span><span class="tag accent">' + esc(PRODUCTS[product] || product) + '</span>' +
+    (tm ? '<span class="tag warn">Trademark caution</span>' : '') + (tr ? '<span class="tag warn">Translation year</span>' : '') + (rev ? '<span class="tag warn">Revised edition</span>' : '');
+}
 function renderSuggest() {
   var el = $('suggest'); if (!el) return;
-  var a = state.audience || 'all', hid = 0;
-  each(SUGGEST, function (x) { if (x.g === state.group && (state.hiddenSug || []).indexOf(x.id) >= 0 && (a === 'all' || x.a === a)) hid++; });
-  var where = a === 'all' ? '' : ' for ' + AUDIENCES[a];
-  var h = '<div class="section-title"><h2>Suggested' + esc(where) + '</h2></div>';
-  if (a === 'all') {
-    el.innerHTML = h + '<p class="sub-note">Pick Kids, Teens or Adults above to see suggested titles for those readers.</p>';
-    return;
-  }
-  var l = sugFor();
-  h += '<p class="sub-note">' + (state.group === 'now' ? 'Published 1930 or earlier, so free in the US today.' : 'Published in 1931, so free in the US on January 1, 2027.') + ' Years checked; still check the edition you use.</p>';
-  if (!l.length) h += '<div class="empty">No more suggestions here.</div>';
-  each(l, function (x) {
+  var a = state.audience || 'all', fa = state.fame || 'all', hl = state.hiddenSug || [], hid = 0;
+  var who = a === 'all' ? 'these readers' : AUDIENCES[a].toLowerCase();
+  each(SUGGEST, function (x) { if (x.g === state.group && hl.indexOf(x.id) >= 0 && (a === 'all' || x.a === a)) hid++; });
+  each(state.titles, function (t) { if (!t.editing && t.group === state.group && hl.indexOf(t.id) >= 0 && (a === 'all' || t.audience === a)) hid++; });
+  if (state.group === 'now') each(hl, function (id) { if (String(id).indexOf('gx-') === 0) hid++; });
+  var st = starters(), cur = sugFor(), pool = st.length + cur.length;
+  var gx = gxOn() ? gxList() : [], g = gxOn() ? gxSt() : null;
+  var k = sugKey(), n = sugN[k] || SUG_PAGE, shown = 0;
+  var h = '<div class="section-title"><h2>Suggested' + (a === 'all' ? '' : ' for ' + esc(AUDIENCES[a])) + '</h2></div>';
+  h += '<p class="sub-note">' + (state.group === 'now' ? 'Published 1930 or earlier, so free in the US today.' : 'Published in 1931, so free in the US on January 1, 2027.') +
+    ' Years checked; still check the edition you use.' + (a === 'all' ? ' Starter titles come first. Pick Kids, Teens or Adults above to narrow the list.' : '') + '</p>';
+  each(st, function (t) {
+    if (shown >= n) return; shown++;
+    h += '<div class="item sug" data-sug="' + t.id + '"><div class="item-title">' + esc(t.title) + '</div>' +
+      '<div class="item-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div>' +
+      '<div class="tags"><span class="tag start">Starter title</span>' + sugTags(t.audience, t.fame, t.product, t.flags.trademark, t.flags.translation, t.flags.revised) + '</div>' +
+      (trim(t.notes) ? '<div class="idea"><b>Idea:</b> ' + esc(t.notes) + '</div>' : '') + (trim(t.flagNotes) ? '<div class="caution"><b>Caution:</b> ' + esc(t.flagNotes) + '</div>' : '') +
+      '<div class="src">One of the starter titles that came with the app. Add it to start editing.</div>' +
+      '<div class="btns"><button class="btn small" data-start="' + t.id + '">Add to my list</button><button class="btn small ghost" data-sug-hide="' + t.id + '">Hide</button></div></div>';
+  });
+  each(cur, function (x) {
+    if (shown >= n) return; shown++;
     h += '<div class="item sug" data-sug="' + x.id + '"><div class="item-title">' + esc(x.title) + '</div>' +
       '<div class="item-sub">' + esc(x.author) + ', ' + x.year + '</div>' +
-      '<div class="tags"><span class="tag aud">' + AUDIENCES[x.a] + '</span><span class="tag' + (x.f === 'obscure' ? ' fame-o' : '') + '">' + FAMES[x.f] + '</span><span class="tag accent">' + esc(PRODUCTS[x.product]) + '</span>' +
-      (x.tm ? '<span class="tag warn">Trademark caution</span>' : '') + (x.tr ? '<span class="tag warn">Translation year</span>' : '') + (x.rev ? '<span class="tag warn">Revised edition</span>' : '') + '</div>' +
+      '<div class="tags">' + sugTags(x.a, x.f, x.product, x.tm, x.tr, x.rev) + '</div>' +
       '<div class="idea"><b>Idea:</b> ' + esc(x.idea) + '</div><div class="caution"><b>Caution:</b> ' + esc(x.caution) + '</div>' +
       '<div class="src">Year checked: ' + esc(x.src) + '</div>' +
       '<div class="btns"><button class="btn small" data-sug-add="' + x.id + '">Add to my list</button><button class="btn small ghost" data-sug-hide="' + x.id + '">Hide</button></div></div>';
   });
+  each(gx, function (b) {
+    if (shown >= n) return; shown++;
+    var au = (b.authors && b.authors[0]) || null;
+    h += '<div class="item sug gx" data-gx="' + esc(b.id) + '"><div class="item-title">' + esc(b.title) + '</div>' +
+      '<div class="item-sub">' + (au ? esc(personName(au.name)) + esc(lifeYears(au)) : 'Author unknown') + '</div>' +
+      '<div class="tags"><span class="tag">Project Gutenberg</span><span class="tag warn">Year not checked</span></div>' +
+      '<div class="caution">From Project Gutenberg, publication year not checked. Confirm it was first published in 1930 or earlier before you publish.</div>' +
+      '<div class="btns"><button class="btn small" data-gx-add="' + esc(b.id) + '">Add to my list</button><button class="btn small ghost" data-sug-hide="gx-' + esc(b.id) + '">Hide</button></div></div>';
+  });
+  var total = pool + gx.length, more = shown < total || (g && !g.done);
+  if (shown) h += '<p class="sub-note sug-count">' + (shown <= pool ? 'Showing ' + shown + ' of ' + pool + ' checked suggestions.' + (g && shown === pool && !g.done ? ' More can load from Project Gutenberg.' : '')
+    : 'Showing all ' + pool + ' checked suggestions, plus ' + (shown - pool) + ' from Project Gutenberg.') + '</p>';
+  if (g && g.err && shown >= pool + gx.length) h += '<p class="sub-note err" id="sugErr">' + esc(g.err) + '</p>';
+  if (g && g.busy) h += '<div class="sug-more"><button class="btn ghost" id="sugMore" disabled>Loading suggestions...</button></div>';
+  else if (more) h += '<div class="sug-more"><button class="btn ghost" id="sugMore">Load more suggestions</button></div>';
+  else {
+    var fl = fa === 'all' ? '' : FAMES[fa].toLowerCase() + ' ';
+    var end = state.group === 'soon' ? 'That\'s every ' + fl + '1931 title we\'ve checked for ' + who + ' so far.'
+      : (fa !== 'all' ? 'That\'s every ' + fl + 'title we\'ve checked for ' + who + '. Choose All under the fame choices above to load more from Project Gutenberg.'
+      : 'That\'s every suggestion we have for ' + who + ' right now.');
+    h += '<p class="sub-note end" id="sugEnd">' + end + '</p>';
+  }
   if (hid) h += '<p class="sub-note"><button class="linkbtn" id="sugShow" style="color:#f0dcae">Show ' + hid + ' hidden</button></p>';
   el.innerHTML = h;
+}
+function startTitle(id) {
+  var t = find(id); if (!t) return;
+  t.editing = true; save(); renderList();
+  toast('Added to your list in ' + GROUPS[t.group]);
+}
+function addGx(id) {
+  var b = null; each(keys(GX), function (k) { each(GX[k].items, function (x) { if (String(x.id) === String(id)) b = x; }); });
+  if (!b || onList(b.title)) return null;
+  var au = (b.authors && b.authors[0]) || {};
+  var t = newTitle({ title: b.title, author: personName(au.name), year: '', group: 'now', audience: AUDIENCES[state.audience] ? state.audience : 'adults',
+    source: 'Project Gutenberg ebook ' + b.id + ' (remove the license and name before publishing)', sourceUrl: 'https://www.gutenberg.org/ebooks/' + b.id, gutenbergId: b.id,
+    flagNotes: 'From Project Gutenberg, publication year not checked. Confirm it was first published in 1930 or earlier before you publish.',
+    notes: 'Author' + lifeYears(au) + '. ' + (b.subjects && b.subjects.length ? 'Subjects: ' + b.subjects.slice(0, 4).join('; ') : '') });
+  state.titles.unshift(t); save(); renderList();
+  toast('Added to your list. Check the year before you publish.');
+  return t;
 }
 function sugById(id) { for (var i = 0; i < SUGGEST.length; i++) if (SUGGEST[i].id === id) return SUGGEST[i]; return null; }
 function addSuggestion(id) {
@@ -1200,7 +1722,7 @@ function addSuggestion(id) {
   var t = newTitle({ title: x.title, author: x.author, year: x.year, group: x.g, audience: x.a, fame: x.f, product: x.product,
     tm: x.tm, tr: x.tr, rev: x.rev, flagNotes: x.caution, notes: x.idea + ' (Year checked: ' + x.src + ')' });
   state.titles.unshift(t); save(); renderList();
-  toast('Added to ' + GROUPS[x.g]);
+  toast('Added to your list in ' + GROUPS[x.g]);
   return t;
 }
 function hideSuggestion(id) {
@@ -1601,6 +2123,9 @@ function bind() {
   $('suggest').addEventListener('click', function (e) {
     var c;
     if ((c = closest(e.target, 'data-sug-add'))) addSuggestion(c.getAttribute('data-sug-add'));
+    else if ((c = closest(e.target, 'data-start'))) startTitle(c.getAttribute('data-start'));
+    else if ((c = closest(e.target, 'data-gx-add'))) addGx(c.getAttribute('data-gx-add'));
+    else if (e.target.id === 'sugMore') loadMoreSug();
     else if ((c = closest(e.target, 'data-sug-hide'))) { hideSuggestion(c.getAttribute('data-sug-hide')); toast('Hidden. Tap Show hidden to bring it back.'); }
     else if (e.target.id === 'sugShow') { state.hiddenSug = []; save(); renderList(); }
   });
@@ -2587,7 +3112,7 @@ function renderBooks() {
   each(['now', 'soon'], function (g) {
     var part = '';
     each(state.titles, function (t) {
-      if (t.group !== g) return; fixBook(t); n++;
+      if (t.group !== g || !t.editing) return; fixBook(t); n++;
       var w = wordCount(t.editor.intro) + wordCount(t.editor.notes) + wordCount(t.editor.backmatter);
       part += '<button class="item" data-ed="' + t.id + '"><div class="item-title">' + esc(t.title || 'Untitled') + '</div>' +
         '<div class="item-sub">' + esc(t.author) + '</div>' +
@@ -2596,7 +3121,7 @@ function renderBooks() {
     });
     if (part) h += '<div class="section-title"><h2>' + GROUPS[g] + '</h2></div>' + part;
   });
-  el.innerHTML = n ? h : '<div class="empty">No titles yet. Add one on the Titles screen.</div>';
+  el.innerHTML = n ? h : '<div class="empty">You\'re not editing any books yet. Pick one from the suggestions on the Titles screen.</div>';
 }
 
 function registerSW() {
@@ -2615,7 +3140,7 @@ renderList();
 tick(); setInterval(tick, 20000);
 calc();
 registerSW();
-window.__pd = { artMode: function () { return artMode; }, artBlobs: function () { return artBlobs; }, artMeta: function (id) { return artMeta(id); }, artTotals: artTotals, artMigrate: function () { return artMigrate; }, openEditor: openEditor, importFiles: importFiles, mdInsert: mdInsert, migrated: function () { return migrated; }, state: function () { return state; }, royalty: royalty, outlineMd: function (id) { return outlineMd(find(id)); } };
+window.__pd = { artMode: function () { return artMode; }, artBlobs: function () { return artBlobs; }, artMeta: function (id) { return artMeta(id); }, artTotals: artTotals, artMigrate: function () { return artMigrate; }, openEditor: openEditor, importFiles: importFiles, mdInsert: mdInsert, migrated: function () { return migrated; }, startAll: function () { each(state.titles, function (t) { t.editing = true; }); save(); renderList(); }, untouched: function (id) { return untouchedSeed(find(id)); }, sugCount: function () { return starters().length + sugFor().length; }, gx: function () { return GX; }, state: function () { return state; }, royalty: royalty, outlineMd: function (id) { return outlineMd(find(id)); } };
 window.__pdReady = true;
 })();
 </script>
