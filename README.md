@@ -91,3 +91,59 @@ Pictures now live in **IndexedDB** (database `pdpress`, store `art`, keyed by `i
 - **Fallback**: if IndexedDB is not available (old browser, some private modes), the app uses the v2.4 localStorage storage with the 4.5 MB per-title cap and says so.
 
 Limits: quotas differ by phone and browser. Chrome can clear site data when the phone is very low on space unless persistence is granted. iPhone Safari may delete site data after about 7 days without use unless the app is added to the Home Screen. Keep downloading backups.
+
+## Readers, fame and suggestions (v2.6)
+
+- **Readers switch** on the Titles screen: All, Kids, Teens, Adults, under the Publish now / Coming 2027 switch. Counts on every switch and chip follow the other choices.
+- **Fame chips**: All, Well known, Obscure, with a one-line explanation. Well-known titles sell on name recognition but face lots of competition; obscure titles have little competition but need a strong angle.
+- Status chips work together with Readers and Fame.
+- Every title has `audience` (kids, teens, adults) and `fame` (wellknown, obscure). Pick them on the Plan tab or the Edition tab (the Add title screen). A new title starts with the Readers and Fame you have selected.
+- Seed tags: picture books, Winnie-the-Pooh, Alice, Oz, Peter and Wendy and The Wind in the Willows are Kids (their market is illustrated read-aloud and gift editions); Sherlock Holmes and The Secret of Shadow Ranch are Teens; the rest are Adults. Haeckel, Snippy and Snappy and the lesser-known 1931 novels are Obscure.
+- **Migration**: saved v2.5 data keeps every title and edit. Missing tags are filled from the seed list by title, otherwise Adults / Well known. Nothing is wiped.
+- **Suggested** area under the list for the chosen readers and list (Publish now: first published 1930 or earlier; Coming 2027: first published 1931). Each card shows title, author, year, readers, fame, product idea, legal caution and the source used to check the year. "Add to my list" makes a normal title with everything filled in; "Hide" hides it (saved), "Show hidden" brings them back. Titles already on the list are not suggested.
+- **Coming 2027 titles in the Book editor**: fully editable (Size, Shape, Quality, Text, Art, Preview, Check royalty, Export), same as Publish now. The detail screen and editor show a notice with a live countdown: "Free to publish on January 1, 2027 (in N days). You can prepare everything now, but don't upload to Amazon or any other store until that date." The date is worked out as January 1 of (first publication year + 96), so on or after that day it switches to "Free to publish now" by itself. Titles not yet free also get a "Ready for day one" checklist item.
+- Service worker cache: `pdpress-v8`.
+
+### Where the suggestion years come from (checked October 2026)
+
+W = English Wikipedia article; IA = Internet Archive record; HT = HathiTrust record. 1931 titles were cross-checked with Wikipedia's "2027 in public domain" page (which follows Duke's Center for the Study of the Public Domain) where listed.
+
+| Title | Author | Year | Readers | Fame | Source |
+|---|---|---|---|---|---|
+| Just So Stories | Rudyard Kipling | 1902 | Kids | Well known | W |
+| The Story of Doctor Dolittle | Hugh Lofting | 1920 | Kids | Well known | W (US, Stokes, Oct 25, 1920) |
+| Raggedy Ann Stories | Johnny Gruelle | 1918 | Kids | Well known | W: Raggedy Ann (Volland) |
+| Angus and the Ducks | Marjorie Flack | 1930 | Kids | Obscure | W |
+| The Funny Thing | Wanda Gag | 1929 | Kids | Obscure | HT 001021617; Online Books Page |
+| The Cat Who Went to Heaven | Elizabeth Coatsworth | 1930 | Kids | Obscure | W |
+| Hitty, Her First Hundred Years | Rachel Field | 1929 | Kids | Obscure | W |
+| Anne of Green Gables | L. M. Montgomery | 1908 | Teens | Well known | W (L. C. Page, Boston) |
+| The Secret Garden | Frances Hodgson Burnett | 1911 | Teens | Well known | W (US: Stokes) |
+| Treasure Island | Robert Louis Stevenson | 1883 | Teens | Well known | W |
+| The Call of the Wild | Jack London | 1903 | Teens | Well known | W |
+| The Trumpeter of Krakow | Eric P. Kelly | 1928 | Teens | Obscure | W |
+| Smoky the Cowhorse | Will James | 1926 | Teens | Obscure | W (1927 Newbery, Scribner 1926) |
+| Gay-Neck, the Story of a Pigeon | Dhan Gopal Mukerji | 1927 | Teens | Obscure | W |
+| The Secret of the Old Clock | Carolyn Keene | 1930 | Teens | Well known | W (April 28, 1930) |
+| The Sun Also Rises | Ernest Hemingway | 1926 | Adults | Well known | W (Scribner) |
+| Mrs Dalloway | Virginia Woolf | 1925 | Adults | Well known | W (May 14, 1925) |
+| A Farewell to Arms | Ernest Hemingway | 1929 | Adults | Well known | W |
+| The Maltese Falcon | Dashiell Hammett | 1930 | Adults | Well known | W (book 1930, serial 1929) |
+| Quicksand | Nella Larsen | 1928 | Adults | Obscure | W |
+| Plum Bun | Jessie Redmon Fauset | 1929 | Adults | Obscure | W (London 1928, US Stokes 1929) |
+| Cane | Jean Toomer | 1923 | Adults | Obscure | W |
+| Urformen der Kunst | Karl Blossfeldt | 1928 | Adults | Obscure | W: Karl Blossfeldt (1928; lead says 1929) |
+| Angus and the Cat | Marjorie Flack | 1931 | Kids | Obscure | IA anguscat00flac; library catalogs |
+| The Fairy Circus | Dorothy P. Lathrop | 1931 | Kids | Obscure | W |
+| Histoire de Babar | Jean de Brunhoff | 1931 | Kids | Well known | W: 2027 in public domain (French original only) |
+| Calico Bush | Rachel Field | 1931 | Teens | Obscure | W: Rachel Field |
+| Waterless Mountain | Laura Adams Armer | 1931 | Teens | Obscure | W |
+| The Secret of Red Gate Farm | Carolyn Keene | 1931 | Teens | Well known | W; 2027 in public domain |
+| What Happened at Midnight | Franklin W. Dixon | 1931 | Teens | Well known | W; 2027 in public domain |
+| Only Yesterday | Frederick Lewis Allen | 1931 | Adults | Obscure | W (Harper, 1931) |
+| The Epic of America | James Truslow Adams | 1931 | Adults | Obscure | W: James Truslow Adams |
+| The Living Shadow | Walter B. Gibson | 1931 | Adults | Obscure | W (April 1, 1931); 2027 in public domain |
+
+Left out on purpose: The Pocket Book of Boners (a 1941 compilation; the 1931 volumes and Dr. Seuss trademarks need item-by-item checks), Cavalcade (British play, first printing date unclear), Maigret's Pietr-le-Letton and Tintin in the Congo (French originals only, strong trademarks, Tintin's racist content), Bambi (1923 German book with a disputed US copyright history), If It Had Happened Otherwise (British book; the US version was revised), the Disney Mickey Mouse book (Disney trademarks).
+
+Tests: `test_pdpress.py`, `test_editor.py`, `test_storage.py`, `test_audience.py` (in /workspace).

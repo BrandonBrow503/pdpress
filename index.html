@@ -450,6 +450,34 @@ label.f > span { font-size: 15px; color: #2b2620; }
 .pv-page .pv-fade { background: -webkit-linear-gradient(top, rgba(255,255,255,0), #ffffff); background: linear-gradient(180deg, rgba(255,255,255,0), #ffffff); }
 .pv-page.cream .pv-fade { background: -webkit-linear-gradient(top, rgba(246,238,219,0), #f6eedb); background: linear-gradient(180deg, rgba(246,238,219,0), #f6eedb); }
 .pv-num { position: absolute; bottom: 3%; left: 0; right: 0; text-align: center; font-size: 9px; color: #6b6255; }
+
+/* v2.6 audience, fame, suggestions, day-one notice */
+#v-watch #aud { margin-top: 10px; }
+.aud-lbl { font-family: "Marcellus SC", Georgia, serif; font-size: 14px; letter-spacing: 0.08em; color: #efe5d2; text-shadow: 0 1px 3px rgba(0,0,0,0.8); margin: 16px 0 0; }
+.chips.fame { margin-bottom: 6px; }
+.fame-why { font-size: 15px; line-height: 1.45; color: #2b2620; background: rgba(250,245,235,0.93); border: 1px solid rgba(176,141,74,0.7); border-radius: 4px; padding: 10px 14px; margin: 0 0 12px; }
+.fame-why b { font-family: "Marcellus SC", Georgia, serif; font-weight: 400; letter-spacing: 0.03em; }
+.sug-wrap { margin-top: 26px; }
+.sug-wrap .sub-note { font-size: 15px; line-height: 1.45; color: #f3ead9; text-shadow: 0 1px 2px rgba(0,0,0,0.6); margin: -4px 0 12px; background: rgba(20,15,10,0.62); border: 1px solid rgba(176,141,74,0.45); border-radius: 4px; padding: 8px 12px; }
+.item.sug { cursor: default; border-left: 3px solid #b08d4a; }
+.sug .idea { font-size: 16px; color: #2b2620; margin-top: 8px; line-height: 1.4; }
+.sug .caution { font-size: 15px; color: #3d362d; margin-top: 6px; line-height: 1.4; }
+.sug .caution b, .sug .idea b { font-family: "Marcellus SC", Georgia, serif; font-weight: 400; letter-spacing: 0.03em; }
+.sug .src { font-size: 13px; color: #5a5146; margin-top: 6px; }
+.sug .btns { margin-top: 12px; }
+.sug .btn.ghost { color: #1d1813; border-color: #b08d4a; background: transparent; }
+.tag.aud:before { background: #7d8f6a; }
+.tag.fame-o:before { background: #8c3b2a; }
+.pd-wait { background: rgba(29,24,19,0.94); color: #f3e8d0; border: 1px solid #b08d4a; border-radius: 4px; padding: 14px 16px 12px; margin: 14px 0 4px; box-shadow: inset 0 0 0 3px rgba(29,24,19,0.94), inset 0 0 0 4px rgba(176,141,74,0.45); text-shadow: none; }
+.pd-wait .pw-h { font-family: "Marcellus SC", Georgia, serif; font-size: 17px; letter-spacing: 0.04em; color: #ecd9ae; }
+.pd-wait p { margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: #e6dcc6; }
+.pd-wait .count-row { margin-top: 10px; }
+.pd-wait .count-num { font-size: 28px; color: #f5ecd6; }
+.pd-wait .count-lbl { color: #c9b98f; }
+.pd-wait .count-cell { border-left-color: rgba(176,141,74,0.45); }
+.pd-wait.free { background: rgba(240,233,214,0.96); color: #1d1813; box-shadow: none; }
+.pd-wait.free .pw-h { color: #3f5a2c; }
+.pd-wait.free p { color: #2b2620; }
 </style>
 </head>
 <body>
@@ -471,6 +499,13 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <button data-g="now" class="on">Publish now<span class="n" id="n-now"></span></button>
       <button data-g="soon">Coming 2027<span class="n" id="n-soon"></span></button>
     </div>
+    <div class="aud-lbl" id="aud-lbl">Readers</div>
+    <div class="seg" id="aud" role="tablist" aria-label="Readers">
+      <button data-a="all" class="on">All<span class="n" id="na-all"></span></button>
+      <button data-a="kids">Kids<span class="n" id="na-kids"></span></button>
+      <button data-a="teens">Teens<span class="n" id="na-teens"></span></button>
+      <button data-a="adults">Adults<span class="n" id="na-adults"></span></button>
+    </div>
     <section class="now" id="nowCard">
       <div class="eyebrow">Free to publish today</div>
       <h3>In the US public domain now</h3>
@@ -488,8 +523,11 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <button class="btn small hidden" id="moveAll">Move all to Publish now</button>
     </section>
     <div class="section-title"><h2 id="listTitle">Publish now</h2><button class="btn small ghost" id="addBtn">Add title</button></div>
+    <div class="chips fame" id="fame"></div>
+    <p class="fame-why" id="fameWhy"></p>
     <div class="chips" id="filters"></div>
     <div id="list"></div>
+    <div id="suggest" class="sug-wrap"></div>
     <p class="foot">Dates and flags are research notes, not legal advice. Check the copyright page of the exact edition you use.</p>
   </div>
 </main>
@@ -590,7 +628,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.5. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.6. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -628,6 +666,137 @@ var PD_DAY = new Date(2027, 0, 1, 0, 0, 0);
 var STATUSES = ['Watching', 'Ready to annotate', 'Annotating', 'Ready to publish', 'Published'];
 var GROUPS = { now: 'Publish now', soon: 'Coming 2027' };
 var PRODUCTS = { annotated: 'Annotated edition', illustrated: 'Illustrated edition', both: 'Annotated and illustrated', children: "Children's picture book", coffee: 'Coffee-table edition', study: 'Study guide edition' };
+
+/* v2.6 Audience and fame.
+   Seed tags: Alice, Oz, Peter and Wendy and The Wind in the Willows are tagged Kids, because their main
+   market is illustrated read-aloud and gift editions bought for children; change any tag on the Plan tab. */
+var AUDIENCES = { kids: 'Kids', teens: 'Teens', adults: 'Adults' };
+var FAMES = { wellknown: 'Well known', obscure: 'Obscure' };
+var SEED_TAGS = {
+  'the great gatsby': ['adults', 'wellknown'], 'the adventures of sherlock holmes': ['teens', 'wellknown'],
+  'dracula': ['adults', 'wellknown'], 'frankenstein': ['adults', 'wellknown'],
+  'the tale of peter rabbit': ['kids', 'wellknown'], 'the velveteen rabbit': ['kids', 'wellknown'],
+  'millions of cats': ['kids', 'wellknown'], 'the little engine that could': ['kids', 'wellknown'],
+  'winnie-the-pooh': ['kids', 'wellknown'], "alice's adventures in wonderland": ['kids', 'wellknown'],
+  'the wonderful wizard of oz': ['kids', 'wellknown'], 'peter and wendy (peter pan)': ['kids', 'wellknown'],
+  'the wind in the willows': ['kids', 'wellknown'], 'art forms in nature (kunstformen der natur)': ['adults', 'obscure'],
+  'the birds of america': ['adults', 'wellknown'],
+  'the glass key': ['adults', 'wellknown'], 'the good earth': ['adults', 'wellknown'], 'the waves': ['adults', 'wellknown'],
+  'the sittaford mystery': ['adults', 'obscure'], 'five red herrings': ['adults', 'obscure'],
+  'death walks in eastrepps': ['adults', 'obscure'], 'mourning becomes electra': ['adults', 'wellknown'],
+  'green grow the lilacs': ['adults', 'obscure'], 'the road back': ['adults', 'obscure'],
+  'snippy and snappy': ['kids', 'obscure'], 'the loving spirit': ['adults', 'obscure'],
+  'the chinaberry tree': ['adults', 'obscure'], 'sanctuary': ['adults', 'wellknown'],
+  'shadows on the rock': ['adults', 'obscure'], 'the secret of shadow ranch': ['teens', 'wellknown']
+};
+/* Suggested titles. Every year below was checked in October 2026. Sources:
+   W = English Wikipedia article for the book (or its author, where named); D = Wikipedia "2027 in public domain"
+   (which follows Duke CSPD); IA = Internet Archive scan record; HT = HathiTrust catalog record.
+   now: first published 1930 or earlier. soon: first published 1931, free in the US on January 1, 2027. */
+var SUGGEST = [
+  { id: 's-justso', g: 'now', a: 'kids', f: 'wellknown', title: 'Just So Stories', author: 'Rudyard Kipling', year: 1902, product: 'illustrated',
+    idea: 'Illustrated read-aloud edition: keep Kipling\'s own 1902 drawings and add new color plates.',
+    caution: 'Free in the US. A few passages use outdated racial language; if you trim them, say so in a short note.', src: 'W: Just So Stories (1902)' },
+  { id: 's-dolittle', g: 'now', a: 'kids', f: 'wellknown', title: 'The Story of Doctor Dolittle', author: 'Hugh Lofting', year: 1920, product: 'illustrated', tm: true, rev: true,
+    idea: 'Illustrated chapter book with a short note to parents about the 1920 text.',
+    caution: 'Use the 1920 text. The 1988 revised edition is protected. The original has racist scenes you should address. Film names and looks are protected.', src: 'W: The Story of Doctor Dolittle (US, Frederick A. Stokes, Oct 25, 1920)' },
+  { id: 's-raggedy', g: 'now', a: 'kids', f: 'wellknown', title: 'Raggedy Ann Stories', author: 'Johnny Gruelle', year: 1918, product: 'children', tm: true,
+    idea: 'Picture book restoring the 1918 color art, with a note on the doll\'s history.',
+    caution: 'Raggedy Ann and Andy are registered trademarks. Use the 1918 text and art only, nothing that looks like official merchandise. Search USPTO first.', src: 'W: Raggedy Ann (1918 book, P. F. Volland)' },
+  { id: 's-angusducks', g: 'now', a: 'kids', f: 'obscure', title: 'Angus and the Ducks', author: 'Marjorie Flack', year: 1930, product: 'children',
+    idea: 'Picture book with restored art. Pairs with Angus and the Cat, free in 2027.',
+    caution: 'Free in the US since 2026. Scan a 1930 printing; later reprints can carry new protected material.', src: 'W: Angus and the Ducks (1930, Doubleday)' },
+  { id: 's-funnything', g: 'now', a: 'kids', f: 'obscure', title: 'The Funny Thing', author: 'Wanda Gag', year: 1929, product: 'children',
+    idea: 'Gift picture book from the author of Millions of Cats, with restored art.',
+    caution: 'Free in the US. Scan the 1929 Coward-McCann edition; the 2003 University of Minnesota Press reprint adds protected material.', src: 'HT record 001021617 (Coward-McCann, c1929); Online Books Page' },
+  { id: 's-catheaven', g: 'now', a: 'kids', f: 'obscure', title: 'The Cat Who Went to Heaven', author: 'Elizabeth Coatsworth', year: 1930, product: 'illustrated',
+    idea: 'Illustrated chapter book with new ink drawings and a short note on the Buddha legends in it.',
+    caution: '1931 Newbery Medal. Free in the US since January 1, 2026. Use only art from a 1930 printing; later reissue art is protected.', src: 'W: The Cat Who Went to Heaven (1930)' },
+  { id: 's-hitty', g: 'now', a: 'kids', f: 'obscure', title: 'Hitty, Her First Hundred Years', author: 'Rachel Field', year: 1929, product: 'illustrated',
+    idea: 'Gift edition with a timeline of the doll\'s hundred years of travels.',
+    caution: '1930 Newbery Medal. Free in the US. The 1999 retelling by Rosemary Wells is a separate protected book.', src: 'W: Hitty, Her First Hundred Years (1929)' },
+
+  { id: 's-anne', g: 'now', a: 'teens', f: 'wellknown', title: 'Anne of Green Gables', author: 'L. M. Montgomery', year: 1908, product: 'annotated', tm: true,
+    idea: 'Annotated: Prince Edward Island map, 1870s school and farm life, glossary.',
+    caution: 'Free in the US. "Anne of Green Gables" is a trademark in Canada; use it only as the book title, no official-looking branding. Check before selling in Canada.', src: 'W: Anne of Green Gables (1908, L. C. Page, Boston)' },
+  { id: 's-secretgarden', g: 'now', a: 'teens', f: 'wellknown', title: 'The Secret Garden', author: 'Frances Hodgson Burnett', year: 1911, product: 'both',
+    idea: 'Annotated and illustrated: the plants in the garden, a Yorkshire dialect glossary.',
+    caution: 'Free in the US. Use the 1911 text. Avoid looks taken from the films or the musical. Crowded market.', src: 'W: The Secret Garden (1911, US edition Frederick A. Stokes)' },
+  { id: 's-treasure', g: 'now', a: 'teens', f: 'wellknown', title: 'Treasure Island', author: 'Robert Louis Stevenson', year: 1883, product: 'annotated',
+    idea: 'Annotated: sailing terms, ship diagrams and the original treasure map.',
+    caution: 'Free in the US. Very crowded market, so the notes and maps must stand out. Disney and Muppet versions are protected.', src: 'W: Treasure Island (book 1883)' },
+  { id: 's-callwild', g: 'now', a: 'teens', f: 'wellknown', title: 'The Call of the Wild', author: 'Jack London', year: 1903, product: 'annotated',
+    idea: 'Annotated: Klondike Gold Rush maps, sled dog terms, period photos.',
+    caution: 'Free in the US. Crowded market. Avoid art from the 2020 film.', src: 'W: The Call of the Wild (1903)' },
+  { id: 's-trumpeter', g: 'now', a: 'teens', f: 'obscure', title: 'The Trumpeter of Krakow', author: 'Eric P. Kelly', year: 1928, product: 'annotated',
+    idea: 'Annotated: medieval Krakow map, the Heynal trumpet call, Polish names explained.',
+    caution: '1929 Newbery Medal. Free in the US since 2024. Use art only from a 1928 printing; later edition art is protected.', src: 'W: The Trumpeter of Krakow (1928)' },
+  { id: 's-smoky', g: 'now', a: 'teens', f: 'obscure', title: 'Smoky the Cowhorse', author: 'Will James', year: 1926, product: 'annotated',
+    idea: 'Annotated western with the author\'s own drawings and a cowboy glossary.',
+    caution: '1927 Newbery Medal (given for a 1926 book). Free in the US. Check the copyright page of the edition you scan.', src: 'W: Smoky the Cowhorse (1927 Newbery winner); Scribner 1926' },
+  { id: 's-gayneck', g: 'now', a: 'teens', f: 'obscure', title: 'Gay-Neck, the Story of a Pigeon', author: 'Dhan Gopal Mukerji', year: 1927, product: 'annotated',
+    idea: 'Annotated: India and the Himalaya, and messenger pigeons in World War I.',
+    caution: '1928 Newbery Medal. Free in the US. A short introduction can give 1920s context.', src: 'W: Gay-Neck, the Story of a Pigeon (1927)' },
+  { id: 's-oldclock', g: 'now', a: 'teens', f: 'wellknown', title: 'The Secret of the Old Clock', author: 'Carolyn Keene', year: 1930, product: 'annotated', tm: true, rev: true,
+    idea: 'Annotated original 1930 text: 1930s cars, money and the first Nancy Drew.',
+    caution: 'Only the 1930 original is free; the 1959 rewrite is protected. Nancy Drew is a trademark: nothing that looks like an official book. Search USPTO first.', src: 'W: The Secret of the Old Clock (April 28, 1930)' },
+
+  { id: 's-sunrises', g: 'now', a: 'adults', f: 'wellknown', title: 'The Sun Also Rises', author: 'Ernest Hemingway', year: 1926, product: 'annotated', tm: true,
+    idea: 'Annotated: Paris and Pamplona maps, bullfighting terms, the real people behind the characters.',
+    caution: 'Free in the US since 2022. The Hemingway name is a trademark on products; use it only as the author credit.', src: 'W: The Sun Also Rises (1926, Scribner)' },
+  { id: 's-dalloway', g: 'now', a: 'adults', f: 'wellknown', title: 'Mrs Dalloway', author: 'Virginia Woolf', year: 1925, product: 'annotated',
+    idea: 'Annotated: a street map of the day in London, 1923 politics and people.',
+    caution: 'Free in the US since 2021. Notes in scholarly editions are protected. Crowded market.', src: 'W: Mrs Dalloway (May 14, 1925)' },
+  { id: 's-farewell', g: 'now', a: 'adults', f: 'wellknown', title: 'A Farewell to Arms', author: 'Ernest Hemingway', year: 1929, product: 'annotated', tm: true,
+    idea: 'Annotated: Italian front maps and the World War I ambulance service.',
+    caution: 'Free in the US since 2025. The 2012 alternate-endings edition is protected. Hemingway name: author credit only.', src: 'W: A Farewell to Arms (1929)' },
+  { id: 's-maltese', g: 'now', a: 'adults', f: 'wellknown', title: 'The Maltese Falcon', author: 'Dashiell Hammett', year: 1930, product: 'annotated',
+    idea: 'Annotated noir edition: 1920s San Francisco map and slang glossary.',
+    caution: 'The 1930 book is free in the US since 2026. The 1941 film, Bogart likeness and film stills are protected.', src: 'W: The Maltese Falcon (novel, 1930)' },
+  { id: 's-quicksand', g: 'now', a: 'adults', f: 'obscure', title: 'Quicksand', author: 'Nella Larsen', year: 1928, product: 'annotated',
+    idea: 'Annotated Harlem Renaissance edition with notes on Chicago, Harlem and Copenhagen.',
+    caution: 'Free in the US. Notes in modern critical editions are protected; use the 1928 text.', src: 'W: Quicksand (Larsen novel, 1928)' },
+  { id: 's-plumbun', g: 'now', a: 'adults', f: 'obscure', title: 'Plum Bun', author: 'Jessie Redmon Fauset', year: 1929, product: 'annotated',
+    idea: 'Annotated edition. Pairs with The Chinaberry Tree on your 2027 list.',
+    caution: 'First printed in London in 1928; US edition (Stokes) 1929. Free in the US either way.', src: 'W: Plum Bun (London 1928, US Stokes 1929)' },
+  { id: 's-cane', g: 'now', a: 'adults', f: 'obscure', title: 'Cane', author: 'Jean Toomer', year: 1923, product: 'study',
+    idea: 'Study edition of the poems and stories, with a reading guide.',
+    caution: 'Free in the US since 2019. Notes in later critical editions are protected.', src: 'W: Cane (novel, 1923)' },
+  { id: 's-blossfeldt', g: 'now', a: 'adults', f: 'obscure', title: 'Urformen der Kunst (Art Forms in Plants)', author: 'Karl Blossfeldt', year: 1928, product: 'coffee', tr: true,
+    idea: 'Coffee-table book of the plant close-up photographs. Pairs with Haeckel.',
+    caution: 'German book, Berlin 1928 (some sources say 1929). Its US term has ended either way. Write your own captions; English editions add protected text.', src: 'W: Karl Blossfeldt (Urformen der Kunst, 1928)' },
+
+  { id: 's-anguscat', g: 'soon', a: 'kids', f: 'obscure', title: 'Angus and the Cat', author: 'Marjorie Flack', year: 1931, product: 'children',
+    idea: 'Picture book with restored art, sold as a pair with Angus and the Ducks.',
+    caution: 'Free on January 1, 2027. Scan a 1931 printing.', src: 'IA anguscat00flac (Doubleday, Doran, 1931); library catalogs' },
+  { id: 's-fairycircus', g: 'soon', a: 'kids', f: 'obscure', title: 'The Fairy Circus', author: 'Dorothy P. Lathrop', year: 1931, product: 'children',
+    idea: 'Gift edition built around Lathrop\'s 1931 drawings.',
+    caution: 'Free on January 1, 2027. 1932 Newbery Honor. The art is the value: scan from a 1931 printing.', src: 'W: The Fairy Circus (1931)' },
+  { id: 's-babar', g: 'soon', a: 'kids', f: 'wellknown', title: 'Histoire de Babar (The Story of Babar)', author: 'Jean de Brunhoff', year: 1931, product: 'children', tm: true, tr: true,
+    idea: 'Your own new English translation of the French picture book, with the original art.',
+    caution: 'Only the 1931 French book is free. The 1933 English translation and later books stay protected, and Babar is a busy trademark. Get advice first.', src: 'W: 2027 in public domain; W: Babar the Elephant (French, 1931)' },
+  { id: 's-calico', g: 'soon', a: 'teens', f: 'obscure', title: 'Calico Bush', author: 'Rachel Field', year: 1931, product: 'annotated',
+    idea: 'Annotated: the 1740s Maine frontier, French settlers and household crafts.',
+    caution: 'Free on January 1, 2027. 1932 Newbery Honor. Check the edition you scan.', src: 'W: Rachel Field (bibliography: Calico Bush, 1931)' },
+  { id: 's-waterless', g: 'soon', a: 'teens', f: 'obscure', title: 'Waterless Mountain', author: 'Laura Adams Armer', year: 1931, product: 'annotated',
+    idea: 'Annotated coming-of-age story with a Navajo place and word guide.',
+    caution: 'Free on January 1, 2027. 1932 Newbery Medal. Written by an outsider about Navajo life; consider a Dine consultant for the notes.', src: 'W: Waterless Mountain (1931)' },
+  { id: 's-redgate', g: 'soon', a: 'teens', f: 'wellknown', title: 'The Secret of Red Gate Farm', author: 'Carolyn Keene', year: 1931, product: 'annotated', tm: true, rev: true,
+    idea: 'Annotated original 1931 text, a companion to your Shadow Ranch edition.',
+    caution: 'Only the 1931 original is free; the later rewrite is protected. Nancy Drew is a trademark.', src: 'W: The Secret of Red Gate Farm (1931); W: 2027 in public domain' },
+  { id: 's-midnight', g: 'soon', a: 'teens', f: 'wellknown', title: 'What Happened at Midnight', author: 'Franklin W. Dixon', year: 1931, product: 'annotated', tm: true, rev: true,
+    idea: 'Annotated original Hardy Boys text with 1930s notes.',
+    caution: 'Only the 1931 original (written by Leslie McFarlane) is free; the later rewrite is protected. Hardy Boys is a trademark.', src: 'W: What Happened at Midnight (1931); W: 2027 in public domain' },
+  { id: 's-onlyyesterday', g: 'soon', a: 'adults', f: 'obscure', title: 'Only Yesterday', author: 'Frederick Lewis Allen', year: 1931, product: 'annotated',
+    idea: 'Annotated history of the 1920s with period photos; a companion to The Great Gatsby.',
+    caution: 'Free on January 1, 2027. Use the 1931 Harper text; the 1957 reissue may add material. Use only free photos.', src: 'W: Only Yesterday: An Informal History of the Nineteen-Twenties (Harper, 1931)' },
+  { id: 's-epic', g: 'soon', a: 'adults', f: 'obscure', title: 'The Epic of America', author: 'James Truslow Adams', year: 1931, product: 'annotated',
+    idea: 'Annotated edition of the book that named "the American Dream".',
+    caution: 'Free on January 1, 2027. Use a 1931 printing; later printings may add material.', src: 'W: James Truslow Adams (The Epic of America, 1931)' },
+  { id: 's-shadow', g: 'soon', a: 'adults', f: 'obscure', title: 'The Living Shadow', author: 'Walter B. Gibson (Maxwell Grant)', year: 1931, product: 'annotated', tm: true,
+    idea: 'Annotated pulp edition: 1930s New York crime and the radio show behind it.',
+    caution: 'First appeared in The Shadow Magazine, April 1, 1931. The Shadow name and look are trademarks: get advice before using them on a cover.', src: 'W: The Living Shadow (April 1, 1931); W: 2027 in public domain' }
+];
 
 /* Publish now: already public domain in the US as of 2026 (published 1930 or earlier). Notes only, no book text. */
 var NOW_SEED = [
@@ -761,6 +930,7 @@ function blankTitle(o) {
   return {
     id: uid(), title: o.title || '', author: o.author || '', year: o.year || '', product: o.product || 'annotated',
     group: o.group || 'now',
+    audience: AUDIENCES[o.audience] ? o.audience : 'adults', fame: FAMES[o.fame] ? o.fame : 'wellknown',
     status: o.status || (o.group === 'soon' ? 'Watching' : 'Ready to annotate'),
     flags: { trademark: !!o.tm, translation: !!o.tr, revised: !!o.rev },
     flagNotes: o.flagNotes || '', notes: o.notes || '',
@@ -774,13 +944,14 @@ function blankTitle(o) {
   };
 }
 function newTitle(o) { var t = blankTitle(o); fixBook(t); return t; }
+function tagSeed(s) { var g = SEED_TAGS[String(s.title || '').toLowerCase()]; if (g) { if (!AUDIENCES[s.audience]) s.audience = g[0]; if (!FAMES[s.fame]) s.fame = g[1]; } return s; }
 function seedTitles(skip) {
   var t = [];
-  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; t.push(newTitle(s)); } });
-  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; t.push(newTitle(s)); } });
+  each(NOW_SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'now'; t.push(newTitle(tagSeed(s))); } });
+  each(SEED, function (s) { if (!skip || !skip[s.title.toLowerCase()]) { s.group = 'soon'; t.push(newTitle(tagSeed(s))); } });
   return t;
 }
-function fresh() { return { v: 2, titles: seedTitles(), group: 'now', filter: 'All' }; }
+function fresh() { return { v: 2, titles: seedTitles(), group: 'now', filter: 'All', audience: 'all', fame: 'all', hiddenSug: [] }; }
 /* Version 1 data: every title was on one watchlist, statuses Watching/Annotating/Ready/Published. */
 function migrateV1(d) {
   var have = {};
@@ -793,7 +964,7 @@ function migrateV1(d) {
     if (t.status === 'Ready') t.status = 'Ready to publish';
   });
   var add = [];
-  each(NOW_SEED, function (s) { if (!have[s.title.toLowerCase()]) { s.group = 'now'; add.push(blankTitle(s)); } });
+  each(NOW_SEED, function (s) { if (!have[s.title.toLowerCase()]) { s.group = 'now'; add.push(blankTitle(tagSeed(s))); } });
   d.titles = add.concat(d.titles || []);
   d.v = 2; d.group = 'now'; d.filter = 'All'; d.migratedFrom = 1;
   return d;
@@ -802,6 +973,11 @@ function normalize(d) {
   if (!d.v || d.v < 2) d = migrateV1(d);
   var base = blankTitle();
   each(d.titles, function (t) {
+    if (!AUDIENCES[t.audience] || !FAMES[t.fame]) {
+      var tg = SEED_TAGS[String(t.title || '').toLowerCase()];
+      if (!AUDIENCES[t.audience]) t.audience = tg ? tg[0] : 'adults';
+      if (!FAMES[t.fame]) t.fame = tg ? tg[1] : 'wellknown';
+    }
     each(keys(base), function (k) { if (t[k] === undefined) t[k] = base[k]; });
     fixBook(t);
     if (!t.id) t.id = uid();
@@ -814,13 +990,55 @@ function normalize(d) {
   });
   if (!d.filter) d.filter = 'All';
   if (!GROUPS[d.group]) d.group = 'now';
+  if (d.audience !== 'all' && !AUDIENCES[d.audience]) d.audience = 'all';
+  if (d.fame !== 'all' && !FAMES[d.fame]) d.fame = 'all';
+  if (Object.prototype.toString.call(d.hiddenSug) !== '[object Array]') d.hiddenSug = [];
   d.v = 2;
   return d;
 }
 var state;
 
+/* Time. window.__pdNow (ms) lets tests pretend it is another day. */
+function nowMs() { return typeof window.__pdNow === 'number' ? window.__pdNow : new Date().getTime(); }
+/* US rule for these books: free on January 1 of (first publication year + 96). */
+function freeInfo(t) {
+  var y = parseInt(t.year, 10), fy = (y >= 1000 && y < 3000) ? y + 96 : (t.group === 'soon' ? 2027 : 0);
+  if (!fy) return null;
+  var at = new Date(fy, 0, 1, 0, 0, 0).getTime(), ms = at - nowMs();
+  return { year: fy, at: at, ms: ms, days: Math.floor(ms / 86400000), free: ms <= 0, pubYear: fy - 96 };
+}
+function daysTxt(d) { return d < 1 ? 'in under a day' : 'in ' + d + (d === 1 ? ' day' : ' days'); }
+function notYetFree(t) { var f = freeInfo(t); return !!(f && !f.free); }
+function cdCells(ms) {
+  ms = Math.max(0, ms);
+  return '<div class="count-row"><div class="count-cell"><div class="count-num" data-cd="d">' + Math.floor(ms / 86400000) + '</div><div class="count-lbl">Days</div></div>' +
+    '<div class="count-cell"><div class="count-num" data-cd="h">' + Math.floor(ms % 86400000 / 3600000) + '</div><div class="count-lbl">Hours</div></div>' +
+    '<div class="count-cell"><div class="count-num" data-cd="m">' + Math.floor(ms % 3600000 / 60000) + '</div><div class="count-lbl">Minutes</div></div></div>';
+}
+function freeNotice(t) {
+  var f = freeInfo(t); if (!f) return '';
+  if (f.free) {
+    if (t.group !== 'soon' && f.pubYear <= 1930) return '';
+    return '<div class="pd-wait free" data-free="1"><div class="pw-h">Free to publish now</div><p>First published in ' + f.pubYear + ', so it entered the US public domain on January 1, ' + f.year + '. You can upload it to Amazon and other stores.' +
+      (t.group === 'soon' ? ' Move it to Publish now on the Plan tab when you are ready.' : '') + '</p></div>';
+  }
+  return '<div class="pd-wait" data-at="' + f.at + '"><div class="pw-h">Free to publish on January 1, ' + f.year + ' (<span data-cd="days">' + daysTxt(f.days) + '</span>)</div>' +
+    '<p>You can prepare everything now, but don\'t upload to Amazon or any other store until that date.</p>' + cdCells(f.ms) + '</div>';
+}
+function tickNotices() {
+  each(document.querySelectorAll('.pd-wait[data-at]'), function (el) {
+    var ms = parseInt(el.getAttribute('data-at'), 10) - nowMs();
+    if (ms <= 0) { if (openId) { var ft = $('d-free'); var t1 = find(openId); if (ft && t1) ft.innerHTML = freeNotice(t1); } if (edId) { var fe = $('ed-free'); var t2 = find(edId); if (fe && t2) fe.innerHTML = freeNotice(t2); } return; }
+    var q = function (k) { return el.querySelector('[data-cd="' + k + '"]'); };
+    if (q('days')) q('days').textContent = daysTxt(Math.floor(ms / 86400000));
+    if (q('d')) q('d').textContent = Math.floor(ms / 86400000);
+    if (q('h')) q('h').textContent = Math.floor(ms % 86400000 / 3600000);
+    if (q('m')) q('m').textContent = Math.floor(ms % 3600000 / 60000);
+  });
+}
 function tick() {
-  var ms = PD_DAY.getTime() - new Date().getTime();
+  tickNotices();
+  var ms = PD_DAY.getTime() - nowMs();
   if (ms <= 0) {
     $('cd-d').textContent = '0'; $('cd-h').textContent = '0'; $('cd-m').textContent = '0';
     $('cd-text').textContent = 'Books published in 1931 are now free to use in the US. Move them to Publish now. Next: 1932 books on January 1, 2028.';
@@ -855,6 +1073,7 @@ function flagTags(t) {
 }
 function detailTags(t) {
   return '<span class="status st-' + STATUSES.indexOf(t.status) + '">' + esc(t.status) + '</span>' +
+    '<span class="tag aud">' + esc(AUDIENCES[t.audience] || 'Adults') + '</span><span class="tag' + (t.fame === 'obscure' ? ' fame-o' : '') + '">' + esc(FAMES[t.fame] || 'Well known') + '</span>' +
     '<span class="tag accent">' + esc(PRODUCTS[t.product] || t.product) + '</span>' + flagTags(t);
 }
 
@@ -865,7 +1084,7 @@ function checklist(t) {
   var desc = trim(t.description);
   var aiD = t.ai === 'generated' ? 'Marked: includes AI-generated text or images. KDP requires you to disclose this.'
     : (t.ai === 'assisted' ? 'Marked: AI-assisted only (editing, ideas). KDP does not ask you to disclose assisted use.' : 'Marked: no AI used.');
-  return [
+  var list = [
     { label: 'Title or subtitle says (Annotated) or (Illustrated)', ok: /\((annotated|illustrated)\)/i.test(et),
       d: 'Amazon wants the difference visible in the title. Set it on the Edition tab.' },
     { label: 'Description opens with a bullet about your added content', ok: /^[-*\u2022]/.test(desc) && desc.length > 20,
@@ -878,18 +1097,40 @@ function checklist(t) {
     { label: 'Legal cautions reviewed', ok: !hasFlags(t) || !!t.flagsReviewed,
       d: hasFlags(t) ? 'This title has cautions. Read them on the Legal tab and tick when you are comfortable.' : 'No cautions flagged.' }
   ];
+  var f = freeInfo(t);
+  if (f && !f.free) {
+    var all = true; each(list, function (x) { if (!x.na && !x.ok) all = false; });
+    list.push({ label: 'Ready for day one', ok: all,
+      d: all ? 'Everything above is done. Upload on January 1, ' + f.year + ', not before.' : 'Finish the steps above so you can upload on January 1, ' + f.year + '. Do not upload before then.' });
+  }
+  return list;
 }
 function score(t) { var done = 0, total = 0; each(checklist(t), function (x) { if (x.na) return; total++; if (x.ok) done++; }); return { done: done, total: total }; }
 
+function audOk(t) { return !state.audience || state.audience === 'all' || t.audience === state.audience; }
+function fameOk(t) { return !state.fame || state.fame === 'all' || t.fame === state.fame; }
 function renderFilters() {
   var h = '';
   each(['All'].concat(STATUSES), function (o) {
-    var n = 0; each(state.titles, function (t) { if (t.group === state.group && (o === 'All' || t.status === o)) n++; });
+    var n = 0; each(state.titles, function (t) { if (t.group === state.group && audOk(t) && fameOk(t) && (o === 'All' || t.status === o)) n++; });
     if (o !== 'All' && o !== state.filter && !n) return;
     h += '<button class="chip' + (state.filter === o ? ' on' : '') + '" data-f="' + o + '">' + o + '<span class="n">' + n + '</span></button>';
   });
   $('filters').innerHTML = h;
-  var c = { now: 0, soon: 0 }; each(state.titles, function (t) { c[t.group]++; });
+  var fh = '', fa = state.fame || 'all';
+  each(['all', 'wellknown', 'obscure'], function (o) {
+    var n = 0; each(state.titles, function (t) { if (t.group === state.group && audOk(t) && (o === 'all' || t.fame === o)) n++; });
+    fh += '<button class="chip' + (fa === o ? ' on' : '') + '" data-fame="' + o + '">' + (o === 'all' ? 'All' : FAMES[o]) + '<span class="n">' + n + '</span></button>';
+  });
+  $('fame').innerHTML = fh;
+  $('fameWhy').innerHTML = fa === 'obscure' ? '<b>Obscure:</b> little competition, but you need a strong angle to find readers.'
+    : (fa === 'wellknown' ? '<b>Well known:</b> sells on name recognition, but lots of competition.'
+    : '<b>Well known</b> titles sell on name recognition but face lots of competition. <b>Obscure</b> titles have little competition but need a strong angle.');
+  var ca = { all: 0, kids: 0, teens: 0, adults: 0 };
+  each(state.titles, function (t) { if (t.group !== state.group || !fameOk(t)) return; ca.all++; if (ca[t.audience] !== undefined) ca[t.audience]++; });
+  each(keys(ca), function (k) { $('na-' + k).textContent = ca[k]; });
+  each(document.querySelectorAll('#aud button'), function (b) { b.className = b.getAttribute('data-a') === (state.audience || 'all') ? 'on' : ''; });
+  var c = { now: 0, soon: 0 }; each(state.titles, function (t) { if (audOk(t) && fameOk(t)) c[t.group]++; });
   $('n-now').textContent = c.now; $('n-soon').textContent = c.soon;
   each(document.querySelectorAll('#seg button'), function (b) { b.className = b.getAttribute('data-g') === state.group ? 'on' : ''; });
   $('nowCard').className = 'now' + (state.group === 'now' ? '' : ' hidden');
@@ -900,7 +1141,7 @@ function renderList() {
   renderFilters();
   var h = '', shown = 0;
   each(state.titles, function (t) {
-    if (t.group !== state.group) return;
+    if (t.group !== state.group || !audOk(t) || !fameOk(t)) return;
     if (state.filter !== 'All' && t.status !== state.filter) return;
     shown++;
     var sc = score(t), note = trim(t.notes);
@@ -908,12 +1149,64 @@ function renderList() {
       '<div class="item-head"><div><div class="item-title">' + esc(t.title || 'Untitled') + '</div>' +
       '<div class="item-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div></div>' +
       '<span class="status st-' + STATUSES.indexOf(t.status) + '">' + t.status + '</span></div>' +
-      '<div class="tags"><span class="tag accent">' + esc(PRODUCTS[t.product] || t.product) + '</span>' + flagTags(t) + '</div>' +
+      '<div class="tags"><span class="tag aud">' + esc(AUDIENCES[t.audience] || 'Adults') + '</span><span class="tag' + (t.fame === 'obscure' ? ' fame-o' : '') + '">' + esc(FAMES[t.fame] || 'Well known') + '</span><span class="tag accent">' + esc(PRODUCTS[t.product] || t.product) + '</span>' + flagTags(t) + '</div>' +
       '<div class="item-meta">Checklist ' + sc.done + ' of ' + sc.total + (note ? ' &middot; ' + esc(note.slice(0, 78)) + (note.length > 78 ? '...' : '') : '') + '</div>' +
       '</button>';
   });
-  if (!shown) h = '<div class="empty">' + (state.filter === 'All' ? 'No titles here yet. Tap Add title, or add one from the Catalog.' : 'No titles with this status yet.') + '</div>';
+  if (!shown) h = '<div class="empty">' + (state.filter !== 'All' ? 'No titles with this status yet.' : ((state.audience && state.audience !== 'all') || (state.fame && state.fame !== 'all') ? 'No titles match these choices yet. See the suggestions below, or tap Add title.' : 'No titles here yet. Tap Add title, or add one from the Catalog.')) + '</div>';
   $('list').innerHTML = h;
+  renderSuggest();
+}
+/* Suggested titles for the chosen list and readers, minus ones already on the list or hidden. */
+function onList(title) { var k = String(title).toLowerCase(), r = false; each(state.titles, function (t) { if (String(t.title || '').toLowerCase() === k) r = true; }); return r; }
+function sugFor() {
+  var out = [], hid = state.hiddenSug || [];
+  each(SUGGEST, function (x) {
+    if (x.g !== state.group || hid.indexOf(x.id) >= 0 || onList(x.title)) return;
+    if (state.audience && state.audience !== 'all' && x.a !== state.audience) return;
+    if (state.fame && state.fame !== 'all' && x.f !== state.fame) return;
+    out.push(x);
+  });
+  return out;
+}
+function renderSuggest() {
+  var el = $('suggest'); if (!el) return;
+  var a = state.audience || 'all', hid = 0;
+  each(SUGGEST, function (x) { if (x.g === state.group && (state.hiddenSug || []).indexOf(x.id) >= 0 && (a === 'all' || x.a === a)) hid++; });
+  var where = a === 'all' ? '' : ' for ' + AUDIENCES[a];
+  var h = '<div class="section-title"><h2>Suggested' + esc(where) + '</h2></div>';
+  if (a === 'all') {
+    el.innerHTML = h + '<p class="sub-note">Pick Kids, Teens or Adults above to see suggested titles for those readers.</p>';
+    return;
+  }
+  var l = sugFor();
+  h += '<p class="sub-note">' + (state.group === 'now' ? 'Published 1930 or earlier, so free in the US today.' : 'Published in 1931, so free in the US on January 1, 2027.') + ' Years checked; still check the edition you use.</p>';
+  if (!l.length) h += '<div class="empty">No more suggestions here.</div>';
+  each(l, function (x) {
+    h += '<div class="item sug" data-sug="' + x.id + '"><div class="item-title">' + esc(x.title) + '</div>' +
+      '<div class="item-sub">' + esc(x.author) + ', ' + x.year + '</div>' +
+      '<div class="tags"><span class="tag aud">' + AUDIENCES[x.a] + '</span><span class="tag' + (x.f === 'obscure' ? ' fame-o' : '') + '">' + FAMES[x.f] + '</span><span class="tag accent">' + esc(PRODUCTS[x.product]) + '</span>' +
+      (x.tm ? '<span class="tag warn">Trademark caution</span>' : '') + (x.tr ? '<span class="tag warn">Translation year</span>' : '') + (x.rev ? '<span class="tag warn">Revised edition</span>' : '') + '</div>' +
+      '<div class="idea"><b>Idea:</b> ' + esc(x.idea) + '</div><div class="caution"><b>Caution:</b> ' + esc(x.caution) + '</div>' +
+      '<div class="src">Year checked: ' + esc(x.src) + '</div>' +
+      '<div class="btns"><button class="btn small" data-sug-add="' + x.id + '">Add to my list</button><button class="btn small ghost" data-sug-hide="' + x.id + '">Hide</button></div></div>';
+  });
+  if (hid) h += '<p class="sub-note"><button class="linkbtn" id="sugShow" style="color:#f0dcae">Show ' + hid + ' hidden</button></p>';
+  el.innerHTML = h;
+}
+function sugById(id) { for (var i = 0; i < SUGGEST.length; i++) if (SUGGEST[i].id === id) return SUGGEST[i]; return null; }
+function addSuggestion(id) {
+  var x = sugById(id); if (!x || onList(x.title)) return null;
+  var t = newTitle({ title: x.title, author: x.author, year: x.year, group: x.g, audience: x.a, fame: x.f, product: x.product,
+    tm: x.tm, tr: x.tr, rev: x.rev, flagNotes: x.caution, notes: x.idea + ' (Year checked: ' + x.src + ')' });
+  state.titles.unshift(t); save(); renderList();
+  toast('Added to ' + GROUPS[x.g]);
+  return t;
+}
+function hideSuggestion(id) {
+  if (!state.hiddenSug) state.hiddenSug = [];
+  if (state.hiddenSug.indexOf(id) < 0) state.hiddenSug.push(id);
+  save(); renderList();
 }
 function find(id) { for (var i = 0; i < state.titles.length; i++) if (state.titles[i].id === id) return state.titles[i]; return null; }
 /* Detail sheet */
@@ -947,6 +1240,7 @@ function renderSheet() {
   var h = '<h1 class="d-title">' + esc(t.title || 'Untitled') + '</h1>' +
     '<div class="d-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div>' +
     '<div class="tags" id="d-tags">' + detailTags(t) + '</div>' +
+    '<div id="d-free">' + freeNotice(t) + '</div>' +
     '<div class="ed-open"><button class="btn" id="openEditor">Open book editor</button><p class="small muted">Size, shape, paper, your text and art</p></div><div class="tabs2">';
   each([['plan', 'Plan'], ['edition', 'Edition'], ['legal', 'Legal'], ['check', 'Checklist'], ['export', 'Export']], function (p) {
     h += '<button data-tab="' + p[0] + '" class="' + (dtab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
@@ -954,6 +1248,7 @@ function renderSheet() {
   h += '</div>';
   if (dtab === 'plan') {
     h += sel('List', 'group', t.group, { now: 'Publish now (public domain today)', soon: 'Coming 2027 (1931 titles)' }) +
+      '<div class="row2">' + sel('Readers', 'audience', t.audience, AUDIENCES) + sel('Fame', 'fame', t.fame, FAMES) + '</div>' +
       sel('Status', 'status', t.status, stOpts) + sel('Product idea', 'product', t.product, PRODUCTS) +
       fld('Notes', 'notes', t.notes, 'textarea', 'Angle, audience, ideas.') +
       eyebrow('Annotation plan') +
@@ -964,6 +1259,8 @@ function renderSheet() {
       fld('Back matter', 'plan.backmatter', t.plan.backmatter, 'textarea', 'Timeline, discussion questions, further reading.');
   } else if (dtab === 'edition') {
     var ex = (t.title || 'Title') + ' (Annotated)';
+    h += '<div class="row2">' + sel('Readers', 'audience', t.audience, AUDIENCES) + sel('Fame', 'fame', t.fame, FAMES) + '</div>' +
+      '<p class="small muted" style="margin:-4px 0 12px">Well known sells on name recognition but has lots of competition. Obscure has little competition but needs a strong angle.</p>';
     h += '<div class="row2">' + fld('Original title', 'title', t.title) + '<div style="-webkit-box-flex:0;-webkit-flex:none;flex:none;width:96px">' + fld('Year', 'year', t.year, 'number', '', ' inputmode="numeric"') + '</div></div>' +
       fld('Author', 'author', t.author) +
       fld('Your edition title', 'editionTitle', t.editionTitle, 'text', 'Include (Annotated) or (Illustrated).', ' placeholder="' + esc(ex) + '"') +
@@ -1029,6 +1326,8 @@ function onSheetInput(e) {
   }
   if (k === 'pages' || k === 'price') updDetailRoyalty(t);
   if (k === 'group') { state.group = t.group; state.filter = 'All'; save(); }
+  if (k === 'year' || k === 'group') { var df = $('d-free'); if (df) df.innerHTML = freeNotice(t); }
+  if (k === 'audience' || k === 'fame') $('d-tags').innerHTML = detailTags(t);
   if (k.indexOf('flags.') === 0 || k === 'status' || k === 'product') $('d-tags').innerHTML = detailTags(t);
   if (dtab === 'check' && e.type === 'change') renderSheet();
 }
@@ -1297,8 +1596,16 @@ function closest(el, attr) { while (el && el !== document) { if (el.getAttribute
 function bind() {
   each(document.querySelectorAll('.nav button'), function (b) { b.addEventListener('click', function () { go(b.getAttribute('data-v')); }); });
   $('filters').addEventListener('click', function (e) { var c = closest(e.target, 'data-f'); if (!c) return; state.filter = c.getAttribute('data-f'); save(); renderList(); });
+  $('aud').addEventListener('click', function (e) { var c = closest(e.target, 'data-a'); if (!c) return; state.audience = c.getAttribute('data-a'); state.filter = 'All'; save(); renderList(); });
+  $('fame').addEventListener('click', function (e) { var c = closest(e.target, 'data-fame'); if (!c) return; state.fame = c.getAttribute('data-fame'); state.filter = 'All'; save(); renderList(); });
+  $('suggest').addEventListener('click', function (e) {
+    var c;
+    if ((c = closest(e.target, 'data-sug-add'))) addSuggestion(c.getAttribute('data-sug-add'));
+    else if ((c = closest(e.target, 'data-sug-hide'))) { hideSuggestion(c.getAttribute('data-sug-hide')); toast('Hidden. Tap Show hidden to bring it back.'); }
+    else if (e.target.id === 'sugShow') { state.hiddenSug = []; save(); renderList(); }
+  });
   $('list').addEventListener('click', function (e) { var c = closest(e.target, 'data-id'); if (c) openTitle(c.getAttribute('data-id')); });
-  $('addBtn').addEventListener('click', function () { var t = newTitle({ year: state.group === 'soon' ? 1931 : '', group: state.group }); state.titles.unshift(t); save(); openTitle(t.id, 'edition'); });
+  $('addBtn').addEventListener('click', function () { var t = newTitle({ year: state.group === 'soon' ? 1931 : '', group: state.group, audience: state.audience, fame: state.fame }); state.titles.unshift(t); save(); openTitle(t.id, 'edition'); });
   function pickGroup(e) { var c = closest(e.target, 'data-g'); if (!c) return; state.group = c.getAttribute('data-g'); state.filter = 'All'; save(); renderList(); window.scrollTo(0, 0); }
   $('seg').addEventListener('click', pickGroup);
   $('nowCard').addEventListener('click', pickGroup);
@@ -2128,7 +2435,7 @@ function tabPreview(t) {
 function renderEditor() {
   var t = find(edId); if (!t) return; fixBook(t);
   var h = '<div class="eyebrow" style="margin-top:18px">Book editor</div><h1 class="d-title" style="margin-top:4px">' + esc(t.title || 'Untitled') + '</h1>' +
-    '<div class="d-sub" id="ed-sum">' + esc(bookSummary(t)) + '</div><div class="tabs2">';
+    '<div class="d-sub" id="ed-sum">' + esc(bookSummary(t)) + '</div><div id="ed-free">' + freeNotice(t) + '</div><div class="tabs2">';
   each([['size', 'Size'], ['shape', 'Shape'], ['quality', 'Quality'], ['text', 'Text'], ['art', 'Art'], ['preview', 'Preview']], function (p) {
     h += '<button data-etab="' + p[0] + '" class="' + (edTab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
   });
