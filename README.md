@@ -12,6 +12,14 @@ It is one HTML file, with no sign-in, no ads and no outside code. Your data stay
   4. After a minute or two, open **https://brandonbrow503.github.io/pdpress/**.
   5. In Chrome's menu, tap **Add to Home screen** to use it like an app.
 
+## What's new in version 2.10.1 (older phones)
+
+- Project files now open on older Android phones. Packed (zipped) project files used to need Chrome 103 or newer; the app now has its own small unpacker, so Chrome 62 and up can import them.
+- Simple look: older or low-memory phones skip the frosted glass blur, which could make the bottom buttons vanish or the app crash. Turn it on or off on the Backup screen, or add ?lite=1 to the address.
+- If a phone still hides the bottom buttons, the app moves them to the top of the screen.
+- Picking files no longer filters by type, so Android does not grey out project files.
+- App icon settings simplified for older installs. Tested in Chromium 62 and 72 at phone size.
+
 ## What's new in version 2.10
 - **Import takes any files, several at once.** Pick a project file, or the loose pieces a chat app left behind when it unpacked one (names like `f7e6183ddde-struggle-of-the-age-cover-wrap.pdf` are fine). PD Press works out which book each file belongs to and what it is: the ebook, interior PDF, cover wrap, cover picture, KDP listing, facts to check, or chapter text (.txt, .md, .html, .docx). The title and author come from the ebook.
 - **Check before saving.** A summary shows each book it found and its files. Choose New project or Add to an existing project, then tap Import.
