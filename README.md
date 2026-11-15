@@ -12,6 +12,16 @@ It is one HTML file, with no sign-in, no ads and no outside code. Your data stay
   4. After a minute or two, open **https://brandonbrow503.github.io/pdpress/**.
   5. In Chrome's menu, tap **Add to Home screen** to use it like an app.
 
+## What's new in version 2.11 (Scan Pages)
+
+- Scan pages: take a photo of each page of a printed book (or pick photos from the gallery, or use the live camera) and PD Press reads the words on the phone. No paid service, and nothing is uploaded.
+- Find it on My Projects (Scan pages), or inside a project on the Text tab.
+- Pages can be moved up or down, turned, retaken or deleted. Black and white, boost contrast and straighten a slight tilt help with phone photos.
+- Check the text for each page, then choose to join words split at line ends, join lines into paragraphs, and remove page numbers and running headers. Spelling and dashes stay as printed.
+- Add the text as a new chapter or at the end of a chapter, in the original or translation box, and keep the page photos with the project if you like.
+- Languages: English, Russian, French, German, or Russian and English. Each language's reading data downloads the first time it is used (English about 2.9 MB, Russian 2.7 MB, French 0.7 MB, German 1.3 MB), plus the reader itself (about 4 MB) once. After that it works offline.
+- Needs Chrome 67 or newer to read pages. Page reading by Tesseract OCR and tesseract.js (Apache License 2.0), files in ocr/.
+
 ## What's new in version 2.10.1 (older phones)
 
 - Project files now open on older Android phones. Packed (zipped) project files used to need Chrome 103 or newer; the app now has its own small unpacker, so Chrome 62 and up can import them.

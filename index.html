@@ -575,6 +575,21 @@ html.lite .card, html.lite .item, html.lite .now, html.lite .result, html.lite .
 html.nav-top body { padding-bottom: 0; }
 html.nav-top .nav { position: relative; position: -webkit-sticky; position: sticky; top: 0; bottom: auto; border-top: 0; border-bottom: 1px solid #e3dccd; padding-bottom: 0; }
 html.nav-top .toast { bottom: 24px; }
+/* v2.11 Scan Pages */
+.scan-page { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-align: start; -webkit-align-items: flex-start; align-items: flex-start; }
+.scan-thumb { -webkit-box-flex: 0; -webkit-flex: none; flex: none; width: 86px; height: 116px; margin-right: 12px; background: #e9e2d3; border: 1px solid #cdbd9c; -o-object-fit: contain; object-fit: contain; }
+.scan-thumb.small { width: 56px; height: 76px; }
+.scan-info { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; min-width: 0; }
+.scan-info .item-title { font-size: 18px; }
+.scan-btns { margin-top: 8px; margin-bottom: -8px; }
+.deco-2 .scan-btns > .btn { margin: 4px 10px 10px 4px; }
+.scan-opt { display: block; font-size: 16px; padding: 7px 0; }
+.scan-opt input { width: 20px; height: 20px; vertical-align: -4px; margin: 0 8px 0 0; accent-color: #9a7432; }
+.scan-video { display: block; width: 100%; max-height: 420px; max-height: 60vh; background: #000; margin-bottom: 10px; }
+.scan-bar { height: 10px; background: #e3dccd; border: 1px solid #cdbd9c; margin: 10px 0; }
+.scan-bar i { display: block; height: 100%; width: 0; background: #9a7432; -webkit-transition: width .3s; transition: width .3s; }
+.scan-ptext { min-height: 160px; font-size: 16px; }
+.view > .wrap > p.scan-empty, .sheet p.scan-empty { color: #3d362d; text-shadow: none; }
 /* v2.10 import summary and file kinds */
 #pjImp { z-index: 45; }
 .pj-imptitle { font-family: "Federo", Georgia, serif; font-size: 21px; line-height: 1.25; overflow-wrap: break-word; word-wrap: break-word; }
@@ -739,7 +754,7 @@ html.nav-top .toast { bottom: 24px; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.10.1. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.11. Page reading by Tesseract OCR (Apache License 2.0). Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -749,8 +764,8 @@ html.nav-top .toast { bottom: 24px; }
     <p class="muted small" style="margin-top:6px">Whole books saved on this phone: text, notes, listing, cover and finished files. They work offline.</p>
     <div id="pj-tools">
       <div class="card" style="margin-top:14px">
-        <div class="btns"><button class="btn" id="pj-new">New project</button><button class="btn ghost" id="pj-import">Import project file</button></div>
-        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress), or loose book files like an EPUB, PDF, cover picture or KDP listing? Tap Import project file and pick them all from Downloads or Drive.</p>
+        <div class="btns"><button class="btn" id="pj-new">New project</button><button class="btn ghost" id="pj-import">Import project file</button><button class="btn ghost" id="pj-scan">Scan pages</button></div>
+        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress), or loose book files like an EPUB, PDF, cover picture or KDP listing? Tap Import project file and pick them all from Downloads or Drive. Have a printed book? Tap Scan pages and take a photo of each page.</p>
         <div class="btns"><button class="btn ghost small" id="pj-exall">Export all</button><button class="btn ghost small hidden" id="pj-shareall">Save all to Drive</button></div>
         <p class="small muted" id="pj-keep" style="margin:0"></p>
         <button class="btn ghost small hidden" id="pj-persist" style="margin-top:10px">Ask the phone to keep my projects</button>
@@ -786,6 +801,15 @@ html.nav-top .toast { bottom: 24px; }
   <div class="wrap" id="pjBody"></div>
 </div>
 <input type="file" id="pjFile" class="hidden">
+<div id="scanSheet" class="sheet editor hidden" role="dialog" aria-modal="true" aria-label="Scan pages">
+  <div class="sheet-bar"><div class="wrap">
+    <button class="back" id="scanBack"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1d1b18" stroke-width="1.8"><path d="M11 3L5 9l6 6"/></svg><span>Back</span></button>
+    <span class="saved">Not saved yet</span>
+  </div></div>
+  <div class="wrap" id="scanBody"></div>
+</div>
+<input type="file" id="scanCam" accept="image/*" capture="environment" class="hidden">
+<input type="file" id="scanPick" accept="image/*" multiple class="hidden">
 <div id="pjImp" class="sheet editor hidden" role="dialog" aria-modal="true" aria-label="Import summary">
   <div class="sheet-bar"><div class="wrap">
     <button class="back" id="pjImpBack"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1d1b18" stroke-width="1.8"><path d="M11 3L5 9l6 6"/></svg><span>Cancel</span></button>
@@ -3667,7 +3691,7 @@ function exportEpub(t) {
   } catch (x) { toast('Could not build the ebook on this browser.'); }
 }
 
-var PJ_APPVER = '2.10.1';
+var PJ_APPVER = '2.11';
 /* ---- My Projects (v2.9): whole book projects kept on this phone ----
    Each project (details, chapters, notes, KDP listing, fact checks) is one record in the IndexedDB
    database "pdpress-projects", store "projects". Cover art and finished files (EPUB, PDFs, JPG) are
@@ -4215,14 +4239,14 @@ function pjTabHtml(p) {
         pjField('Chapter title', 'data-pc="title"', c.title) +
         pjField('Original text', 'data-pc="original"', c.original, { area: 1, cls: 'pj-text', em: pjW(pjWords(c.original)), emId: 'pj-wc-original' }) +
         pjField(p.translator ? 'Translation' : 'Translation or annotated text', 'data-pc="text"', c.text, { area: 1, cls: 'pj-text', em: pjW(pjWords(c.text)), emId: 'pj-wc-text' }) +
-        '<div class="btns"><button class="btn ghost small" data-chmove="-1"' + (pjChap ? '' : ' disabled') + '>Move up</button><button class="btn ghost small" data-chmove="1"' + (pjChap < p.chapters.length - 1 ? '' : ' disabled') + '>Move down</button><button class="btn ghost small" id="pj-chapdel">Delete chapter</button></div>';
+        '<div class="btns"><button class="btn ghost small" data-chmove="-1"' + (pjChap ? '' : ' disabled') + '>Move up</button><button class="btn ghost small" data-chmove="1"' + (pjChap < p.chapters.length - 1 ? '' : ' disabled') + '>Move down</button><button class="btn ghost small" id="pj-chapdel">Delete chapter</button><button class="btn ghost small" id="pj-scanchap">Scan more pages into this chapter</button></div>';
     } else {
       var tw = 0, ow = 0; each(p.chapters, function (c) { tw += pjWords(c.text); ow += pjWords(c.original); });
       h += '<p class="small muted mt0">' + (p.chapters.length ? p.chapters.length + ' chapters. Original ' + commas(ow) + ' words, translation or annotated text ' + commas(tw) + ' words.' : 'Add a chapter for each part of the book. Each one holds the original text and your translation or annotated text.') + '</p>';
       each(p.chapters, function (c, i) {
         h += '<button class="item pj-chap" data-chap="' + i + '"><span class="item-title">' + (i + 1) + '. ' + esc(c.title || 'Untitled chapter') + '</span><span class="item-meta">Original ' + commas(pjWords(c.original)) + ' words, translation ' + commas(pjWords(c.text)) + ' words</span></button>';
       });
-      h += '<button class="btn" id="pj-addchap">Add chapter</button>';
+      h += '<div class="btns"><button class="btn" id="pj-addchap">Add chapter</button><button class="btn ghost" id="pj-scanbtn">Scan pages</button></div>';
     }
   } else if (pjTab === 'notes') {
     h += pjField('Introduction', 'data-pk="introduction"', p.introduction, { area: 1, cls: 'pj-text', em: pjW(pjWords(p.introduction)), emId: 'pj-wc-introduction' }) +
@@ -4328,6 +4352,8 @@ function pjClick(e) {
   if ((a = b.getAttribute('data-pjtab'))) { pjFlush(); pjTab = a; pjChap = -1; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
   if ((a = b.getAttribute('data-chap')) !== null) { pjChap = +a; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
   if (b.id === 'pj-chapback') { pjChap = -1; pjRenderSheet(); return; }
+  if (b.id === 'pj-scanbtn') { scanOpen(p.id, -1); return; }
+  if (b.id === 'pj-scanchap') { scanOpen(p.id, pjChap); return; }
   if (b.id === 'pj-addchap') { p.chapters.push({ id: 'c' + uid().slice(1), title: 'Chapter ' + (p.chapters.length + 1), original: '', text: '' }); pjChap = p.chapters.length - 1; pjDirty(); pjRenderSheet(); return; }
   if ((a = b.getAttribute('data-chmove'))) { var j = pjChap + (+a), c = p.chapters[pjChap]; if (j < 0 || j >= p.chapters.length) return; p.chapters.splice(pjChap, 1); p.chapters.splice(j, 0, c); pjChap = j; pjDirty(); pjRenderSheet(); return; }
   if (b.id === 'pj-chapdel') { if (!window.confirm('Delete this chapter and its text?')) return; p.chapters.splice(pjChap, 1); pjChap = -1; pjDirty(); pjRenderSheet(); return; }
@@ -4890,6 +4916,479 @@ window.__pd.proj = { list: function () { return pjList; }, mode: function () { r
   files: function (id) { return pjGetAll('files', id).then(function (l) { return l.map(function (r) { var b = pjBlob(r); return { id: r.id, kind: r.kind, name: r.name, size: b ? b.size : -1 }; }); }); },
   clean: pjCleanName, kind: pjKindOf, key: pjBookKey, parseListing: pjParseListing, parseFacts: pjParseFacts, summary: function () { return document.getElementById('pjImpSum') ? document.getElementById('pjImpSum').textContent : ''; },
   open: pjOpenProject, close: pjCloseSheet, flush: pjFlush, lastExport: function () { return window.__pjLastExport || null; } };
+/* ---- v2.11: Scan Pages ----
+   Point the phone camera at book pages, read the text on the phone (Tesseract OCR, no paid
+   service), check it, then add it to a project. Plain old JavaScript for Chrome 62 and up.
+   The reader (ocr/) and each language's data load only when first used. */
+var SCAN_LANGS = [['eng', 'English'], ['rus', 'Russian'], ['fra', 'French'], ['deu', 'German'], ['rus+eng', 'Russian and English']];
+var SCAN_MB = { eng: 2.9, rus: 2.7, fra: 0.7, deu: 1.3 };
+var SCAN_DIR = 'ocr/';
+var SCAN_L = 'A-Za-z\u00C0-\u024F\u0400-\u04FF\u1E00-\u1EFF';
+var scan = null, scanWorkerP = null, scanWorkerLang = '', scanLogger = null, scanStream = null, scanThumbBusy = false;
+
+function scanLangName(code) { var n = ''; each(SCAN_LANGS, function (l) { if (l[0] === code) n = l[1]; }); return n || code; }
+function scanMB(code) { var t = 0; each(code.split('+'), function (c) { t += SCAN_MB[c] || 0; }); return Math.round(t * 10) / 10; }
+function scanNew(projectId, chap) {
+  var pref = {};
+  try { pref = JSON.parse(localStorage.getItem('pdpress.scan') || '{}') || {}; } catch (e) {}
+  scan = {
+    pages: [], lang: pref.lang || 'eng', bw: pref.bw !== false, contrast: pref.contrast !== false, straighten: pref.straighten !== false,
+    hyph: pref.hyph !== false, para: pref.para !== false, strip: pref.strip !== false, keep: !!pref.keep,
+    step: 'pages', projectId: projectId || '', where: chap >= 0 ? 'c' + chap : 'new', field: 'original', title: '',
+    result: '', edited: false, retake: null, stop: false, run: 0
+  };
+}
+function scanSavePref() {
+  try { localStorage.setItem('pdpress.scan', JSON.stringify({ lang: scan.lang, bw: scan.bw, contrast: scan.contrast, straighten: scan.straighten, hyph: scan.hyph, para: scan.para, strip: scan.strip, keep: scan.keep })); } catch (e) {}
+}
+function scanOpen(projectId, chap) {
+  if (pjMode !== 'idb') { toast('This browser cannot save book projects.'); return; }
+  if (pjCur) pjFlush();
+  scanNew(projectId, chap);
+  scanRender();
+  $('scanSheet').className = 'sheet editor';
+  $('scanSheet').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function scanClose(force) {
+  if (!scan) return;
+  if (!force && scan.pages.length && scan.step !== 'done' && !window.confirm('Leave without adding these pages? The photos and text here will be lost.')) return;
+  scanStopCamera(); scanStopWorker();
+  each(scan.pages, function (pg) { scanFreeThumb(pg); });
+  scan = null;
+  $('scanSheet').className = 'sheet editor hidden';
+  $('scanBody').innerHTML = '';
+  if (!pjCur) document.body.style.overflow = '';
+}
+function scanFreeThumb(pg) { if (pg.thumb) { try { URL.revokeObjectURL(pg.thumb); } catch (e) {} pg.thumb = ''; } }
+function scanResetRead(all, pg) {
+  each(all ? scan.pages : [pg], function (x) { x.read = false; x.text = ''; });
+  scan.edited = false;
+}
+
+/* ---------- pictures ---------- */
+function scanAddFiles(files, how) {
+  if (!scan) return;
+  var added = 0;
+  each(files, function (f) {
+    if (!f || (f.type && !/^image\//.test(f.type))) return;
+    if (scan.retake) {
+      var pg = scanPage(scan.retake); scan.retake = null;
+      if (pg) { pg.blob = f; pg.rot = 0; scanFreeThumb(pg); scanResetRead(false, pg); added++; return; }
+    }
+    scan.pages.push({ id: 's' + uid().slice(1), blob: f, rot: 0, thumb: '', text: '', read: false });
+    added++;
+  });
+  scan.retake = null;
+  if (!added) { toast('That was not a picture. Pick a photo of a page.'); return; }
+  if (scan.step === 'review') scan.step = 'pages';
+  scanRender();
+  if (how === 'camera') toast('Page added');
+  scanThumbs();
+}
+function scanPage(id) { var r = null; each(scan.pages, function (p) { if (p.id === id) r = p; }); return r; }
+function scanLoadImg(blob) {
+  return new Promise(function (res, rej) {
+    var u = URL.createObjectURL(blob), im = new Image();
+    im.onload = function () { res({ im: im, url: u }); };
+    im.onerror = function () { try { URL.revokeObjectURL(u); } catch (e) {} rej(new Error('This picture could not be opened.')); };
+    im.src = u;
+  });
+}
+/* Scale, turn, and clean up one page. Returns a canvas. */
+function scanPrep(pg, maxSide, opts) {
+  opts = opts || scan;
+  return scanLoadImg(pg.blob).then(function (o) {
+    var im = o.im, w = im.naturalWidth || im.width, h = im.naturalHeight || im.height;
+    var s = Math.min(1, maxSide / Math.max(w, h)), cw = Math.max(1, Math.round(w * s)), ch = Math.max(1, Math.round(h * s));
+    var r = ((pg.rot % 360) + 360) % 360, c = document.createElement('canvas'), x = c.getContext('2d');
+    c.width = (r === 90 || r === 270) ? ch : cw; c.height = (r === 90 || r === 270) ? cw : ch;
+    x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+    x.translate(c.width / 2, c.height / 2); x.rotate(r * Math.PI / 180); x.drawImage(im, -cw / 2, -ch / 2, cw, ch);
+    try { URL.revokeObjectURL(o.url); } catch (e) {}
+    if (opts.bw || opts.contrast) scanClean(c, opts.bw, opts.contrast);
+    return c;
+  });
+}
+/* Grayscale and a simple auto-contrast (stretch the darkest 1% to black and the lightest 1% to white). */
+function scanClean(c, bw, contrast) {
+  var x = c.getContext('2d'), d = x.getImageData(0, 0, c.width, c.height), a = d.data, n = a.length / 4, hist = new Uint32Array(256), i, lo = 0, hi = 255;
+  for (i = 0; i < a.length; i += 4) hist[(a[i] * 77 + a[i + 1] * 150 + a[i + 2] * 29) >> 8]++;
+  if (contrast) {
+    var cut = n * 0.01, acc = 0;
+    for (lo = 0; lo < 255; lo++) { acc += hist[lo]; if (acc > cut) break; }
+    acc = 0; for (hi = 255; hi > 0; hi--) { acc += hist[hi]; if (acc > cut) break; }
+    if (hi - lo < 16) { lo = 0; hi = 255; }
+  }
+  var lut = new Uint8ClampedArray(256), k = 255 / Math.max(1, hi - lo);
+  for (i = 0; i < 256; i++) lut[i] = contrast ? (i - lo) * k : i;
+  for (i = 0; i < a.length; i += 4) {
+    if (bw) { var y = lut[(a[i] * 77 + a[i + 1] * 150 + a[i + 2] * 29) >> 8]; a[i] = a[i + 1] = a[i + 2] = y; }
+    else { a[i] = lut[a[i]]; a[i + 1] = lut[a[i + 1]]; a[i + 2] = lut[a[i + 2]]; }
+  }
+  x.putImageData(d, 0, 0);
+}
+function scanThumbs() {
+  if (scanThumbBusy || !scan) return;
+  var pg = null; each(scan.pages, function (p) { if (!pg && !p.thumb && !p.bad) pg = p; });
+  if (!pg) return;
+  scanThumbBusy = true;
+  var s0 = scan;
+  scanPrep(pg, 320).then(function (c) {
+    return new Promise(function (res) { if (c.toBlob) c.toBlob(res, 'image/jpeg', 0.8); else res(null); }).then(function (b) {
+      if (s0 !== scan) return;
+      pg.thumb = b ? URL.createObjectURL(b) : c.toDataURL('image/jpeg', 0.8);
+      var im = $('scanThumb-' + pg.id); if (im) im.src = pg.thumb;
+    });
+  }, function () { pg.bad = true; var im = $('scanThumb-' + pg.id); if (im) im.alt = 'Could not open'; })
+    .then(function () { scanThumbBusy = false; scanThumbs(); }, function () { scanThumbBusy = false; });
+}
+function scanStartCamera() {
+  var md = navigator.mediaDevices;
+  if (!md || !md.getUserMedia) { toast('Live camera is not available here. Use Take a photo instead.'); return; }
+  md.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1440 } }, audio: false }).then(function (s) {
+    if (!scan) { each(s.getTracks(), function (t) { t.stop(); }); return; }
+    scanStream = s; scanRender();
+  }, function () { toast('The camera did not open. Use Take a photo instead.'); });
+}
+function scanStopCamera() { if (scanStream) { each(scanStream.getTracks(), function (t) { try { t.stop(); } catch (e) {} }); scanStream = null; } }
+function scanSnap() {
+  var v = $('scanVideo');
+  if (!v || !v.videoWidth) { toast('The camera is not ready yet.'); return; }
+  var c = document.createElement('canvas'); c.width = v.videoWidth; c.height = v.videoHeight;
+  c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+  var add = function (b) { if (b) scanAddFiles([b], 'camera'); else toast('Could not take the picture.'); };
+  if (c.toBlob) c.toBlob(add, 'image/jpeg', 0.92);
+  else { var bin = atob(c.toDataURL('image/jpeg', 0.92).split(',')[1]), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); add(new Blob([u], { type: 'image/jpeg' })); }
+}
+
+/* ---------- reading (OCR) ---------- */
+function scanAbs(p) { var a = document.createElement('a'); a.href = p; return a.href; }
+function scanLoadLib() {
+  if (window.Tesseract) return Promise.resolve();
+  return new Promise(function (res, rej) {
+    var s = document.createElement('script');
+    s.src = SCAN_DIR + 'tesseract.min.js';
+    s.onload = function () { window.Tesseract ? res() : rej(new Error('The page reader did not start.')); };
+    s.onerror = function () { s.parentNode.removeChild(s); rej(new Error('Could not load the page reader. Connect to the internet once and try again.')); };
+    document.head.appendChild(s);
+  });
+}
+function scanGetWorker(lang) {
+  if (scanWorkerP && scanWorkerLang === lang) return scanWorkerP;
+  scanStopWorker();
+  if (!scanWasmOk()) return Promise.reject(new Error('This version of Chrome is too old to read pages. Update Chrome in the Play Store (version 67 or newer) and try again.'));
+  scanWorkerLang = lang;
+  var p = scanLoadLib().then(function () {
+    var ready = window.Tesseract.createWorker(lang, 1, {
+      workerPath: scanAbs(SCAN_DIR + 'worker.min.js'), corePath: scanAbs(SCAN_DIR), langPath: scanAbs(SCAN_DIR + 'lang'),
+      workerBlobURL: false, gzip: true, logger: function (m) { if (scanLogger) scanLogger(m); }
+    });
+    /* If the reader never starts (no internet for the first download, or a phone problem), say so instead of waiting forever. */
+    var limit = new Promise(function (res, rej) { setTimeout(function () { rej(new Error('The page reader did not start. Check the internet connection for the first use, then try again.')); }, 240000); });
+    return Promise.race([ready, limit]);
+  });
+  scanWorkerP = p;
+  p['catch'](function () { if (scanWorkerP === p) { scanWorkerP = null; scanWorkerLang = ''; } });
+  return p;
+}
+/* The reader needs WebAssembly with sign-extension instructions (Chrome 67 and newer). */
+function scanWasmOk() {
+  try {
+    if (typeof WebAssembly !== 'object' || !WebAssembly.validate) return false;
+    return WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 0, 1, 127, 3, 2, 1, 0, 10, 7, 1, 5, 0, 65, 0, 192, 11]));
+  } catch (e) { return false; }
+}
+function scanStopWorker() {
+  var p = scanWorkerP; scanWorkerP = null; scanWorkerLang = '';
+  if (p) p.then(function (w) { try { w.terminate(); } catch (e) {} }, function () {});
+}
+function scanProgress(msg, frac) {
+  var m = $('scanMsg'), b = $('scanBarFill');
+  if (m && msg != null) m.textContent = msg;
+  if (b && frac != null) b.style.width = Math.round(Math.max(0, Math.min(1, frac)) * 100) + '%';
+}
+function scanRead() {
+  if (!scan || !scan.pages.length) return;
+  var todo = scan.pages.filter(function (p) { return !p.read; });
+  if (!todo.length) { scanToReview(); return; }
+  scanStopCamera();
+  var s0 = scan, run = ++scan.run, n = todo.length, cur = 0, lang = scan.lang;
+  scan.step = 'reading'; scan.stop = false; scanRender();
+  var names = lang.split('+').map(scanLangName).join(' and ');
+  scanProgress('Getting the page reader ready. The first time, this downloads the ' + names + ' reading data (about ' + scanMB(lang) + ' MB). After that it works offline.', 0.02);
+  scanLogger = function (m) {
+    if (s0 !== scan || run !== scan.run) return;
+    if (m.status === 'recognizing text') scanProgress('Reading page ' + (cur + 1) + ' of ' + n, (cur + (m.progress || 0)) / n);
+    else if (/traineddata/.test(m.status || '') && m.progress < 1) scanProgress('Downloading the ' + names + ' reading data (about ' + scanMB(lang) + ' MB). This happens once.', 0.02);
+  };
+  var chain = scanGetWorker(lang);
+  each(todo, function (pg, i) {
+    chain = chain.then(function (w) {
+      if (s0 !== scan || scan.stop || run !== scan.run) throw new Error('stopped');
+      cur = i; scanProgress('Reading page ' + (i + 1) + ' of ' + n, i / n);
+      return scanPrep(pg, 2400).then(function (c) { return w.recognize(c, { rotateAuto: !!scan.straighten }, { text: true, blocks: true }); }).then(function (r) {
+        var d = (r && r.data) || {};
+        pg.text = scanFromLines(d.lines) || d.text || ''; pg.conf = d.confidence || 0; pg.read = true;
+        return w;
+      });
+    });
+  });
+  chain.then(function () {
+    if (s0 !== scan || run !== scan.run) return;
+    scanToReview();
+  }, function (e) {
+    if (s0 !== scan || run !== scan.run) return;
+    scan.step = 'pages'; scanRender();
+    if (e && e.message === 'stopped') toast('Stopped. Pages already read are kept.');
+    else { scanStopWorker(); toast('Could not read the pages: ' + ((e && e.message) || e || 'unknown problem')); }
+  });
+}
+function scanToReview() {
+  scan.step = 'review'; scan.result = scanBuild(); scan.edited = false;
+  if (!scan.title) scan.title = scanGuessTitle(scan.result);
+  scanRender(); $('scanSheet').scrollTop = 0;
+}
+
+/* Rebuild a page's text from the reader's lines, starting a new paragraph where the printed page
+   does: a bigger gap between lines, an indented first line, or a short line that ends a sentence. */
+function scanFromLines(lines) {
+  if (!lines || !lines.length) return '';
+  var L = [];
+  each(lines, function (l) { var t = String(l.text || '').replace(/^\s+|\s+$/g, ''), b = l.bbox; if (t && b) L.push({ t: t, x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1 }); });
+  if (!L.length) return '';
+  function med(a) { a = a.slice().sort(function (x, y) { return x - y; }); return a.length ? a[Math.floor(a.length / 2)] : 0; }
+  function pct(a, q) { a = a.slice().sort(function (x, y) { return x - y; }); return a.length ? a[Math.min(a.length - 1, Math.floor(a.length * q))] : 0; }
+  var hs = L.map(function (l) { return l.y1 - l.y0; }), gaps = [], i;
+  for (i = 1; i < L.length; i++) gaps.push(L[i].y0 - L[i - 1].y1);
+  var mh = med(hs) || 1, mg = gaps.length ? pct(gaps, 0.25) : 0, left = pct(L.map(function (l) { return l.x0; }), 0.2), right = pct(L.map(function (l) { return l.x1; }), 0.8), width = Math.max(1, right - left);
+  var out = L[0].t;
+  for (i = 1; i < L.length; i++) {
+    var a = L[i - 1], b = L[i], gap = b.y0 - a.y1;
+    var brk = gap > mg + mh * 0.6 || (b.x0 - left > mh * 0.8 && b.x0 - left < width * 0.3) || (right - a.x1 > width * 0.15 && /[.!?\u2026:\u00BB"\u201D]$/.test(a.t));
+    out += (brk ? '\n\n' : '\n') + b.t;
+  }
+  return out;
+}
+/* ---------- text clean-up ---------- */
+function scanNorm(t) { return String(t || '').replace(/\r\n?/g, '\n').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/^\s+|\s+$/g, ''); }
+function scanKey(line) { return String(line).toLowerCase().replace(/[^a-z\u00e0-\u024f\u0430-\u045f\u0460-\u04ff]+/g, ''); }
+function scanIsNum(line) { var s = String(line).replace(/[\s.,:;'"*()\[\]|\u2013\u2014-]+/g, ''); return /^\d{1,4}$/.test(s) || /^[ivxlc]{1,6}$/.test(s); }
+function scanLooksHeader(line) {
+  var t = String(line).replace(/^\s+|\s+$/g, '');
+  if (t.length > 70 || !/^\d{1,4}\s+\S|\S\s+\d{1,4}$/.test(t)) return false;
+  var letters = t.replace(/[^A-Za-z\u00C0-\u024F\u0400-\u04FF]/g, ''), up = letters.replace(/[^A-Z\u00C0-\u00DE\u0400-\u042F]/g, '');
+  return letters.length >= 3 && up.length / letters.length > 0.6;
+}
+function scanStrip(texts) {
+  var lines = texts.map(function (t) { return scanNorm(t).split('\n'); });
+  function firstIdx(L) { for (var i = 0; i < L.length; i++) if (/\S/.test(L[i])) return i; return -1; }
+  function lastIdx(L) { for (var i = L.length - 1; i >= 0; i--) if (/\S/.test(L[i])) return i; return -1; }
+  var tops = lines.map(function (L) { var i = firstIdx(L); return i < 0 ? '' : scanKey(L[i]); });
+  var bots = lines.map(function (L) { var i = lastIdx(L); return i < 0 ? '' : scanKey(L[i]); });
+  function repeats(keys, k, me) { if (!k || k.length < 3) return false; for (var j = 0; j < keys.length; j++) if (j !== me && keys[j] === k) return true; return false; }
+  return lines.map(function (L, me) {
+    var i, guard = 0;
+    while (guard++ < 3 && (i = firstIdx(L)) >= 0 && L[i].length < 80 && (scanIsNum(L[i]) || scanLooksHeader(L[i]) || (guard === 1 && repeats(tops, scanKey(L[i]), me)))) L.splice(i, 1);
+    guard = 0;
+    while (guard++ < 2 && (i = lastIdx(L)) >= 0 && L[i].length < 80 && (scanIsNum(L[i]) || (guard === 1 && repeats(bots, scanKey(L[i]), me)))) L.splice(i, 1);
+    return L.join('\n');
+  });
+}
+function scanBuild() {
+  var texts = scan.pages.map(function (p) { return scanNorm(p.text); });
+  if (scan.strip) texts = scanStrip(texts);
+  var out = '';
+  each(texts, function (t) {
+    t = scanNorm(t); if (!t) return;
+    if (!out) { out = t; return; }
+    var hy = new RegExp('[' + SCAN_L + '][-\u00AD\u00AC]$').test(out), ends = /[.!?\u2026:;\u00BB"\u201D'\)\]]$/.test(out), low = new RegExp('^[a-z\u00DF-\u00FF\u0430-\u045F\u0463\u0473\u0475]').test(t);
+    out += (hy || (scan.para && !ends && low)) ? '\n' : '\n\n';
+    out += t;
+  });
+  if (scan.hyph) out = out.replace(new RegExp('([' + SCAN_L + '])[-\u00AD\u00AC]\\n[ \\t]*([' + SCAN_L + '])', 'g'), '$1$2');
+  if (scan.para) {
+    var paras = out.split(/\n[ \t]*\n/).map(function (p) { return p.replace(/[ \t]*\n[ \t]*/g, ' '); }), merged = [];
+    /* The reader sometimes leaves a blank line in the middle of a sentence. Join it back when the
+       part before has no closing mark and the next part starts with a small letter. */
+    each(paras, function (p) {
+      var prev = merged.length ? merged[merged.length - 1] : '';
+      if (prev && !/[.!?\u2026:;\u00BB"\u201D'\)\]]$/.test(prev) && new RegExp('^[a-z\u00DF-\u00FF\u0430-\u045F\u0463\u0473\u0475]').test(p)) merged[merged.length - 1] = prev + ' ' + p;
+      else merged.push(p);
+    });
+    out = merged.join('\n\n');
+  }
+  return out;
+}
+function scanGuessTitle(t) {
+  var first = String(t || '').split('\n')[0].replace(/^\s+|\s+$/g, '');
+  return first && first.length <= 60 && !/[.,;]$/.test(first) ? first : 'Scanned pages';
+}
+
+/* ---------- screen ---------- */
+function scanCheck(id, on, label) { return '<label class="scan-opt"><input type="checkbox" id="' + id + '"' + (on ? ' checked' : '') + '> ' + esc(label) + '</label>'; }
+function scanRender() {
+  var el = $('scanBody'); if (!el || !scan) return;
+  var h = '<div class="pj-head"><div class="eyebrow">Book projects</div><h2 class="pj-h">Scan pages</h2>' +
+    '<div class="small muted">Take a photo of each page. PD Press reads the words on this phone, then you check them and add them to a book.</div></div>';
+  if (scan.step === 'reading') {
+    h += '<div class="card"><p class="mt0" id="scanMsg">Getting ready</p><div class="scan-bar"><i id="scanBarFill"></i></div>' +
+      '<p class="small muted">Older phones can take a minute or more for each page. Keep this screen open.</p><button class="btn ghost" id="scanStop">Stop</button></div>';
+  } else if (scan.step === 'review') {
+    h += '<div class="card"><h3 class="ed-h mt0">Tidy the text</h3>' + scanCheck('scanHy', scan.hyph, 'Join words split at line ends') + scanCheck('scanPa', scan.para, 'Join lines into paragraphs') +
+      scanCheck('scanSr', scan.strip, 'Remove page numbers and running headers') +
+      '<p class="small muted" style="margin-bottom:0">Spelling and dashes are kept as printed. Check names, numbers and old spellings against the photo.</p></div>';
+    each(scan.pages, function (pg, i) {
+      h += '<div class="card scan-rev"><div class="scan-page">' + (pg.thumb ? '<img class="scan-thumb small" alt="Page photo" src="' + pg.thumb + '">' : '') +
+        '<div class="scan-info"><div class="item-title">Page ' + (i + 1) + '</div><div class="small muted">' + (pg.text ? commas(pjWords(pg.text)) + ' words read' : 'No words found. Try a sharper photo.') + '</div></div></div>' +
+        '<label class="f"><span>Text read from this page</span><textarea class="pj-text scan-ptext" rows="8" data-stext="' + pg.id + '">' + esc(pg.text) + '</textarea></label></div>';
+    });
+    h += '<div class="card"><label class="f"><span>Text to add</span><textarea class="pj-text" id="scanResult" rows="12">' + esc(scan.result) + '</textarea><em id="scanWc">' + commas(pjWords(scan.result)) + ' words</em></label>' +
+      (scan.edited ? '<p class="small muted">You changed this box, so edits to the pages above do not show here.</p><button class="btn ghost small" id="scanRebuild">Rebuild from the pages</button>' : '') + '</div>';
+    h += scanAddHtml();
+    h += '<div class="btns"><button class="btn ghost" id="scanBackPages">Back to pages</button></div>';
+  } else {
+    if (!scanWasmOk()) h += '<div class="note">This version of Chrome is too old to read pages. Update Chrome in the Play Store (version 67 or newer), then come back. You can still add photos now.</div>';
+    h += '<div class="card"><label class="f"><span>Language of the pages</span><select id="scanLang">' +
+      SCAN_LANGS.map(function (l) { return '<option value="' + l[0] + '"' + (l[0] === scan.lang ? ' selected' : '') + '>' + l[1] + '</option>'; }).join('') + '</select>' +
+      '<em>The first time you use a language, PD Press downloads its reading data, about ' + scanMB(scan.lang) + ' MB. After that it works offline.</em></label>' +
+      scanCheck('scanBw', scan.bw, 'Black and white') + scanCheck('scanCt', scan.contrast, 'Boost contrast') + scanCheck('scanSt', scan.straighten, 'Straighten a slight tilt') + '</div>';
+    h += '<div class="card"><div class="btns"><button class="btn" id="scanCamBtn">Take a photo</button><button class="btn ghost" id="scanPickBtn">Pick photos</button>' +
+      (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && !scanStream ? '<button class="btn ghost" id="scanLiveBtn">Use live camera</button>' : '') + '</div>' +
+      '<p class="small muted" style="margin-bottom:0">Lay the page flat in good light, hold the phone straight above it, and fill the screen with the page. One page per photo works best.</p></div>';
+    if (scanStream) h += '<div class="card scan-live"><video id="scanVideo" class="scan-video" autoplay playsinline muted></video><div class="btns"><button class="btn" id="scanSnap">Snap page</button><button class="btn ghost" id="scanLiveOff">Close camera</button></div></div>';
+    if (!scan.pages.length) h += '<p class="small muted scan-empty">No pages yet.</p>';
+    each(scan.pages, function (pg, i) {
+      var last = i === scan.pages.length - 1;
+      h += '<div class="card scan-card"><div class="scan-page"><img class="scan-thumb" id="scanThumb-' + pg.id + '" alt="Page photo"' + (pg.thumb ? ' src="' + pg.thumb + '"' : '') + '>' +
+        '<div class="scan-info"><div class="item-title">Page ' + (i + 1) + '</div><div class="small muted">' + (pg.bad ? 'This photo could not be opened.' : pg.read ? 'Read' : 'Not read yet') + '</div>' +
+        '<div class="btns scan-btns"><button class="btn ghost small" data-sup="' + pg.id + '"' + (i ? '' : ' disabled') + '>Move up</button><button class="btn ghost small" data-sdown="' + pg.id + '"' + (last ? ' disabled' : '') + '>Move down</button>' +
+        '<button class="btn ghost small" data-srot="' + pg.id + '">Turn</button><button class="btn ghost small" data-sretake="' + pg.id + '">Retake</button><button class="btn ghost small" data-sdel="' + pg.id + '">Delete</button></div></div></div></div>';
+    });
+    if (scan.pages.length) h += '<div class="btns"><button class="btn" id="scanReadBtn">Read the text</button></div>';
+  }
+  el.innerHTML = h;
+  if (scanStream) { var v = $('scanVideo'); if (v) { try { v.srcObject = scanStream; } catch (e) { v.src = URL.createObjectURL(scanStream); } if (v.play) { var pr = v.play(); if (pr && pr['catch']) pr['catch'](function () {}); } } }
+}
+function scanAddHtml() {
+  var opts = '<option value="">A new project</option>' + pjList.map(function (p) { return '<option value="' + esc(p.id) + '"' + (p.id === scan.projectId ? ' selected' : '') + '>' + esc(p.title || 'Untitled') + '</option>'; }).join('');
+  var p = scan.projectId ? pjFind(scan.projectId) : null, chs = p ? p.chapters : [];
+  if (scan.where !== 'new' && !chs[+scan.where.slice(1)]) scan.where = 'new';
+  var where = '<option value="new"' + (scan.where === 'new' ? ' selected' : '') + '>As a new chapter</option>' + chs.map(function (c, j) { return '<option value="c' + j + '"' + (scan.where === 'c' + j ? ' selected' : '') + '>At the end of: ' + esc(c.title || 'Untitled chapter') + '</option>'; }).join('');
+  return '<div class="card" id="scanAddCard"><h3 class="ed-h mt0">Add to a project</h3>' +
+    '<label class="f"><span>Project</span><select id="scanProj">' + opts + '</select></label>' +
+    '<label class="f"><span>Where</span><select id="scanWhere">' + where + '</select></label>' +
+    (scan.where === 'new' ? '<label class="f"><span>' + (p ? 'Chapter title' : 'Book and chapter title') + '</span><input type="text" id="scanTitle" value="' + esc(scan.title) + '"></label>' : '') +
+    '<label class="f"><span>Put the text in</span><select id="scanField"><option value="original"' + (scan.field === 'original' ? ' selected' : '') + '>Original text box</option><option value="text"' + (scan.field === 'text' ? ' selected' : '') + '>Translation or annotated text box</option></select></label>' +
+    scanCheck('scanKeep', scan.keep, 'Keep the page photos in the project files') +
+    '<div class="btns"><button class="btn" id="scanAdd">Add to project</button></div></div>';
+}
+function scanPad(n) { return (n < 10 ? '0' : '') + n; }
+function scanAdd() {
+  var text = String(scan.result || '').replace(/^\s+|\s+$/g, '');
+  if (!text) { toast('There is no text to add yet.'); return; }
+  if (pjCur) pjFlush();
+  var p = scan.projectId ? pjFind(scan.projectId) : null, isNew = !p, title = String(scan.title || '').replace(/^\s+|\s+$/g, '') || 'Scanned pages';
+  if (isNew) p = pjNorm({ title: title, annotator: 'PD Press' });
+  var field = scan.field === 'text' ? 'text' : 'original', idx, undo;
+  if (scan.where === 'new' || !p.chapters[+scan.where.slice(1)]) {
+    var ch = { id: 'c' + uid().slice(1), title: title, original: '', text: '' }; ch[field] = text;
+    p.chapters.push(ch); idx = p.chapters.length - 1;
+    undo = function () { p.chapters.splice(idx, 1); };
+  } else {
+    idx = +scan.where.slice(1); var c = p.chapters[idx], before = c[field] || '';
+    c[field] = before ? before.replace(/\s+$/, '') + '\n\n' + text : text;
+    undo = function () { c[field] = before; };
+  }
+  var recs = [], slug = title.toLowerCase().replace(/[^a-z0-9\u0430-\u044f]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'scan';
+  if (scan.keep) each(scan.pages, function (pg, i) {
+    var ext = /png/.test(pg.blob.type || '') ? '.png' : '.jpg';
+    var r = pjFileRec(p, pg.blob, 'scan-' + slug + '-page-' + scanPad(i + 1) + ext, 'other'); recs.push(r); p.files.push(pjMeta(r));
+  });
+  var oldUpd = p.updated; p.updated = new Date().toISOString();
+  var btn = $('scanAdd'); if (btn) btn.disabled = true;
+  pjWrite(p, recs).then(function () {
+    if (isNew) pjList.unshift(p);
+    pjSort(); pjAskKeep();
+    scan.step = 'done'; scanSavePref();
+    toast(isNew ? 'Saved as a new project: ' + p.title : 'Added to ' + (p.title || 'the project'));
+    scanClose(true);
+    if (pjCur && pjCur.id !== p.id) pjCloseSheet();
+    if (!pjCur) pjOpenProject(p.id); else pjFiles = pjFiles.concat(recs);
+    pjTab = 'text'; pjChap = idx; pjRenderSheet(); $('pjSheet').scrollTop = 0;
+    renderProjects();
+  }, function (e) {
+    undo(); var ids = recs.map(function (r) { return r.id; }); p.files = p.files.filter(function (f) { return ids.indexOf(f.id) < 0; }); p.updated = oldUpd;
+    if (btn) btn.disabled = false;
+    toast('Could not save: ' + pjErr(e));
+  });
+}
+function scanClick(e) {
+  var b = e.target.closest ? e.target.closest('button') : null; if (!b || !scan || b.disabled) return;
+  var id = b.id, a;
+  if (id === 'scanCamBtn') { scan.retake = null; $('scanCam').value = ''; $('scanCam').click(); return; }
+  if (id === 'scanPickBtn') { scan.retake = null; $('scanPick').value = ''; $('scanPick').click(); return; }
+  if (id === 'scanLiveBtn') { scanStartCamera(); return; }
+  if (id === 'scanLiveOff') { scanStopCamera(); scanRender(); return; }
+  if (id === 'scanSnap') { scanSnap(); return; }
+  if (id === 'scanReadBtn') { scanRead(); return; }
+  if (id === 'scanStop') { scan.stop = true; scan.run++; scanStopWorker(); scan.step = 'pages'; scanRender(); toast('Stopped. Pages already read are kept.'); return; }
+  if (id === 'scanBackPages') { scan.step = 'pages'; scanRender(); scanThumbs(); return; }
+  if (id === 'scanRebuild') { scan.result = scanBuild(); scan.edited = false; scanRender(); return; }
+  if (id === 'scanAdd') { scanAdd(); return; }
+  var pages = scan.pages, i;
+  function at(x) { for (var k = 0; k < pages.length; k++) if (pages[k].id === x) return k; return -1; }
+  if ((a = b.getAttribute('data-sup')) && (i = at(a)) > 0) { pages.splice(i - 1, 0, pages.splice(i, 1)[0]); scan.edited = false; scanRender(); return; }
+  if ((a = b.getAttribute('data-sdown')) && (i = at(a)) >= 0 && i < pages.length - 1) { pages.splice(i + 1, 0, pages.splice(i, 1)[0]); scan.edited = false; scanRender(); return; }
+  if ((a = b.getAttribute('data-srot')) && (i = at(a)) >= 0) { pages[i].rot = (pages[i].rot + 90) % 360; scanFreeThumb(pages[i]); scanResetRead(false, pages[i]); scanRender(); scanThumbs(); return; }
+  if ((a = b.getAttribute('data-sretake'))) { scan.retake = a; $('scanCam').value = ''; $('scanCam').click(); return; }
+  if ((a = b.getAttribute('data-sdel')) && (i = at(a)) >= 0) { if (!window.confirm('Delete this page?')) return; scanFreeThumb(pages[i]); pages.splice(i, 1); scanRender(); return; }
+}
+function scanChange(e) {
+  var t = e.target; if (!scan || !t) return;
+  var id = t.id, a;
+  if (id === 'scanLang') { scan.lang = t.value; scanResetRead(true); scanSavePref(); scanRender(); scanThumbs(); return; }
+  if (id === 'scanBw' || id === 'scanCt' || id === 'scanSt') {
+    scan[id === 'scanBw' ? 'bw' : id === 'scanCt' ? 'contrast' : 'straighten'] = t.checked; scanSavePref();
+    scanResetRead(true); each(scan.pages, function (pg) { scanFreeThumb(pg); }); scanRender(); scanThumbs(); return;
+  }
+  if (id === 'scanHy' || id === 'scanPa' || id === 'scanSr') {
+    scan[id === 'scanHy' ? 'hyph' : id === 'scanPa' ? 'para' : 'strip'] = t.checked; scanSavePref();
+    scan.result = scanBuild(); scan.edited = false; var st = $('scanSheet').scrollTop; scanRender(); $('scanSheet').scrollTop = st; return;
+  }
+  if (id === 'scanProj') { scan.projectId = t.value; scan.where = 'new'; scanRerenderAdd(); return; }
+  if (id === 'scanWhere') { scan.where = t.value; scanRerenderAdd(); return; }
+  if (id === 'scanField') { scan.field = t.value; return; }
+  if (id === 'scanKeep') { scan.keep = t.checked; return; }
+}
+function scanRerenderAdd() { var c = $('scanAddCard'); if (!c) return; var d = document.createElement('div'); d.innerHTML = scanAddHtml(); c.parentNode.replaceChild(d.firstChild, c); }
+function scanInput(e) {
+  var t = e.target, a; if (!scan || !t) return;
+  if ((a = t.getAttribute && t.getAttribute('data-stext'))) {
+    var pg = scanPage(a); if (!pg) return; pg.text = t.value;
+    if (!scan.edited) { scan.result = scanBuild(); var r = $('scanResult'); if (r) r.value = scan.result; var w = $('scanWc'); if (w) w.textContent = commas(pjWords(scan.result)) + ' words'; }
+    return;
+  }
+  if (t.id === 'scanResult') {
+    scan.result = t.value; var w2 = $('scanWc'); if (w2) w2.textContent = commas(pjWords(t.value)) + ' words';
+    if (!scan.edited) { scan.edited = true; }
+    return;
+  }
+  if (t.id === 'scanTitle') { scan.title = t.value; return; }
+}
+function scanBind() {
+  $('scanBack').onclick = function () { scanClose(false); };
+  $('scanBody').addEventListener('click', scanClick);
+  $('scanBody').addEventListener('change', scanChange);
+  $('scanBody').addEventListener('input', scanInput);
+  function files(inp) { return function () { var fs = []; for (var i = 0; i < inp.files.length; i++) fs.push(inp.files[i]); inp.value = ''; if (fs.length) scanAddFiles(fs, inp.id === 'scanCam' ? 'camera' : 'pick'); else scan && (scan.retake = null); }; }
+  $('scanCam').onchange = files($('scanCam'));
+  $('scanPick').onchange = files($('scanPick'));
+  $('pj-scan').onclick = function () { scanOpen('', -1); };
+}
+scanBind();
+window.__pd.scan = { wasmOk: scanWasmOk, open: scanOpen, state: function () { return scan; }, build: function (texts, o) { var keep = scan; scan = { pages: texts.map(function (t) { return { text: t }; }), hyph: o.hyph, para: o.para, strip: o.strip }; var r = scanBuild(); scan = keep; return r; } };
+
 /* v2.10.1: if the bottom bar is off screen or covered, put the section buttons at the top. */
 function pdNavCheck() {
   var nav = document.querySelector('.nav'), d = document.documentElement;

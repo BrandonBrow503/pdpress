@@ -1,6 +1,6 @@
 /* Public Domain Press offline cache. Optional: the app works without it.
    Same-site files only. Catalog searches (gutendex.com) always go to the network. */
-var CACHE = 'pdpress-v14', INBOX = 'pdpress-inbox';
+var CACHE = 'pdpress-v15', INBOX = 'pdpress-inbox', OCR = 'pdpress-ocr-5.1.1';
 var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './study-bg-2.jpg', './study-bg.jpg', './library-bg.jpg',
   './fonts/federo-latin.woff2', './fonts/marcellus-sc-latin.woff2', './fonts/josefin-sans-latin.woff2',
   './fonts/poiret-one-latin.woff2', './fonts/limelight-latin.woff2'];
@@ -9,7 +9,7 @@ self.addEventListener('install', function (e) {
 });
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
-    return Promise.all(keys.map(function (k) { if (k !== CACHE && k !== INBOX) return caches.delete(k); }));
+    return Promise.all(keys.map(function (k) { if (k !== CACHE && k !== INBOX && k !== OCR) return caches.delete(k); }));
   }).then(function () { return self.clients.claim(); }));
 });
 self.addEventListener('fetch', function (e) {
@@ -30,7 +30,20 @@ self.addEventListener('fetch', function (e) {
 });
 self.addEventListener('fetch', function (e) {
   var req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+  var u = new URL(req.url);
+  if (req.method !== 'GET' || u.origin !== self.location.origin) return;
+  // v2.11 page reader (ocr/): loaded only when Scan pages is used. The reader files are kept
+  // in their own cache so app updates do not download them again. Language data is kept by
+  // the reader itself (IndexedDB), so it is not stored twice.
+  if (/\/ocr\//.test(u.pathname)) {
+    if (/\/ocr\/lang\//.test(u.pathname)) return;
+    e.respondWith(caches.open(OCR).then(function (c) {
+      return c.match(req).then(function (hit) {
+        return hit || fetch(req).then(function (resp) { if (resp && resp.ok) c.put(req, resp.clone()); return resp; });
+      });
+    }));
+    return;
+  }
   // Network first so updates show up right away; fall back to the cached copy offline.
   e.respondWith(fetch(req).then(function (resp) {
     if (resp && resp.ok) { var copy = resp.clone(); caches.open(CACHE).then(function (c) { c.put(req, copy); }); }
