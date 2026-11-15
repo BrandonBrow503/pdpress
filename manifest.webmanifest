@@ -37,7 +37,8 @@
             "application/json",
             "application/octet-stream",
             ".zip",
-            ".json"
+            ".json",
+            ".pdpress"
           ]
         }
       ]

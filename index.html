@@ -711,7 +711,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
     <div id="pj-tools">
       <div class="card" style="margin-top:14px">
         <div class="btns"><button class="btn" id="pj-new">New project</button><button class="btn ghost" id="pj-import">Import project file</button></div>
-        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress.zip) from your computer or a backup? Tap Import project file and pick it from Downloads or Drive.</p>
+        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress) from your computer or a backup? Tap Import project file and pick it from Downloads or Drive.</p>
         <div class="btns"><button class="btn ghost small" id="pj-exall">Export all</button><button class="btn ghost small hidden" id="pj-shareall">Save all to Drive</button></div>
         <p class="small muted" id="pj-keep" style="margin:0"></p>
         <button class="btn ghost small hidden" id="pj-persist" style="margin-top:10px">Ask the phone to keep my projects</button>
@@ -4224,7 +4224,7 @@ function pjNewProject() {
 }
 function pjBind() {
   $('pj-new').onclick = pjNewProject;
-  $('pj-import').onclick = function () { pjPick('.zip,.json,application/zip,application/json,application/octet-stream', true, pjImportFiles); };
+  $('pj-import').onclick = function () { pjPick('.pdpress,.zip,.json,application/zip,application/json,application/octet-stream', true, pjImportFiles); };
   $('pj-exall').onclick = function () { pjExport(null, false); };
   $('pj-shareall').onclick = function () { pjExport(null, true); };
   $('pj-persist').onclick = function () { pjAskKeep(); };
