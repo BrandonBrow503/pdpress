@@ -488,6 +488,67 @@ label.f > span { font-size: 15px; color: #2b2620; }
 .sug-wrap .sub-note.err { border-color: #c9a45c; color: #ffe2b8; }
 .tag.start { background: #efe4c8; color: #4a3714; border-color: #b08d4a; }
 .sug.gx { border-left-color: #8a7a5a; }
+/* v2.8 annotations */
+.ann-sum { text-align: center; }
+.ann-wc { font-family: "Federo", Georgia, serif; font-size: 19px; }
+.ann-wc b { font-weight: 400; font-size: 30px; display: block; line-height: 1.1; }
+.ann-score { margin-top: 8px; }
+.ann-score .tag { margin: 0; font-size: 13px; padding: 5px 9px 4px 21px; }
+.ann-nav { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 4px -4px 0; }
+.ann-nav button { width: calc(50% - 8px); margin: 4px; padding: 11px 10px 10px; text-align: center; border: 1px solid rgba(176,141,74,0.6); background: rgba(255,252,245,0.78); color: #1d1813; font-family: "Marcellus SC", Georgia, serif; font-size: 16px; letter-spacing: 0.03em; }
+.ann-nav button.on { background: #1d1813; color: #ecd9ae; border-color: #b08d4a; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(201,164,92,0.6); }
+.ann-nav button i { font-style: normal; font-family: "Josefin Sans", Arial, sans-serif; font-size: 13px; opacity: 0.7; margin-left: 2px; }
+.ann-ta { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 18px; line-height: 1.55; }
+.ann-text { min-height: 46vh; font-size: 17px; }
+.ann-bar { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 8px 0 10px; }
+.ann-bar .btn { margin: 0 12px 6px 0; }
+.ann-bar .small { margin-bottom: 6px; }
+.ann-list { margin: 0 0 10px; }
+.ann-item { display: -webkit-box; display: -webkit-flex; display: flex; width: 100%; text-align: left; padding: 10px 12px; margin-bottom: 7px; border: 1px solid rgba(176,141,74,0.55); background: rgba(255,252,245,0.8); color: #1d1813; }
+.ann-item.on { border-color: #1d1813; box-shadow: inset 0 0 0 1px #1d1813; }
+.ann-item.loose { border-style: dashed; }
+.ann-n { -webkit-flex: none; flex: none; width: 34px; font-family: "Federo", Georgia, serif; font-size: 20px; color: #8a6a2c; }
+.ann-it { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; min-width: 0; }
+.ann-it b { display: block; font-weight: 600; font-size: 16px; }
+.ann-it em { display: block; font-style: normal; font-size: 15px; color: #3d362d; line-height: 1.35; margin-top: 2px; overflow-wrap: anywhere; }
+.ann-ed { border-color: #b08d4a; }
+.ann-cred { background: rgba(255,252,245,0.85); border: 1px solid rgba(176,141,74,0.6); padding: 12px 14px; margin: 0 0 14px; text-align: center; }
+.ann-cred-p { background: #fbf6ea; border: 1px solid rgba(0,0,0,0.12); margin: 8px auto 8px; max-width: 220px; padding: 18px 12px; font-family: "Iowan Old Style", Palatino, Georgia, serif; color: #2a241d; }
+.ann-cred-p b { display: block; font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 17px; line-height: 1.2; }
+.ann-cred-p span { display: block; font-size: 13px; margin-top: 10px; }
+.ann-cred-p em { display: block; font-style: normal; font-variant: small-caps; letter-spacing: 0.06em; font-size: 13px; margin-top: 14px; }
+.ann-cred-p u { color: #8c3b2a; }
+.ann-ck .ann-dot { -webkit-flex: none; flex: none; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 50%; margin: 1px 12px 0 0; font-size: 14px; font-weight: 700; }
+.ann-dot.ok { background: #3f6b4a; color: #fff; }
+.ann-dot.no { background: #c27c60; color: #fff; }
+.ann-dot.na { background: #d8cfbd; color: #3d362d; }
+/* v2.9 My Projects */
+.pj-item { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; }
+.pj-item .item-title, .pj-item .item-sub, .pj-item .item-meta, .pj-item .tags { display: block; }
+.pj-item .tags { margin-top: 8px; }
+.pj-cv { -webkit-flex: none; flex: none; width: 58px; height: 82px; margin-right: 14px; background: #1d1813; border: 1px solid #b08d4a; box-shadow: inset 0 0 0 2px #1d1813, inset 0 0 0 3px rgba(176,141,74,0.5); overflow: hidden; position: relative; }
+.pj-cv b { position: absolute; left: 0; right: 0; top: 50%; margin-top: -14px; text-align: center; font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 24px; line-height: 28px; color: #ecd9ae; }
+.pj-cv img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pj-main { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; min-width: 0; }
+.pj-main .item-title { overflow-wrap: break-word; word-wrap: break-word; }
+.pj-head { padding: 14px 0 0; }
+.pj-h { font-family: "Federo", Georgia, serif; font-weight: 400; font-size: 26px; line-height: 1.2; margin: 4px 0 6px; overflow-wrap: break-word; word-wrap: break-word; }
+.pj-two { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 0 -6px; }
+.pj-two > label.f { width: 50%; padding: 0 6px; box-sizing: border-box; }
+.pj-text { min-height: 38vh; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif; font-size: 17px; line-height: 1.55; }
+.pj-coverbox { text-align: center; margin: 4px 0 16px; }
+.pj-coverbox img { display: block; max-width: 62%; max-height: 300px; margin: 0 auto; border: 1px solid #b08d4a; box-shadow: 0 8px 22px rgba(0,0,0,0.3); }
+.pj-nocover { display: inline-block; width: 140px; height: 200px; line-height: 200px; background: #1d1813; color: #ecd9ae; border: 1px solid #b08d4a; font-family: "Marcellus SC", Georgia, serif; font-size: 15px; }
+.pj-file .pj-fname { font-weight: 600; font-size: 16px; overflow-wrap: anywhere; word-break: break-word; margin-bottom: 8px; }
+.pj-file .btns, .pj-fact .btns { margin-bottom: -8px; }
+.pj-fact.st-checked { border-left: 3px solid #7d8f6a; }
+.pj-fact.st-fix { border-left: 3px solid #c27c60; }
+.pj-fact.st-open { border-left: 3px solid #b08d4a; }
+.pj-chap .item-title, .pj-chap .item-meta { display: block; }
+#pj-count { margin-top: 2px; }
+.btn[disabled] { opacity: 0.4; }
+.pj-coverbox.small-cv img { max-height: 190px; }
+.pj-coverbox.small-cv .pj-nocover { width: 110px; height: 160px; line-height: 160px; }
 </style>
 </head>
 <body>
@@ -623,6 +684,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <div class="btns"><button class="btn" id="bk-dl">Download backup</button><button class="btn ghost" id="bk-up">Restore from file</button></div>
       <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
       <p class="small muted" id="bk-info"></p>
+      <p class="small muted">Book projects are kept separately. Use Export all on the Projects screen to back them up.</p>
       <div id="bk-space"></div>
       <button class="btn ghost small hidden" id="bk-persist" style="margin-top:10px">Ask the phone to keep my art</button>
     </div>
@@ -638,7 +700,25 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.7. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.9. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+  </div>
+</main>
+
+<main id="v-projects" class="view hidden">
+  <div class="wrap">
+    <header class="top"><div class="eyebrow">Book projects</div><h2 style="font-size:26px;margin-top:4px">My Projects</h2></header>
+    <p class="muted small" style="margin-top:6px">Whole books saved on this phone: text, notes, listing, cover and finished files. They work offline.</p>
+    <div id="pj-tools">
+      <div class="card" style="margin-top:14px">
+        <div class="btns"><button class="btn" id="pj-new">New project</button><button class="btn ghost" id="pj-import">Import project file</button></div>
+        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress.zip) from your computer or a backup? Tap Import project file and pick it from Downloads or Drive.</p>
+        <div class="btns"><button class="btn ghost small" id="pj-exall">Export all</button><button class="btn ghost small hidden" id="pj-shareall">Save all to Drive</button></div>
+        <p class="small muted" id="pj-keep" style="margin:0"></p>
+        <button class="btn ghost small hidden" id="pj-persist" style="margin-top:10px">Ask the phone to keep my projects</button>
+        <p class="small muted" id="pj-count" style="margin-bottom:0"></p>
+      </div>
+    </div>
+    <div id="pjList"></div>
   </div>
 </main>
 
@@ -659,6 +739,14 @@ label.f > span { font-size: 15px; color: #2b2620; }
 </div>
 <input type="file" id="artFile" accept="image/*" multiple class="hidden">
 
+<div id="pjSheet" class="sheet editor hidden" role="dialog" aria-modal="true" aria-label="Book project">
+  <div class="sheet-bar"><div class="wrap">
+    <button class="back" id="pjBack"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1d1b18" stroke-width="1.8"><path d="M11 3L5 9l6 6"/></svg><span>My Projects</span></button>
+    <span class="saved" id="pjSaved">Saved</span>
+  </div></div>
+  <div class="wrap" id="pjBody"></div>
+</div>
+<input type="file" id="pjFile" class="hidden">
 <div class="toast" id="toast"></div>
 
 <nav class="nav" aria-label="Sections"><div class="wrap">
@@ -666,6 +754,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
   <button data-v="search"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9.5" cy="9.5" r="5.5"/><path d="M13.5 13.5L19 19"/></svg>Catalog</button>
   <button data-v="calc"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="14" height="16" rx="1.5"/><path d="M7 7.5h8M7 11.5h2M11 11.5h4M7 15h2M11 15h4"/></svg>Royalty</button>
   <button data-v="books"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18l1-4L15 4l3 3L8 17z"/><path d="M13 6l3 3"/></svg>Editor</button>
+  <button data-v="projects"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7.5V17a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 19 17V9a1.5 1.5 0 0 0-1.5-1.5H11L9 5H4.5A1.5 1.5 0 0 0 3 6.5z"/><path d="M7 12h8M7 15h5"/></svg>Projects</button>
   <button data-v="data"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="11" cy="5.5" rx="6.5" ry="2.5"/><path d="M4.5 5.5v11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-11M4.5 11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5"/></svg>Backup</button>
 </div></nav>
 <script>
@@ -1312,6 +1401,7 @@ function untouchedSeed(t) {
   });
   var e = t.editor || {};
   if (trim(e.intro) || trim(e.notes) || trim(e.backmatter)) same = false;
+  if (annTouched(t)) same = false;
   if (t.artCount > 0) same = false;
   if (typeof artIdx === 'object' && artIdx && artIdx[t.id] && artIdx[t.id].length) same = false;
   return same;
@@ -1459,11 +1549,12 @@ function tick() {
 }
 
 function go(v) {
-  each(['watch', 'search', 'calc', 'books', 'data'], function (x) { $('v-' + x).className = 'view' + (x === v ? '' : ' hidden'); });
+  each(['watch', 'search', 'calc', 'books', 'projects', 'data'], function (x) { $('v-' + x).className = 'view' + (x === v ? '' : ' hidden'); });
   each(document.querySelectorAll('.nav button'), function (b) { b.className = b.getAttribute('data-v') === v ? 'on' : ''; });
   if (v === 'calc') fillTitleSelect();
   if (v === 'data') backupInfo();
   if (v === 'books') renderBooks();
+  if (v === 'projects') renderProjects();
   if (v === 'watch') renderList();
   window.scrollTo(0, 0);
 }
@@ -1763,7 +1854,7 @@ function renderSheet() {
     '<div class="d-sub">' + esc(t.author) + (t.year ? ', ' + esc(t.year) : '') + '</div>' +
     '<div class="tags" id="d-tags">' + detailTags(t) + '</div>' +
     '<div id="d-free">' + freeNotice(t) + '</div>' +
-    '<div class="ed-open"><button class="btn" id="openEditor">Open book editor</button><p class="small muted">Size, shape, paper, your text and art</p></div><div class="tabs2">';
+    '<div class="ed-open"><button class="btn" id="openEditor">Open book editor</button><p class="small muted">Size, shape, paper, your text, annotations and art</p></div><div class="tabs2">';
   each([['plan', 'Plan'], ['edition', 'Edition'], ['legal', 'Legal'], ['check', 'Checklist'], ['export', 'Export']], function (p) {
     h += '<button data-tab="' + p[0] + '" class="' + (dtab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
   });
@@ -1994,10 +2085,13 @@ function outlineMd(t) {
     '---', '');
   o.push('# ' + et, '', '## Front matter', '');
   o.push('### Half title', '', et, '');
-  o.push('### Title page', '', et); if (trim(t.subtitle)) o.push(trim(t.subtitle)); o.push('by ' + (t.author || '[Author]'), 'Edited, with an introduction and notes, by [Your name]', '');
+  if (!t.ann) fixAnn(t);
+  var an = t.ann, cred = trim(an.credit), curl = trim(an.creditUrl);
+  o.push('### Title page', '', et); if (trim(t.subtitle)) o.push(trim(t.subtitle)); o.push('by ' + (t.author || '[Author]'), cred || 'Edited, with an introduction and notes, by [Your name]', '');
   o.push('### Copyright page', '',
     'The original text was first published in ' + yr + ' and is in the public domain in the United States.', '',
-    'Introduction, notes, glossary, illustrations and arrangement copyright ' + new Date().getFullYear() + ' [Your name]. All rights reserved.', '',
+    'Introduction, notes, glossary, illustrations and arrangement copyright ' + new Date().getFullYear() + ' ' + (cred ? cred.replace(/^.*\bby\s+/i, '') : '[Your name]') + '. All rights reserved.', '',
+    (curl ? curl : ''), '',
     'Source text: ' + (trim(t.source) || '[the printing you used]'), '',
     'This edition is not affiliated with or endorsed by the author\'s estate or any trademark holder.', '');
   o.push('### Contents', '', '[Filled in when the interior is typeset]', '');
@@ -2007,14 +2101,18 @@ function outlineMd(t) {
   o.push('### A note on the text', '', '[Which printing you used, what you corrected, and what you kept as first printed.]', '');
   o.push('## The text', '', '[Insert the cleaned ' + yr + ' text here, chapter by chapter. No Project Gutenberg header, footer, license or name.]', '');
   if (trim(edt.notes)) o.push('### Chapter notes', '', demote(edt.notes), '');
+  if (an.notes.length) { o.push('### Endnotes (' + an.notes.length + ')', ''); each(an.notes, function (n, i) { o.push((n.loose ? '- (not placed) ' : (i + 1) + '. ') + (trim(n.quote) ? '**' + trim(n.quote) + '**. ' : '') + trim(n.body).replace(/\n+/g, ' ')); }); o.push(''); }
   if (trim(t.plan.footnotes)) o.push('### Annotation plan', '', trim(t.plan.footnotes), '');
   var arts = artMeta(t.id);
   if (arts.length) { o.push('### Art (' + arts.length + (arts.length === 1 ? ' picture' : ' pictures') + ', kept in the app)', ''); each(arts, function (a) { o.push('- ' + artLabel(a) + ': ' + (a.caption || a.name) + ' (' + a.width + ' x ' + a.height + ' px)'); }); o.push(''); }
   if (trim(t.plan.illustrations) || num(t.illusCount, 0)) o.push('### Illustrations (' + num(t.illusCount, 0) + ' original)', '', trim(t.plan.illustrations) || '[List planned images]', '');
   o.push('## Back matter', '', '### Glossary', '', trim(t.plan.glossary) || '[Terms]', '');
+  if (trim(an.timeline)) { o.push('### Timeline', ''); each(an.timeline.split('\n'), function (l) { if (trim(l)) o.push('- ' + trim(l)); }); o.push(''); }
+  if (trim(an.questions)) { o.push('### Discussion questions', ''); var qn = 0; each(an.questions.split('\n'), function (l) { l = trim(l).replace(/^(\d+[.)]|[-*\u2022])\s*/, ''); if (l) o.push('- ' + (++qn) + '. ' + l); }); o.push(''); }
+  if (trim(an.bio)) o.push('### About the author', '', demote(an.bio), '');
   o.push('### Further material', '', trim(t.plan.backmatter) || '[Timeline, discussion questions, further reading]', '');
   if (trim(edt.backmatter)) o.push('### About this edition', '', demote(edt.backmatter), '');
-  o.push('### About the editor', '', '[Short bio]', '');
+  o.push('### About the editor', '', cred ? cred + (curl ? ' (' + curl + ')' : '') : '[Short bio]', '');
   o.push('---', '', '## Working notes (not for print)', '', 'Status: ' + t.status);
   var fl = []; if (t.flags.trademark) fl.push('trademark'); if (t.flags.translation) fl.push('translation year'); if (t.flags.revised) fl.push('revised edition');
   o.push('Legal cautions: ' + (fl.length ? fl.join(', ') : 'none flagged'));
@@ -2023,6 +2121,8 @@ function outlineMd(t) {
   if (trim(t.description)) o.push('', 'Store description draft:', '', trim(t.description));
   o.push('', 'KDP checklist:', '');
   each(checklist(t), function (c) { o.push('- [' + (c.na ? '-' : (c.ok ? 'x' : ' ')) + '] ' + c.label); });
+  o.push('', 'Annotation check (' + commas(annWords(t).total) + ' words of original material):', '');
+  each(annChecklist(t), function (c) { o.push('- [' + (c.na ? '-' : (c.ok ? 'x' : ' ')) + '] ' + c.label); });
   o.push('');
   return o.join('\n');
 }
@@ -2143,7 +2243,9 @@ function bind() {
   $('edBody').addEventListener('click', onEdClick);
   $('edBody').addEventListener('input', onEdInput);
   $('edBody').addEventListener('change', onEdInput);
-  $('edBody').addEventListener('mousedown', function (e) { if (closest(e.target, 'data-md')) e.preventDefault(); });
+  $('edBody').addEventListener('mousedown', function (e) { if (closest(e.target, 'data-md') || closest(e.target, 'data-keepsel')) e.preventDefault(); });
+  document.addEventListener('selectionchange', annCaptureSel);
+  $('edBody').addEventListener('keyup', annCaptureSel); $('edBody').addEventListener('mouseup', annCaptureSel); $('edBody').addEventListener('touchend', annCaptureSel);
   $('artFile').addEventListener('change', function () { var f = $('artFile').files; if (f && f.length) importFiles(f); });
   $('booksList').addEventListener('click', function (e) { var c = closest(e.target, 'data-ed'); if (c) openEditor(c.getAttribute('data-ed'), 'books'); });
   window.addEventListener('pagehide', flushText);
@@ -2271,6 +2373,7 @@ function fixBook(t) {
   if (!t.editor || typeof t.editor !== 'object') t.editor = blankEditor();
   each(['intro', 'notes', 'backmatter', 'updated'], function (k) { if (typeof t.editor[k] !== 'string') t.editor[k] = ''; });
   if (typeof t.artCount !== 'number') t.artCount = 0;
+  fixAnn(t);
 }
 function trimWH(tr) { var p = String(tr || '5.5x8.5').split('x'); return [num(p[0], 5.5), num(p[1], 8.5)]; }
 function trimName(tr) { var w = trimWH(tr); return w[0] + ' x ' + w[1] + ' in'; }
@@ -2683,7 +2786,7 @@ function findArt(id) { for (var i = 0; i < edArt.length; i++) if (edArt[i].id ==
 
 /* Open and close */
 function openEditor(id, from) {
-  edId = id; edFrom = from || 'sheet'; edTab = 'size'; edArtSel = null; edRoy = false; pvIdx = 0;
+  edId = id; edFrom = from || 'sheet'; edTab = 'size'; annSec = 'credit'; annSel = null; edArtSel = null; edRoy = false; pvIdx = 0;
   var t = find(id); if (!t) return; fixBook(t);
   freeUrls(); edArt = []; edArtLoading = true; artDirty = {};
   whenArt(function () {
@@ -2703,7 +2806,7 @@ function flushArt() {
   if (!l.length) return Promise.resolve();
   return artPutMany(l).then(function () { edSaved(); }, function (e) { toast('Could not save: ' + artErrMsg(e)); });
 }
-function flushText() { if (edSaveT) { clearTimeout(edSaveT); edSaveT = null; save(); } flushArt(); }
+function flushText() { if (edSaveT) { clearTimeout(edSaveT); edSaveT = null; save(); } annFlush(); flushArt(); }
 function closeEditor() {
   flushText();
   $('editor').className = 'sheet editor hidden'; edId = null; edArt = []; edArtLoading = false; setTimeout(freeUrls, 3000);
@@ -2918,7 +3021,7 @@ function tabPreview(t) {
   // title page
   h += '<div class="pv"><div class="pv-row"><div class="pv-page' + paper + '" style="width:' + sz.w + 'px;height:' + sz.h + 'px"><div class="pv-in pv-title">' +
     '<b>' + esc(et) + '</b>' + (trim(t.subtitle) ? '<i>' + esc(t.subtitle) + '</i>' : '') + '<span>by ' + esc(t.author || 'the author') + '</span>' +
-    '<i>Edited, with an introduction and notes</i><em>' + esc((t.title || '').toUpperCase() ? 'PUBLIC DOMAIN PRESS' : '') + '</em></div></div></div><div class="pv-cap">Title page</div></div>';
+    '<i>' + esc(trim(t.ann.credit) || 'Edited, with an introduction and notes') + '</i><em>' + (/pd press/i.test(t.ann.credit) ? 'PD PRESS' : '') + '</em></div></div></div><div class="pv-cap">Title page</div></div>';
   // intro page
   var intro = t.editor.intro || t.plan.intro;
   h += '<div class="pv"><div class="pv-row"><div class="pv-page' + paper + '" style="width:' + sz.w + 'px;height:' + sz.h + 'px"><div class="pv-in"><h4>Introduction</h4>' +
@@ -2953,15 +3056,15 @@ function tabPreview(t) {
     each(ap.loose, function (a2) { h += '<div class="check"><span class="ct">No page yet<span class="cd">' + esc(a2.caption || a2.name) + '. Set a page on the Art tab.</span></span></div>'; });
     h += '</div>';
   }
-  h += '<div class="ed-h">Take it further</div><div class="btns"><button class="btn small ghost" id="ed-ex-md">Export outline (.md)</button><button class="btn small ghost" id="ed-ex-html">Print-ready outline (.html)</button></div>' +
-    '<p class="small muted mt0">The outline includes your Text tab writing and a list of your art. A full print-ready PDF is not built yet.</p>';
+  h += '<div class="ed-h">Take it further</div><div class="btns"><button class="btn small ghost" id="ed-ex-md">Export outline (.md)</button><button class="btn small ghost" id="ed-ex-html">Print-ready outline (.html)</button><button class="btn small ghost" id="ann-ex-epub">Ebook (.epub)</button></div>' +
+    '<p class="small muted mt0">The outline includes your Text tab writing, your annotations and a list of your art. The ebook has your annotations with linked notes. A full print-ready PDF is not built yet.</p>';
   return h + royBlock(t);
 }
 function renderEditor() {
   var t = find(edId); if (!t) return; fixBook(t);
   var h = '<div class="eyebrow" style="margin-top:18px">Book editor</div><h1 class="d-title" style="margin-top:4px">' + esc(t.title || 'Untitled') + '</h1>' +
     '<div class="d-sub" id="ed-sum">' + esc(bookSummary(t)) + '</div><div id="ed-free">' + freeNotice(t) + '</div><div class="tabs2">';
-  each([['size', 'Size'], ['shape', 'Shape'], ['quality', 'Quality'], ['text', 'Text'], ['art', 'Art'], ['preview', 'Preview']], function (p) {
+  each([['size', 'Size'], ['shape', 'Shape'], ['quality', 'Quality'], ['text', 'Text'], ['ann', 'Annotations'], ['art', 'Art'], ['preview', 'Preview']], function (p) {
     h += '<button data-etab="' + p[0] + '" class="' + (edTab === p[0] ? 'on' : '') + '">' + p[1] + '</button>';
   });
   h += '</div>';
@@ -2969,11 +3072,13 @@ function renderEditor() {
   else if (edTab === 'shape') h += tabShape(t);
   else if (edTab === 'quality') h += tabQuality(t);
   else if (edTab === 'text') h += tabText(t);
+  else if (edTab === 'ann') h += tabAnn(t);
   else if (edTab === 'art') h += tabArt(t);
   else h += tabPreview(t);
-  $('edBody').innerHTML = h;
+  edRedraw = true; try { $('edBody').innerHTML = h; } finally { edRedraw = false; }
   edSaved();
   if (edTab === 'text') updCount();
+  if (edTab === 'ann') annLiveCounts(t);
   if (edTab === 'art' && artMode === 'idb' && $('ed-space')) fillSpace('ed-space');
   var on = document.querySelector('#edBody .tabs2 button.on'); if (on && on.scrollIntoView && on.offsetLeft > 200) { on.parentNode.scrollLeft = on.offsetLeft - 40; }
 }
@@ -3041,6 +3146,7 @@ function onEdClick(e) {
   var t = find(edId); if (!t) return;
   var b = t.book, c, v;
   if ((c = closest(e.target, 'data-etab'))) { flushText(); edTab = c.getAttribute('data-etab'); edArtSel = null; renderEditor(); $('editor').scrollTop = 0; return; }
+  if (edTab === 'ann' && annClick(e, t)) return;
   if ((c = closest(e.target, 'data-sec'))) { flushText(); edSec = c.getAttribute('data-sec'); renderEditor(); return; }
   if ((c = closest(e.target, 'data-md'))) { mdInsert(c.getAttribute('data-md')); return; }
   if ((c = closest(e.target, 'data-art'))) { edArtSel = c.getAttribute('data-art'); renderEditor(); var ed = document.querySelector('.ed-artedit'); if (ed) $('editor').scrollTop = Math.max(0, ed.offsetTop - 70); return; }
@@ -3082,11 +3188,13 @@ function onEdClick(e) {
   else if (id === 'pv-prev') { if (pvIdx > 0) pvIdx--; renderEditor(); }
   else if (id === 'pv-next') { pvIdx++; renderEditor(); }
   else if (id === 'ed-ex-md') download(slug(t.editionTitle || t.title) + '-outline.md', outlineMd(t), 'text/markdown');
+  else if (id === 'ann-ex-epub') { annFlush(); exportEpub(t); }
   else if (id === 'ed-ex-html') download(slug(t.editionTitle || t.title) + '-outline.html', outlineHtml(t), 'text/html');
 }
 function onEdInput(e) {
   var el = e.target, t = find(edId); if (!t || !el) return;
   if (el.id === 'ed-text') { if (e.type === 'input') textChanged(); return; }
+  if (edTab === 'ann' && annInput(e, t)) return;
   var k = el.getAttribute && el.getAttribute('data-ek');
   if (k) { t[k] = el.value === '' ? '' : num(el.value, 0); save(); syncCalc(t); edLive(t); return; }
   var ak = el.getAttribute && el.getAttribute('data-ak');
@@ -3105,6 +3213,1037 @@ function onEdInput(e) {
   }
 }
 
+/* ---- Annotations (v2.8) ----
+   Everything an annotated edition adds, kept per title on t.ann in the same saved state:
+   credit line, author bio, timeline, discussion questions, the book text (optional, pasted)
+   and numbered endnotes. The introduction is shared with the Text tab (t.editor.intro).
+   Endnote markers live in the book text as [^1], [^2] ... and are renumbered in reading order. */
+var PD_SITE = 'https://brandonbrow503.github.io/pdpress/', PD_CREDIT = 'Annotated by PD Press';
+var ANN_SECS = [['credit', 'Credit line'], ['intro', 'Introduction'], ['bio', 'Author bio'], ['timeline', 'Timeline'], ['questions', 'Questions'], ['notes', 'Endnotes'], ['check', 'KDP check']];
+var edRedraw = false, annSec = 'credit', annSel = null, annSaveT = null, annSelS = 0, annSelE = 0;
+function blankAnn() { return { credit: PD_CREDIT, creditUrl: PD_SITE, bio: '', timeline: '', questions: '', text: '', notes: [], updated: '' }; }
+function fixAnn(t) {
+  var d = blankAnn();
+  if (!t.ann || typeof t.ann !== 'object') t.ann = d;
+  each(['credit', 'creditUrl', 'bio', 'timeline', 'questions', 'text', 'updated'], function (k) { if (typeof t.ann[k] !== 'string') t.ann[k] = d[k]; });
+  if (Object.prototype.toString.call(t.ann.notes) !== '[object Array]') t.ann.notes = [];
+  var ok = []; each(t.ann.notes, function (n) { if (n && typeof n === 'object') { if (!n.id) n.id = uid(); n.quote = String(n.quote || ''); n.body = String(n.body || ''); ok.push(n); } }); t.ann.notes = ok;
+}
+function annTouched(t) {
+  var a = t.ann || {};
+  return !!(trim(a.bio) || trim(a.timeline) || trim(a.questions) || trim(a.text) || (a.notes && a.notes.length) ||
+    (a.credit != null && a.credit !== PD_CREDIT) || (a.creditUrl != null && a.creditUrl !== PD_SITE));
+}
+var MARK_RE = /\[\^(\d+|new)\]/g;
+/* Put notes in reading order and rewrite every marker. Returns the number of notes not placed in the text. */
+function annRenumber(t) {
+  var a = t.ann, old = a.notes, used = {}, order = [], dup = 0;
+  a.text = a.text.replace(MARK_RE, function (m, k) {
+    var n = k === 'new' ? annNew : old[parseInt(k, 10) - 1];
+    if (!n || used[n.id]) { dup++; return ''; }
+    used[n.id] = 1; delete n.loose; order.push(n); return '[^' + order.length + ']';
+  });
+  var loose = 0;
+  each(old, function (n) { if (!used[n.id]) { n.loose = true; order.push(n); loose++; } else delete n.loose; });
+  if (annNew && !used[annNew.id]) { annNew.loose = true; order.push(annNew); loose++; }
+  annNew = null; a.notes = order;
+  return { loose: loose, dropped: dup };
+}
+var annNew = null;
+function annNum(t, id) { for (var i = 0; i < t.ann.notes.length; i++) if (t.ann.notes[i].id === id) return i + 1; return 0; }
+function annFind(t, id) { for (var i = 0; i < t.ann.notes.length; i++) if (t.ann.notes[i].id === id) return t.ann.notes[i]; return null; }
+function placedNotes(t) { var r = []; each(t.ann.notes, function (n) { if (!n.loose) r.push(n); }); return r; }
+function looseNotes(t) { var r = []; each(t.ann.notes, function (n) { if (n.loose) r.push(n); }); return r; }
+
+/* Words of original material */
+function annWords(t) {
+  var a = t.ann, e = t.editor || {}, nw = 0;
+  each(a.notes, function (n) { nw += wordCount(n.body); });
+  var w = { intro: wordCount(e.intro), bio: wordCount(a.bio), timeline: wordCount(a.timeline), questions: wordCount(a.questions), notes: nw,
+    text: wordCount(e.notes) + wordCount(e.backmatter) };
+  w.total = w.intro + w.bio + w.timeline + w.questions + w.notes + w.text;
+  w.beyond = w.total - w.intro;
+  w.book = wordCount(String(a.text).replace(MARK_RE, ''));
+  return w;
+}
+function descBullets(desc) {
+  var lines = String(desc || '').replace(/<\/li>/gi, '\n').replace(/<li[^>]*>/gi, '\n- ').replace(/<[^>]+>/g, '').split('\n'), out = [], started = false;
+  for (var i = 0; i < lines.length; i++) {
+    var l = trim(lines[i]);
+    if (!l) { if (started) continue; else continue; }
+    var m = /^[-*\u2022]\s*(.*)$/.exec(l);
+    if (m) { started = true; out.push(trim(m[1])); }
+    else if (started) break;
+    else if (out.length === 0 && i < 3 && /:$/.test(l)) continue; /* a short lead-in line like "This edition includes:" */
+    else break;
+  }
+  return out;
+}
+function annChecklist(t) {
+  var a = t.ann, w = annWords(t), et = trim(t.editionTitle), desc = trim(t.description), b = descBullets(desc), longB = [], placed = placedNotes(t).length, loose = looseNotes(t).length;
+  each(b, function (x) { if (x.length > 80) longB.push(x); });
+  var credInTitle = /\b(annotated|edited|introduction|notes)\s+by\b|\bwith an introduction\b/i.test(et + ' ' + (t.subtitle || ''));
+  var extras = [];
+  if (w.notes) extras.push(placed + ' endnote' + (placed === 1 ? '' : 's'));
+  if (w.timeline) extras.push('a timeline'); if (w.questions) extras.push('discussion questions'); if (w.bio) extras.push('an author bio'); if (w.text) extras.push('Text tab writing');
+  return [
+    { label: 'Title includes (Annotated)', ok: /\(annotated\)/i.test(et),
+      d: et ? 'Edition title: "' + et + '". ' + (/\(annotated\)/i.test(et) ? 'Good.' : 'Add (Annotated) to the edition title on the title\'s Edition tab.') : 'No edition title yet. Set one on the title\'s Edition tab, e.g. "' + (t.title || 'Title') + ' (Annotated)".' },
+    { label: 'Credit stays out of the title', ok: !credInTitle,
+      d: credInTitle ? 'KDP rejects titles like "(with an Introduction by ...)". Keep "' + (a.credit || PD_CREDIT) + '" inside the book and on the cover, not in the title or subtitle.' : 'The credit line goes inside the book and on the cover only. KDP does not allow it in the title.' },
+    { label: 'Description opens with bullets, 80 characters or fewer each', ok: b.length > 0 && !longB.length,
+      d: !desc ? 'No store description yet. Write it on the title\'s Edition tab, starting with lines that begin with "- ".' :
+        (!b.length ? 'The description must start with a bullet list of what you added (lines starting with "- ").' :
+          (longB.length ? longB.length + ' bullet' + (longB.length === 1 ? ' is' : 's are') + ' too long. Longest: ' + longB.sort(function (x, y) { return y.length - x.length; })[0].length + ' characters.' : b.length + ' bullet' + (b.length === 1 ? '' : 's') + ', longest ' + Math.max.apply(null, b.map(function (x) { return x.length; })) + ' characters.')) },
+    { label: 'No web address in the description', ok: !/(https?:\/\/|www\.|\.(com|io|org|net)\b)/i.test(desc),
+      d: 'KDP does not accept website URLs in descriptions. Your link to PD Press goes inside the book.' },
+    { label: 'Original content beyond an introduction', ok: w.beyond >= 1000 || placed >= 10,
+      d: 'An introduction alone gets rejected. KDP wants real annotations: notes, timeline, study material, biography. ' +
+        (extras.length ? 'You have ' + extras.join(', ') + ' (' + commas(w.beyond) + ' words outside the intro).' : 'Nothing beyond the introduction yet.') + ' Aim for 10 or more notes or 1,000 or more words.' },
+    { label: 'Introduction written', ok: w.intro >= 300, d: commas(w.intro) + ' words. Helpful, but never enough on its own.' },
+    { label: 'Every endnote is placed in the text', na: !a.notes.length, ok: !loose,
+      d: a.notes.length ? (loose ? loose + ' note' + (loose === 1 ? ' has' : 's have') + ' no spot in the text. Place or delete ' + (loose === 1 ? 'it' : 'them') + ' on the Endnotes screen.' : 'All ' + a.notes.length + ' notes are linked to the text.') : 'No endnotes yet.' }
+  ];
+}
+function annScore(t) { var d = 0, n = 0; each(annChecklist(t), function (c) { if (c.na) return; n++; if (c.ok) d++; }); return { done: d, total: n }; }
+
+/* The tab */
+function annArea(key, v, ph, rows) { return '<textarea data-an="' + key + '" class="ann-ta" rows="' + (rows || 8) + '" spellcheck="true" placeholder="' + esc(ph) + '">\n' + esc(v) + '</textarea>'; }
+function tabAnn(t) {
+  var a = t.ann, w = annWords(t), sc = annScore(t), h = '';
+  h += '<div class="card ann-sum"><div class="ann-wc"><b id="ann-wc">' + commas(w.total) + '</b> words of original material</div>' +
+    '<div class="small muted" id="ann-wc-d">' + annWcDetail(w) + '</div>' +
+    '<button class="ann-score" data-asec="check"><span class="tag ' + (sc.done === sc.total ? 'accent' : 'warn') + '" id="ann-score">KDP check ' + sc.done + ' of ' + sc.total + '</span></button></div>';
+  h += '<div class="ann-nav">';
+  each(ANN_SECS, function (s) { h += '<button data-asec="' + s[0] + '" class="' + (annSec === s[0] ? 'on' : '') + '">' + esc(s[1]) + (s[0] === 'notes' && a.notes.length ? ' <i>' + a.notes.length + '</i>' : '') + '</button>'; });
+  h += '</div>';
+  if (annSec === 'credit') {
+    h += '<div class="ed-h">Credit line</div>' +
+      '<label class="f"><span>Shown on the title page, copyright page and cover</span><input type="text" data-an="credit" value="' + esc(a.credit) + '" placeholder="' + esc(PD_CREDIT) + '"></label>' +
+      '<label class="f"><span>Link back to</span><input type="url" data-an="creditUrl" value="' + esc(a.creditUrl) + '" placeholder="' + esc(PD_SITE) + '"><em>Clickable in the ebook. Printed as plain text on the copyright page. Leave empty for no link.</em></label>' +
+      '<div class="ann-cred" id="ann-cred">' + credPreview(t) + '</div>' +
+      noteBox('Keep the credit out of the title. KDP turns down titles like "(with an Introduction by ...)". The title just says (Annotated). For the ebook, put "PD Press" in KDP\'s Publisher box. KDP does not allow web addresses there or in the description.', true) +
+      '<div class="btns"><button class="btn small ghost" id="ann-cred-reset">Use "' + esc(PD_CREDIT) + '"</button></div>';
+  } else if (annSec === 'intro') {
+    h += '<div class="ed-h">Introduction</div><p class="small muted mt0">Shared with the Intro on the Text tab. Who wrote the book, when, why it matters, and anything readers should know before they start.</p>' +
+      annArea('intro', t.editor.intro, 'Start your introduction here.', 14) + '<p class="ed-count" data-wc="intro"></p>' +
+      noteBox('An introduction alone does not count as annotation for KDP. Add notes, a timeline or questions too.');
+  } else if (annSec === 'bio') {
+    h += '<div class="ed-h">About the author</div>' + annArea('bio', a.bio, 'Born, worked, wrote, died. What else they wrote, and how this book was received.', 10) + '<p class="ed-count" data-wc="bio"></p>';
+  } else if (annSec === 'timeline') {
+    h += '<div class="ed-h">Timeline</div><p class="small muted mt0">One event per line. Start with the year, then a dash: <b>1931 - The novel is published.</b></p>' +
+      annArea('timeline', a.timeline, '1895 - Author born\n1931 - Book first published', 12) + '<p class="ed-count" data-wc="timeline"></p>';
+  } else if (annSec === 'questions') {
+    h += '<div class="ed-h">Discussion questions</div><p class="small muted mt0">One question per line. They are numbered for you.</p>' +
+      annArea('questions', a.questions, 'Why does the author open the story this way?', 12) + '<p class="ed-count" data-wc="questions"></p>';
+  } else if (annSec === 'notes') {
+    h += tabAnnNotes(t);
+  } else {
+    h += '<div class="ed-h">KDP readiness</div><div class="card" id="ann-check">' + annCheckHtml(t) + '</div>' +
+      '<p class="small muted mt0">Based on KDP\'s public domain rules: the title must say (Annotated), the description must open with bullets of 80 characters or fewer, and the added material has to be real annotation, not just an introduction.</p>';
+  }
+  h += '<div class="ed-h">Take it further</div><div class="btns"><button class="btn small" id="ann-ex-epub">Export ebook (.epub)</button><button class="btn small ghost" id="ed-ex-md">Export outline (.md)</button></div>' +
+    '<p class="small muted mt0">The ebook includes your credit line and link, introduction, the book text with linked note numbers (tap a number to read the note, tap the note number to jump back), the notes, timeline, questions and bio.</p>';
+  return h;
+}
+function annWcDetail(w) {
+  var p = [];
+  each([['intro', 'intro'], ['notes', 'notes'], ['timeline', 'timeline'], ['questions', 'questions'], ['bio', 'bio'], ['text', 'Text tab']], function (k) { if (w[k[0]]) p.push(k[1] + ' ' + commas(w[k[0]])); });
+  return (p.length ? p.join(' &middot; ') : 'Nothing written yet') + (w.book ? '<br>Book text pasted: ' + commas(w.book) + ' words, so your material is ' + Math.round(w.total / w.book * 100) + '% of it' : '');
+}
+function credPreview(t) {
+  var a = t.ann, c = trim(a.credit), u = trim(a.creditUrl);
+  return '<div class="eyebrow">Title page</div><div class="ann-cred-p"><b>' + esc(trim(t.editionTitle) || ((t.title || 'Title') + ' (Annotated)')) + '</b><span>' + esc(t.author || 'Author') + '</span>' +
+    (c ? '<em>' + (u ? '<u>' + esc(c) + '</u>' : esc(c)) + '</em>' : '<em class="muted">No credit line</em>') + '</div>' + (u ? '<div class="small muted">Links to ' + esc(u) + '</div>' : '');
+}
+function annCheckHtml(t) {
+  var h = '';
+  each(annChecklist(t), function (c) {
+    h += '<div class="check ann-ck"><span class="ann-dot ' + (c.na ? 'na' : (c.ok ? 'ok' : 'no')) + '">' + (c.na ? '&ndash;' : (c.ok ? '&#10003;' : '!')) + '</span><span class="ct">' + esc(c.label) + '<span class="cd">' + esc(c.d) + '</span></span></div>';
+  });
+  return h;
+}
+function tabAnnNotes(t) {
+  var a = t.ann, h = '<div class="ed-h">Endnotes</div>';
+  h += '<p class="small muted mt0">1. Paste the book text below (one chapter is fine). 2. Select a word or phrase, or tap where the note belongs. 3. Tap <b>Add note here</b> and write the note. Numbers update by themselves.</p>';
+  var sel = annSel && annFind(t, annSel);
+  if (sel) h += annNoteEditor(t, sel);
+  h += '<div class="ann-bar"><button class="btn" id="ann-add" data-keepsel="1">Add note here</button><span class="small muted" id="ann-txt-wc">' + commas(wordCount(a.text.replace(MARK_RE, ''))) + ' words of book text</span></div>' +
+    '<textarea id="ann-text" data-an="text" class="ed-text ann-text" spellcheck="false" placeholder="Paste the book text here. Use ## at the start of a line for chapter headings, e.g. ## Chapter One. Markers like [^1] show where notes go.">\n' + esc(a.text) + '</textarea>' +
+    '<p class="small muted">Markers look like [^3]. Delete a marker to unplace its note. Text is kept on this phone with the rest of the app. ' + (a.text.length > 900000 ? '<b>This is a big text (' + kb(a.text.length) + '). If saving fails, paste one chapter at a time.</b>' : '') + '</p>';
+  var loose = looseNotes(t);
+  h += '<div class="ed-h">Notes (' + a.notes.length + ')</div>';
+  if (!a.notes.length) h += '<div class="empty" style="color:#3d362d;text-shadow:none">No notes yet.</div>';
+  else {
+    h += '<div class="ann-list">';
+    each(a.notes, function (n, i) {
+      h += '<button class="ann-item' + (n.id === annSel ? ' on' : '') + (n.loose ? ' loose' : '') + '" data-anote="' + n.id + '"><span class="ann-n">' + (n.loose ? '&ndash;' : (i + 1)) + '</span><span class="ann-it"><b>' + esc(n.quote || '(no phrase)') + '</b><em>' +
+        (n.loose ? 'Not placed in the text. ' : '') + (trim(n.body) ? mdInline(n.body.slice(0, 110) + (n.body.length > 110 ? '...' : '')) : 'Empty note, tap to write it') + '</em></span></button>';
+    });
+    h += '</div>';
+    if (loose.length) h += noteBox(loose.length + ' note' + (loose.length === 1 ? ' is' : 's are') + ' not placed. Open one, tap in the text where it belongs, then tap Place here.');
+  }
+  return h;
+}
+function annNoteEditor(t, n) {
+  var k = annNum(t, n.id);
+  return '<div class="card ann-ed" id="ann-ed"><div class="eyebrow">' + (n.loose ? 'Note, not placed' : 'Note ' + k) + '</div>' +
+    '<label class="f"><span>Word or phrase it explains</span><input type="text" data-anf="quote" value="' + esc(n.quote) + '"></label>' +
+    '<label class="f"><span>The note</span><textarea data-anf="body" rows="5" placeholder="Who, what, where, or why it matters. *Italic* works.">' + esc(n.body) + '</textarea></label>' +
+    '<div class="btns"><button class="btn small" id="ann-done">Done</button>' + (n.loose ? '<button class="btn small ghost" id="ann-place" data-keepsel="1">Place here</button>' : '<button class="btn small ghost" id="ann-show">Show in text</button>') +
+    '<button class="btn small ghost" id="ann-del">Delete</button></div></div>';
+}
+function annCaptureSel() { var ta = $('ann-text'); if (ta && document.activeElement === ta) { annSelS = ta.selectionStart || 0; annSelE = ta.selectionEnd || annSelS; } }
+function annLiveCounts(t) {
+  var w = annWords(t), sc = annScore(t);
+  if ($('ann-wc')) $('ann-wc').textContent = commas(w.total);
+  if ($('ann-wc-d')) $('ann-wc-d').innerHTML = annWcDetail(w);
+  if ($('ann-score')) { $('ann-score').textContent = 'KDP check ' + sc.done + ' of ' + sc.total; $('ann-score').className = 'tag ' + (sc.done === sc.total ? 'accent' : 'warn'); }
+  if ($('ann-txt-wc')) $('ann-txt-wc').textContent = commas(w.book) + ' words of book text';
+  if ($('ann-cred')) $('ann-cred').innerHTML = credPreview(t);
+  each(document.querySelectorAll('#edBody [data-wc]'), function (el) {
+    var k = el.getAttribute('data-wc'), v = w[k] || 0; el.textContent = commas(v) + (v === 1 ? ' word' : ' words');
+  });
+}
+function annSaveSoon(t) {
+  t.ann.updated = new Date().toISOString(); edSaved('Saving...');
+  clearTimeout(annSaveT); annSaveT = setTimeout(function () { annSaveT = null; save(); edSaved(); }, 600);
+}
+function annFlush() { if (annSaveT) { clearTimeout(annSaveT); annSaveT = null; save(); } }
+function annRerender(keepScroll) { var st = $('editor').scrollTop; renderEditor(); if (keepScroll) $('editor').scrollTop = st; }
+function annAdd(t, place) {
+  var ta = $('ann-text'); if (!ta) return;
+  annFlushText(t);
+  var v = t.ann.text, s = Math.min(annSelS, v.length), e = Math.min(annSelE, v.length);
+  if (!trim(v)) { toast('Paste the book text first, then pick a spot.'); return; }
+  var quote = trim(v.slice(s, e).replace(MARK_RE, ''));
+  if (!quote) { var before = v.slice(Math.max(0, s - 60), s).replace(MARK_RE, ''), ws = trim(before).split(/\s+/); quote = ws.slice(-3).join(' '); }
+  quote = quote.replace(/\s+/g, ' ').slice(0, 120);
+  var n = place || { id: uid(), quote: quote, body: '' };
+  if (place && !trim(n.quote)) n.quote = quote;
+  /* never split a marker or a word: move to the end of the word */
+  while (e < v.length && /[\w\u2019']/.test(v.charAt(e))) e++;
+  annNew = n;
+  if (place) { var keep = []; each(t.ann.notes, function (x) { if (x.id !== n.id) keep.push(x); }); t.ann.notes = keep; }
+  t.ann.text = v.slice(0, e) + '[^new]' + v.slice(e);
+  annRenumber(t); annSel = n.id; save(); annRerender(true);
+  var k = annNum(t, n.id); toast((place ? 'Placed note ' : 'Added note ') + k);
+  var ed = $('ann-ed'); if (ed) { $('editor').scrollTop = Math.max(0, ed.offsetTop - 70); var b = ed.querySelector('textarea'); if (b && !place) try { b.focus(); } catch (x) {} }
+}
+function annFlushText(t) { var ta = $('ann-text'); if (ta) t.ann.text = ta.value; }
+function annShow(t, n) {
+  var k = annNum(t, n.id), ta = $('ann-text'); if (!ta) return;
+  var tok = '[^' + k + ']', i = ta.value.indexOf(tok); if (i < 0) return;
+  try { ta.focus(); ta.setSelectionRange(i, i + tok.length); } catch (x) {}
+  var lines = ta.value.slice(0, i).split('\n').length; ta.scrollTop = Math.max(0, (lines - 3) * 26);
+  $('editor').scrollTop = Math.max(0, ta.offsetTop - 80);
+}
+function annClick(e, t) {
+  var c;
+  if ((c = closest(e.target, 'data-asec'))) { annFlush(); annSec = c.getAttribute('data-asec'); annSel = null; renderEditor(); var nv = document.querySelector('.ann-nav'); if (nv) $('editor').scrollTop = Math.max(0, nv.offsetTop - 70); return true; }
+  if ((c = closest(e.target, 'data-anote'))) { annFlushText(t); annSel = c.getAttribute('data-anote'); renderEditor(); var ed = $('ann-ed'); if (ed) $('editor').scrollTop = Math.max(0, ed.offsetTop - 70); return true; }
+  var id = e.target.id || (closest(e.target, 'id') || {}).id, n = annSel && annFind(t, annSel);
+  if (id === 'ann-add') { annAdd(t, null); return true; }
+  if (id === 'ann-place' && n) { annAdd(t, n); return true; }
+  if (id === 'ann-done') { annFlush(); annSel = null; annRerender(true); return true; }
+  if (id === 'ann-show' && n) { annShow(t, n); return true; }
+  if (id === 'ann-del' && n) {
+    if (!window.confirm('Delete this note and its marker?')) return true;
+    annFlushText(t); var k = annNum(t, n.id);
+    if (!n.loose) t.ann.text = t.ann.text.split('[^' + k + ']').join('');
+    var keep = []; each(t.ann.notes, function (x) { if (x.id !== n.id) keep.push(x); });
+    /* renumber needs the old numbering, so map markers before dropping the note */
+    var old = t.ann.notes; t.ann.text = t.ann.text.replace(MARK_RE, function (m, d) { var x = old[parseInt(d, 10) - 1]; return x ? '[^@' + x.id + ']' : m; });
+    t.ann.notes = keep; var idx = {}; each(keep, function (x, i) { idx[x.id] = i + 1; });
+    t.ann.text = t.ann.text.replace(/\[\^@([^\]]+)\]/g, function (m, xid) { return idx[xid] ? '[^' + idx[xid] + ']' : ''; });
+    annRenumber(t); annSel = null; save(); annRerender(true); toast('Note deleted'); return true;
+  }
+  if (id === 'ann-cred-reset') { t.ann.credit = PD_CREDIT; t.ann.creditUrl = PD_SITE; save(); annRerender(true); return true; }
+  if (id === 'ann-ex-epub') { annFlush(); annFlushText(t); exportEpub(t); return true; }
+  return false;
+}
+function annInput(e, t) {
+  if (edRedraw || (e.target && e.target.isConnected === false)) return true; /* a box removed by a redraw can still fire change with old text */
+  var el = e.target, k = el.getAttribute && el.getAttribute('data-an'), f = el.getAttribute && el.getAttribute('data-anf');
+  if (k) {
+    if (k === 'intro') { t.editor.intro = el.value; t.editor.updated = new Date().toISOString(); }
+    else t.ann[k] = el.value;
+    if (k === 'text' && e.type === 'change') {
+      var r = annRenumber(t); save(); edSaved();
+      if (el.value !== t.ann.text || r.dropped) { annCaptureSel(); annRerender(true); if (r.dropped) toast('Removed ' + r.dropped + ' repeated or unknown marker' + (r.dropped === 1 ? '' : 's')); }
+      return true;
+    }
+    annLiveCounts(t); annSaveSoon(t); return true;
+  }
+  if (f) {
+    var n = annSel && annFind(t, annSel); if (!n) return true;
+    n[f] = el.value; annLiveCounts(t); annSaveSoon(t);
+    if (e.type === 'change') { var it = document.querySelector('[data-anote="' + n.id + '"] .ann-it'); if (it) it.innerHTML = '<b>' + esc(n.quote || '(no phrase)') + '</b><em>' + (trim(n.body) ? mdInline(n.body.slice(0, 110) + (n.body.length > 110 ? '...' : '')) : 'Empty note, tap to write it') + '</em>'; }
+    return true;
+  }
+  return false;
+}
+
+/* ---- EPUB export (EPUB 3, no outside code) ---- */
+function xesc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function xInline(s) { return xesc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\*([^*]+)\*/g, '<i>$1</i>'); }
+function xBlocks(s, linesArePars) {
+  /* simple marks: # headings, - lists, [Page break]; paragraphs by line (app writing) or by blank line (pasted book text) */
+  s = String(s || '').replace(/\r\n?/g, '\n');
+  var paras = linesArePars ? s.split('\n') : (s.indexOf('\n\n') >= 0 ? s.split(/\n\s*\n/) : s.split('\n')), out = [], list = [];
+  function fl() { if (list.length) { out.push('<ul>' + list.join('') + '</ul>'); list = []; } }
+  each(paras, function (p) {
+    var l = trim(p).replace(/\s*\n\s*/g, ' '), m;
+    if (!l) { fl(); return; }
+    if (/^\[Page break\]$/.test(l)) { fl(); return; }
+    if ((m = /^#{1,6}\s+(.*)$/.exec(l))) { fl(); out.push('<h3>' + xInline(m[1]) + '</h3>'); }
+    else if ((m = /^[-*\u2022]\s+(.*)$/.exec(l))) list.push('<li>' + xInline(m[1]) + '</li>');
+    else { fl(); out.push('<p>' + xInline(l) + '</p>'); }
+  });
+  fl();
+  return out.join('\n');
+}
+function xPage(title, body, type) {
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE html>\n<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en">\n<head><meta charset="UTF-8"/><title>' + xesc(title) +
+    '</title><link rel="stylesheet" type="text/css" href="style.css"/></head>\n<body><section' + (type ? ' epub:type="' + type + '"' : '') + '>\n' + body + '\n</section></body>\n</html>';
+}
+/* Split pasted book text into chapters at lines starting with # (or CHAPTER ...). */
+function bookChapters(text) {
+  var lines = String(text || '').replace(/\r\n?/g, '\n').split('\n'), ch = [], cur = { title: '', lines: [] };
+  each(lines, function (l) {
+    var m = /^\s*#{1,3}\s+(.+)$/.exec(l) || (/^\s*(CHAPTER|PREFACE|PART|BOOK)\b[^a-z]{0,40}$/.test(l) || /^\s*Chapter\s+([IVXLCDM]+|\d+)\.?\s*$/.test(l) ? [l, trim(l)] : null);
+    if (m) { if (trim(cur.lines.join('\n')) || cur.title) ch.push(cur); cur = { title: trim(m[1]), lines: [] }; }
+    else cur.lines.push(l);
+  });
+  if (trim(cur.lines.join('\n')) || cur.title) ch.push(cur);
+  return ch;
+}
+function buildEpub(t) {
+  fixAnn(t);
+  var a = t.ann, e = t.editor || {}, et = trim(t.editionTitle) || ((t.title || 'Untitled') + ' (Annotated)'), author = trim(t.author) || 'Unknown';
+  var credit = trim(a.credit), url = trim(a.creditUrl), files = [], toc = [];
+  function add(id, title, body, type, inToc) { files.push({ id: id, href: id + '.xhtml', title: title, xml: xPage(title, body, type) }); if (inToc) toc.push({ href: id + '.xhtml', title: title }); }
+  var credX = credit ? (url ? '<a href="' + xesc(url) + '">' + xesc(credit) + '</a>' : xesc(credit)) : '';
+  add('title', et, '<h1 class="tt">' + xesc(et) + '</h1>' + (trim(t.subtitle) ? '<p class="c"><i>' + xesc(t.subtitle) + '</i></p>' : '') +
+    '<p class="c au">' + xesc(author) + '</p>' + (credX ? '<p class="c cr">' + credX + '</p>' : ''), 'titlepage', false);
+  var yr = t.year || 'an earlier year';
+  add('copyright', 'Copyright', '<div class="cp"><p><i>' + xesc(et) + '</i></p><p>by ' + xesc(author) + '</p>' + (credit ? '<p>' + xesc(credit) + '</p>' : '') +
+    '<p>The original text was first published in ' + xesc(yr) + ' and is in the public domain in the United States.</p>' +
+    '<p>The introduction, notes, timeline, discussion questions and author biography are original to this edition. Copyright &#169; ' + new Date().getFullYear() + ' ' + xesc(credit ? credit.replace(/^.*\bby\s+/i, '') : 'the editor') + '. All rights reserved.</p>' +
+    (url ? '<p><a href="' + xesc(url) + '">' + xesc(url) + '</a></p>' : '') + '</div>', 'copyright-page', true);
+  if (trim(e.intro)) add('intro', 'Introduction', '<h1>Introduction</h1>' + xBlocks(e.intro, true), 'introduction', true);
+  /* book text with note links */
+  var placed = placedNotes(t), where = {}, chs = bookChapters(a.text), k = 0;
+  if (!chs.length) chs = [{ title: et.replace(/\s*\(annotated\)\s*/i, ''), lines: ['[The book text goes here. Paste it on the Annotations tab, Endnotes screen.]'] }];
+  each(chs, function (c) {
+    k++; var id = 'text' + (k < 10 ? '0' : '') + k, title = c.title || (k === 1 ? 'Text' : 'Part ' + k);
+    var body = xBlocks(c.lines.join('\n'), false).replace(/\[\^(\d+)\]/g, function (m, d) {
+      var n = parseInt(d, 10); if (!placed[n - 1] || where[n]) return '';
+      where[n] = id + '.xhtml'; return '<a class="nref" epub:type="noteref" id="r' + n + '" href="notes.xhtml#n' + n + '"><sup>' + n + '</sup></a>';
+    });
+    add(id, title, '<h2>' + xesc(title) + '</h2>' + body, 'chapter', true);
+  });
+  if (placed.length) {
+    var nb = '<h1>Notes</h1>';
+    each(placed, function (n, i) {
+      var num1 = i + 1, back = where[num1] ? '<a href="' + where[num1] + '#r' + num1 + '">' + num1 + '</a>' : String(num1);
+      nb += '<aside class="note" epub:type="endnote" id="n' + num1 + '"><p>' + back + '. ' + (trim(n.quote) ? '<b>' + xesc(n.quote) + '</b>. ' : '') + xInline(n.body) + '</p></aside>\n';
+    });
+    add('notes', 'Notes', nb, 'endnotes', true);
+  }
+  if (trim(e.notes)) add('commentary', 'Commentary', '<h1>Commentary</h1>' + xBlocks(e.notes, true), '', true);
+  if (trim(a.timeline)) {
+    var tl = '<h1>Timeline</h1><dl class="tl">';
+    each(a.timeline.split('\n'), function (l) { l = trim(l); if (!l) return; var m = /^(\S+(?:\s\S+)?)\s+[-\u2013\u2014:]\s+(.*)$/.exec(l); tl += m ? '<dt>' + xesc(m[1]) + '</dt><dd>' + xInline(m[2]) + '</dd>' : '<dd>' + xInline(l) + '</dd>'; });
+    add('timeline', 'Timeline', tl + '</dl>', '', true);
+  }
+  if (trim(a.questions)) {
+    var qs = '<h1>Discussion Questions</h1><ol>';
+    each(a.questions.split('\n'), function (l) { l = trim(l).replace(/^(\d+[.)]|[-*\u2022])\s*/, ''); if (l) qs += '<li>' + xInline(l) + '</li>'; });
+    add('questions', 'Discussion Questions', qs + '</ol>', '', true);
+  }
+  if (trim(a.bio)) add('bio', 'About the Author', '<h1>About the Author</h1>' + xBlocks(a.bio, true), '', true);
+  if (trim(e.backmatter)) add('edition', 'About This Edition', '<h1>About This Edition</h1>' + xBlocks(e.backmatter, true), '', true);
+  var css = 'body{font-family:Georgia,serif;line-height:1.45;margin:0 4%}h1,h2{text-align:center;font-weight:normal;margin:2em 0 1em}h3{margin:1.4em 0 .5em}' +
+    'p{margin:0;text-indent:1.3em}h1+p,h2+p,h3+p{text-indent:0}.c,.cp p{text-align:center;text-indent:0}.cp p{text-align:left;font-size:.85em;margin-bottom:.8em}' +
+    '.tt{margin-top:25%;font-size:1.8em}.au{margin-top:1.5em}.cr{margin-top:1.5em;font-variant:small-caps;letter-spacing:.06em}a.nref{text-decoration:none}sup{font-size:.7em;line-height:0}' +
+    'aside.note p{text-indent:0;margin-bottom:.6em}dl.tl dt{font-weight:bold;margin-top:.6em}dl.tl dd{margin:0 0 0 1.2em}ol li{margin-bottom:.5em}';
+  var nav = xPage('Contents', '<nav epub:type="toc" id="toc"><h1>Contents</h1><ol>' + toc.map(function (x) { return '<li><a href="' + x.href + '">' + xesc(x.title) + '</a></li>'; }).join('') + '</ol></nav>', '');
+  nav = nav.replace('<body><section>', '<body>').replace('</section></body>', '</body>');
+  var mod = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+  var opf = '<?xml version="1.0" encoding="UTF-8"?>\n<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="en">\n<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">' +
+    '<dc:identifier id="bookid">urn:pdpress:' + xesc(t.id) + '</dc:identifier><dc:title>' + xesc(et) + '</dc:title><dc:creator id="c1">' + xesc(author) + '</dc:creator>' +
+    '<meta refines="#c1" property="role" scheme="marc:relators">aut</meta>' +
+    (credit ? '<dc:contributor id="c2">' + xesc(credit.replace(/^.*\bby\s+/i, '')) + '</dc:contributor><meta refines="#c2" property="role" scheme="marc:relators">ann</meta>' : '') +
+    (credit && /pd press/i.test(credit) ? '<dc:publisher>PD Press</dc:publisher>' : '') +
+    '<dc:language>en</dc:language><meta property="dcterms:modified">' + mod + '</meta></metadata>\n<manifest>' +
+    '<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/><item id="css" href="style.css" media-type="text/css"/>' +
+    files.map(function (f) { return '<item id="' + f.id + '" href="' + f.href + '" media-type="application/xhtml+xml"/>'; }).join('') +
+    '</manifest>\n<spine>' + files.map(function (f, i) { return (i === 2 ? '<itemref idref="nav"/>' : '') + '<itemref idref="' + f.id + '"/>'; }).join('') + (files.length <= 2 ? '<itemref idref="nav"/>' : '') + '</spine>\n</package>';
+  var entries = [['mimetype', 'application/epub+zip'],
+    ['META-INF/container.xml', '<?xml version="1.0" encoding="UTF-8"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>'],
+    ['OEBPS/content.opf', opf], ['OEBPS/nav.xhtml', nav], ['OEBPS/style.css', css]];
+  each(files, function (f) { entries.push(['OEBPS/' + f.href, f.xml]); });
+  return zipStore(entries);
+}
+function utf8(s) { if (window.TextEncoder) return new TextEncoder().encode(s); var b = unescape(encodeURIComponent(s)), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+var CRC_T = null;
+function crc32(u) {
+  if (!CRC_T) { CRC_T = []; for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; CRC_T[n] = c >>> 0; } }
+  var x = 0xFFFFFFFF; for (var i = 0; i < u.length; i++) x = CRC_T[(x ^ u[i]) & 255] ^ (x >>> 8); return (x ^ 0xFFFFFFFF) >>> 0;
+}
+/* Uncompressed ("stored") ZIP. EPUB readers accept it, and it keeps the code small. */
+function zipStore(entries) {
+  var parts = [], central = [], off = 0, d = new Date(), dt = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate(), tm = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1);
+  function hdr(size) { var b = new Uint8Array(size); return { b: b, v: new DataView(b.buffer) }; }
+  each(entries, function (en) {
+    var name = utf8(en[0]), data = typeof en[1] === 'string' ? utf8(en[1]) : en[1], crc = crc32(data), h = hdr(30);
+    h.v.setUint32(0, 0x04034b50, true); h.v.setUint16(4, 20, true); h.v.setUint16(6, 0x0800, true); h.v.setUint16(8, 0, true); h.v.setUint16(10, tm, true); h.v.setUint16(12, dt, true);
+    h.v.setUint32(14, crc, true); h.v.setUint32(18, data.length, true); h.v.setUint32(22, data.length, true); h.v.setUint16(26, name.length, true); h.v.setUint16(28, 0, true);
+    parts.push(h.b, name, data);
+    var c = hdr(46);
+    c.v.setUint32(0, 0x02014b50, true); c.v.setUint16(4, 20, true); c.v.setUint16(6, 20, true); c.v.setUint16(8, 0x0800, true); c.v.setUint16(10, 0, true); c.v.setUint16(12, tm, true); c.v.setUint16(14, dt, true);
+    c.v.setUint32(16, crc, true); c.v.setUint32(20, data.length, true); c.v.setUint32(24, data.length, true); c.v.setUint16(28, name.length, true); c.v.setUint32(42, off, true);
+    central.push(c.b, name);
+    off += 30 + name.length + data.length;
+  });
+  var csize = 0; each(central, function (x) { csize += x.length; });
+  var end = hdr(22); end.v.setUint32(0, 0x06054b50, true); end.v.setUint16(8, entries.length, true); end.v.setUint16(10, entries.length, true); end.v.setUint32(12, csize, true); end.v.setUint32(16, off, true);
+  return parts.concat(central, [end.b]);
+}
+function exportEpub(t) {
+  try {
+    var parts = buildEpub(t), loose = looseNotes(t).length;
+    var blob = new Blob(parts, { type: 'application/epub+zip' }), name = slug(t.editionTitle || t.title) + '.epub';
+    var url = URL.createObjectURL(blob), el = document.createElement('a'); el.href = url; el.download = name; el.style.display = 'none';
+    document.body.appendChild(el); el.click(); setTimeout(function () { document.body.removeChild(el); URL.revokeObjectURL(url); }, 2000);
+    toast('Downloaded ' + name + (loose ? '. ' + loose + ' unplaced note' + (loose === 1 ? ' was' : 's were') + ' left out' : ''));
+  } catch (x) { toast('Could not build the ebook on this browser.'); }
+}
+
+var PJ_APPVER = '2.9';
+/* ---- My Projects (v2.9): whole book projects kept on this phone ----
+   Each project (details, chapters, notes, KDP listing, fact checks) is one record in the IndexedDB
+   database "pdpress-projects", store "projects". Cover art and finished files (EPUB, PDFs, JPG) are
+   Blobs in the store "files". Export and import use the PD Press bundle format (a ZIP), described in
+   BUNDLE-FORMAT.md. */
+var PJ_DB = 'pdpress-projects', PJ_VER = 1, PJ_FMT = 'pdpress-bundle', PJ_FMT_VER = 1, PJ_INBOX = 'pdpress-inbox';
+var PJ_STATUSES = ['Planning', 'Translating', 'Annotating', 'Editing', 'Ready to upload', 'Published'];
+var PJ_KINDS = { cover: 'Cover art', epub: 'Ebook (EPUB)', interior: 'Interior PDF', wrap: 'Cover wrap PDF', 'ebook-cover': 'Ebook cover JPG', other: 'Other file' };
+var PJ_KIND_ORDER = ['cover', 'ebook-cover', 'epub', 'interior', 'wrap', 'other'];
+var PJ_PRICES = [['ebook', 'Ebook'], ['paperback', 'Paperback'], ['hardcover', 'Hardcover'], ['bundle', 'Bundle']];
+var PJ_FACT = { open: 'Open', checked: 'Checked', fix: 'Needs fix' };
+var pjDb = null, pjMode = 'none', pjList = [], pjReady = false, pjCur = null, pjTab = 'details', pjChap = -1, pjSaveT = null;
+var pjFiles = [], pjUrls = [], pjListUrls = [], pjBusy = false, pjAddKind = 'other';
+
+function pjOpenDb() {
+  return new Promise(function (res, rej) {
+    var idb = null, done = false;
+    function fail(e) { if (!done) { done = true; rej(e || new Error('No IndexedDB')); } }
+    try { idb = window.indexedDB; } catch (e) {}
+    if (!idb || window.__pdNoIDB || !window.Promise) { fail(); return; }
+    var r;
+    try { r = idb.open(PJ_DB, PJ_VER); } catch (e2) { fail(e2); return; }
+    r.onupgradeneeded = function () {
+      var db = r.result;
+      if (!db.objectStoreNames.contains('projects')) db.createObjectStore('projects', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('files')) db.createObjectStore('files', { keyPath: 'id' }).createIndex('projectId', 'projectId', { unique: false });
+    };
+    r.onsuccess = function () {
+      if (done) { try { r.result.close(); } catch (e) {} return; }
+      done = true; var db = r.result;
+      try { db.onversionchange = function () { try { db.close(); } catch (e) {} pjDb = null; }; } catch (e) {}
+      res(db);
+    };
+    r.onerror = function () { fail(r.error); };
+    r.onblocked = function () { fail(new Error('blocked')); };
+    setTimeout(function () { fail(new Error('timeout')); }, 8000);
+  });
+}
+function pjTx(stores, mode, fn) {
+  return new Promise(function (res, rej) {
+    if (!pjDb) { rej(new Error('Project storage is not open')); return; }
+    var tx, box = {}, done = false;
+    function fail(e) { if (done) return; done = true; rej(e || new Error('Storage error')); }
+    try { tx = pjDb.transaction(stores, mode); } catch (e) { fail(e); return; }
+    tx.oncomplete = function () { if (done) return; done = true; res(box.v); };
+    tx.onerror = function (ev) { fail(tx.error || (ev && ev.target && ev.target.error)); };
+    tx.onabort = function () { fail(tx.error || new Error('Storage aborted')); };
+    try { fn(tx, box); } catch (e) { try { tx.abort(); } catch (x) {} fail(e); }
+  });
+}
+function pjGetAll(store, projectId) {
+  return pjTx([store], 'readonly', function (tx, box) {
+    box.v = []; var s = tx.objectStore(store);
+    var src = projectId !== undefined ? s.index('projectId').openCursor(window.IDBKeyRange.only(projectId)) : s.openCursor();
+    src.onsuccess = function () { var c = src.result; if (c) { box.v.push(c.value); c['continue'](); } };
+  });
+}
+function pjGetFile(id) { return pjTx(['files'], 'readonly', function (tx, box) { var r = tx.objectStore('files').get(id); r.onsuccess = function () { box.v = r.result || null; }; }); }
+function pjErr(e) {
+  var n = e && e.name || '';
+  if (n === 'QuotaExceededError' || /quota/i.test(String(e && e.message))) return 'the phone is out of space for this app';
+  return 'the browser would not save it';
+}
+
+/* A project record, cleaned up so old or hand-made files still open */
+function pjStr(v) { return v == null ? '' : String(v); }
+function pjNorm(o) {
+  o = o && typeof o === 'object' ? o : {};
+  var now = new Date().toISOString(), L = o.listing && typeof o.listing === 'object' ? o.listing : {};
+  var p = {
+    id: pjStr(o.id) || ('p' + uid().slice(1)), title: pjStr(o.title), subtitle: pjStr(o.subtitle), author: pjStr(o.author),
+    translator: pjStr(o.translator), annotator: pjStr(o.annotator), year: pjStr(o.year), language: pjStr(o.language),
+    status: PJ_STATUSES.indexOf(o.status) >= 0 ? o.status : 'Planning', pages: pjStr(o.pages), prices: {},
+    chapters: [], introduction: pjStr(o.introduction), notes: pjStr(o.notes),
+    listing: { title: pjStr(L.title), subtitle: pjStr(L.subtitle), description: pjStr(L.description), keywords: [], categories: [], other: pjStr(L.other) },
+    factChecks: [], files: [], coverId: pjStr(o.coverId), source: pjStr(o.source),
+    created: pjStr(o.created) || now, updated: pjStr(o.updated) || now
+  };
+  var pr = o.prices && typeof o.prices === 'object' ? o.prices : {};
+  each(PJ_PRICES, function (k) { var n = parseFloat(pr[k[0]]); p.prices[k[0]] = isFinite(n) ? Math.round(n * 100) / 100 : null; });
+  function list(v) { return (Object.prototype.toString.call(v) === '[object Array]' ? v : pjStr(v).split('\n')).map(function (s) { return pjStr(s).trim(); }).filter(function (s) { return s; }); }
+  p.listing.keywords = list(L.keywords); p.listing.categories = list(L.categories);
+  each(o.chapters || [], function (c, i) { if (!c || typeof c !== 'object') return; p.chapters.push({ id: pjStr(c.id) || ('c' + (i + 1)), title: pjStr(c.title), original: pjStr(c.original), text: pjStr(c.text) }); });
+  each(o.factChecks || [], function (f, i) { if (!f || typeof f !== 'object') return; p.factChecks.push({ id: pjStr(f.id) || ('f' + (i + 1)), claim: pjStr(f.claim), source: pjStr(f.source), status: PJ_FACT[f.status] ? f.status : 'open', note: pjStr(f.note) }); });
+  each(o.files || [], function (f) { if (!f || typeof f !== 'object' || !f.id) return; p.files.push({ id: pjStr(f.id), kind: PJ_KINDS[f.kind] ? f.kind : 'other', name: pjStr(f.name) || 'file', type: pjStr(f.type), size: num(f.size, 0), added: pjStr(f.added) || now, path: pjStr(f.path) }); });
+  if (p.coverId && !p.files.some(function (f) { return f.id === p.coverId; })) p.coverId = '';
+  if (!p.coverId) each(p.files, function (f) { if (!p.coverId && f.kind === 'cover') p.coverId = f.id; });
+  return p;
+}
+function pjW(n) { return commas(n) + (n === 1 ? ' word' : ' words'); }
+function pjWords(s) { var m = pjStr(s).match(/[^\s]+/g); return m ? m.length : 0; }
+function pjFind(id) { for (var i = 0; i < pjList.length; i++) if (pjList[i].id === id) return pjList[i]; return null; }
+function pjSort() { pjList.sort(function (a, b) { return a.updated < b.updated ? 1 : a.updated > b.updated ? -1 : 0; }); }
+function pjGuessKind(name, type) {
+  var n = String(name || '').toLowerCase(), t = String(type || '');
+  if (/\.epub$/.test(n) || t === 'application/epub+zip') return 'epub';
+  if (/\.pdf$/.test(n) || t === 'application/pdf') return /wrap|cover|jacket/.test(n) ? 'wrap' : 'interior';
+  if (/\.(jpe?g|png|webp|gif)$/.test(n) || /^image\//.test(t)) return /ebook|kindle|kdp/.test(n) ? 'ebook-cover' : 'cover';
+  return 'other';
+}
+function pjMime(name) {
+  var n = String(name || '').toLowerCase();
+  if (/\.epub$/.test(n)) return 'application/epub+zip';
+  if (/\.pdf$/.test(n)) return 'application/pdf';
+  if (/\.jpe?g$/.test(n)) return 'image/jpeg';
+  if (/\.png$/.test(n)) return 'image/png';
+  if (/\.webp$/.test(n)) return 'image/webp';
+  if (/\.(txt|md)$/.test(n)) return 'text/plain';
+  if (/\.json$/.test(n)) return 'application/json';
+  if (/\.html?$/.test(n)) return 'text/html';
+  return 'application/octet-stream';
+}
+function pjBlob(rec) { if (!rec) return null; if (rec.blob) return rec.blob; if (rec.buf) return new Blob([rec.buf], { type: rec.type || 'application/octet-stream' }); return null; }
+function pjReadBuf(blob) {
+  return new Promise(function (res, rej) {
+    var r = new FileReader();
+    r.onload = function () { res(new Uint8Array(r.result)); };
+    r.onerror = function () { rej(r.error || new Error('Could not read the file')); };
+    r.readAsArrayBuffer(blob);
+  });
+}
+
+/* Save one project, plus any new or removed files, in one step */
+function pjWrite(p, addRecs, delIds) {
+  addRecs = addRecs || []; delIds = delIds || [];
+  function run(recs) {
+    return pjTx(['projects', 'files'], 'readwrite', function (tx) {
+      var fs = tx.objectStore('files');
+      each(delIds, function (id) { fs['delete'](id); });
+      each(recs, function (r) { fs.put(r); });
+      tx.objectStore('projects').put(p);
+    });
+  }
+  return run(addRecs)['catch'](function (e) {
+    // Some older browsers cannot keep a Blob in IndexedDB. Keep the bytes instead.
+    if (!addRecs.length || (e && e.name === 'QuotaExceededError')) throw e;
+    return Promise.all(addRecs.map(function (r) {
+      if (!r.blob) return r;
+      return pjReadBuf(r.blob).then(function (u) { var c = {}; for (var k in r) if (k !== 'blob') c[k] = r[k]; c.buf = u.buffer; return c; });
+    })).then(run);
+  });
+}
+function pjFileRec(p, blob, name, kind, id) {
+  var type = blob.type || pjMime(name);
+  return { id: id || ('f' + uid().slice(1)), projectId: p.id, kind: kind, name: name, type: type, size: blob.size, added: new Date().toISOString(), blob: blob };
+}
+function pjMeta(r) { return { id: r.id, kind: r.kind, name: r.name, type: r.type, size: r.size, added: r.added }; }
+
+/* ---------- ZIP read and write for bundles ---------- */
+function pjUnzip(u) {
+  var v = new DataView(u.buffer, u.byteOffset, u.byteLength), end = -1;
+  for (var i = u.length - 22; i >= Math.max(0, u.length - 65557); i--) if (v.getUint32(i, true) === 0x06054b50) { end = i; break; }
+  if (end < 0) return Promise.reject(new Error('This is not a ZIP file.'));
+  var count = v.getUint16(end + 10, true), off = v.getUint32(end + 16, true), jobs = [], out = {};
+  for (var n = 0; n < count; n++) {
+    if (v.getUint32(off, true) !== 0x02014b50) return Promise.reject(new Error('The ZIP file is damaged.'));
+    var method = v.getUint16(off + 10, true), csize = v.getUint32(off + 20, true), nl = v.getUint16(off + 28, true), el = v.getUint16(off + 30, true), cl = v.getUint16(off + 32, true), loc = v.getUint32(off + 42, true);
+    var name = pjUtf8Dec(u.subarray(off + 46, off + 46 + nl));
+    var start = loc + 30 + v.getUint16(loc + 26, true) + v.getUint16(loc + 28, true), data = u.subarray(start, start + csize);
+    off += 46 + nl + el + cl;
+    if (/\/$/.test(name)) continue;
+    jobs.push(pjInflate(method, data).then((function (nm) { return function (d) { out[nm] = d; }; })(name)));
+  }
+  return Promise.all(jobs).then(function () { return out; });
+}
+function pjInflate(method, data) {
+  if (method === 0) return Promise.resolve(data);
+  if (method === 8 && window.DecompressionStream && window.Response) {
+    try {
+      var ds = new window.DecompressionStream('deflate-raw');
+      return new Response(new Blob([data]).stream().pipeThrough(ds)).arrayBuffer().then(function (b) { return new Uint8Array(b); });
+    } catch (e) {}
+  }
+  return Promise.reject(new Error('This file is packed in a way this browser cannot open. Ask for a PD Press bundle.'));
+}
+function pjUtf8Dec(u) {
+  if (window.TextDecoder) return new TextDecoder('utf-8').decode(u);
+  var s = ''; for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]);
+  try { return decodeURIComponent(escape(s)); } catch (e) { return s; }
+}
+function pjSafeName(s) { return String(s || 'file').replace(/[\\\/:*?"<>|\u0000-\u001f]+/g, '_').slice(-120) || 'file'; }
+
+/* Build a bundle for some projects: Promise of a Blob */
+function pjBundle(projects, kind) {
+  var entries = [], manifest = { format: PJ_FMT, version: PJ_FMT_VER, kind: kind, created: new Date().toISOString(), generator: 'PD Press app ' + PJ_APPVER, projects: [] };
+  var chain = Promise.resolve();
+  each(projects, function (p) {
+    chain = chain.then(function () { return pjGetAll('files', p.id); }).then(function (recs) {
+      var copy = JSON.parse(JSON.stringify(p)), byId = {}, base = 'projects/' + p.id + '/';
+      each(recs, function (r) { byId[r.id] = r; });
+      copy.files = [];
+      var reads = [];
+      each(p.files, function (f) {
+        var r = byId[f.id], b = pjBlob(r); if (!b) return;
+        var path = base + 'files/' + f.id + '-' + pjSafeName(f.name), m = pjMeta(r); m.path = path; copy.files.push(m);
+        reads.push(pjReadBuf(b).then(function (u) { entries.push([path, u]); }));
+      });
+      return Promise.all(reads).then(function () {
+        entries.push([base + 'project.json', JSON.stringify(copy, null, 1)]);
+        manifest.projects.push({ id: p.id, title: p.title, path: base + 'project.json' });
+      });
+    });
+  });
+  return chain.then(function () {
+    entries.unshift(['pdpress-bundle.json', JSON.stringify(manifest, null, 1)]);
+    return new Blob(zipStore(entries), { type: 'application/zip' });
+  });
+}
+function pjStamp() { var d = new Date(); function z(n) { return (n < 10 ? '0' : '') + n; } return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()); }
+function pjSaveBlob(blob, name) {
+  var url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = name; a.style.display = 'none';
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 4000);
+}
+function pjCanShare() {
+  try { return !!(navigator.share && navigator.canShare && window.File && navigator.canShare({ files: [new File(['x'], 'x.zip', { type: 'application/zip' })] })); } catch (e) { return false; }
+}
+function pjExport(ids, share) {
+  if (pjBusy) return Promise.resolve();
+  var list = ids ? pjList.filter(function (p) { return ids.indexOf(p.id) >= 0; }) : pjList.slice();
+  if (!list.length) { toast('No projects to export yet.'); return Promise.resolve(); }
+  pjBusy = true; toast('Packing ' + (list.length === 1 ? 'the project' : list.length + ' projects') + '...');
+  pjFlush();
+  var name = list.length === 1 && ids ? slug(list[0].title || 'project') + '.pdpress.zip' : 'pdpress-projects-' + pjStamp() + '.pdpress.zip';
+  return pjBundle(list, ids ? 'project' : 'backup').then(function (blob) {
+    pjBusy = false; window.__pjLastExport = { name: name, size: blob.size };
+    if (share && pjCanShare()) {
+      var f = new File([blob], name, { type: 'application/zip' });
+      return navigator.share({ files: [f], title: name }).then(function () { toast('Shared ' + name); }, function () {});
+    }
+    pjSaveBlob(blob, name);
+    toast('Downloaded ' + name + ' (' + sizeText(blob.size) + '). It is in your Downloads folder.');
+  }, function (e) { pjBusy = false; toast('Could not pack the file: ' + (e && e.message || 'unknown problem')); });
+}
+
+/* Import a bundle, a backup, or a single project.json */
+function pjImportBytes(u, fname) {
+  var isZip = u.length > 3 && u[0] === 0x50 && u[1] === 0x4b;
+  var p = isZip ? pjUnzip(u).then(pjFromZip) : Promise.resolve().then(function () { return pjFromJson(JSON.parse(pjUtf8Dec(u))); });
+  return p.then(pjStoreImported, function (e) {
+    throw new Error(e && e.message && !/JSON|Unexpected token/i.test(e.message) ? e.message : (fname || 'This file') + ' is not a PD Press project file.');
+  });
+}
+function pjFromZip(files) {
+  var man = null, paths = [];
+  if (files['pdpress-bundle.json']) { try { man = JSON.parse(pjUtf8Dec(files['pdpress-bundle.json'])); } catch (e) { throw new Error('The bundle list inside the file is damaged.'); } }
+  if (man && man.format !== PJ_FMT) throw new Error('This is not a PD Press bundle.');
+  if (man && man.version > PJ_FMT_VER) throw new Error('This bundle was made by a newer PD Press. Update the app, then try again.');
+  if (man && man.projects) each(man.projects, function (x) { if (x && x.path && files[x.path]) paths.push(x.path); });
+  if (!paths.length) each(keys(files), function (k) { if (/(^|\/)project\.json$/.test(k)) paths.push(k); });
+  if (!paths.length) throw new Error('No book projects were found in this file.');
+  return paths.map(function (path) {
+    var o = JSON.parse(pjUtf8Dec(files[path])), dir = path.replace(/project\.json$/, ''), blobs = {};
+    each(o.files || [], function (f) {
+      var d = f && (files[f.path] || files[dir + 'files/' + f.id + '-' + pjSafeName(f.name)]);
+      if (d) blobs[f.id] = new Blob([d], { type: f.type || pjMime(f.name) });
+    });
+    return { p: o, blobs: blobs };
+  });
+}
+function pjFromJson(o) {
+  // A JSON copy: one project, or { format, projects: [ ... ] } with files carried as data: URLs
+  var list = o && o.projects && o.format === PJ_FMT ? o.projects : [o];
+  return list.map(function (x) {
+    if (!x || typeof x !== 'object' || (!x.title && !x.chapters)) throw new Error('No book projects were found in this file.');
+    var blobs = {};
+    each(x.files || [], function (f) {
+      var m = f && /^data:([^;,]*)(;base64)?,(.*)$/.exec(f.data || '');
+      if (!m) return;
+      var raw = m[2] ? atob(m[3]) : decodeURIComponent(m[3]), u = new Uint8Array(raw.length);
+      for (var i = 0; i < raw.length; i++) u[i] = raw.charCodeAt(i);
+      blobs[f.id] = new Blob([u], { type: f.type || m[1] || pjMime(f.name) });
+    });
+    return { p: x, blobs: blobs };
+  });
+}
+function pjStoreImported(items) {
+  var done = [], chain = Promise.resolve();
+  each(items, function (it) {
+    chain = chain.then(function () {
+      var p = pjNorm(it.p), old = pjFind(p.id), dels = [];
+      if (old) {
+        if (window.confirm('"' + (old.title || 'Untitled') + '" is already on this phone. Tap OK to replace it with the copy from the file, or Cancel to keep both.')) {
+          dels = old.files.map(function (f) { return f.id; });
+        } else {
+          var map = {}; p.id = 'p' + uid().slice(1); p.title = (p.title || 'Untitled') + ' (copy)';
+          each(p.files, function (f) { var nid = 'f' + uid().slice(1); map[f.id] = nid; if (it.blobs[f.id]) { it.blobs[nid] = it.blobs[f.id]; } f.id = nid; });
+          if (p.coverId) p.coverId = map[p.coverId] || '';
+        }
+      }
+      var recs = [];
+      p.files = p.files.filter(function (f) { return !!it.blobs[f.id]; });
+      each(p.files, function (f) { var b = it.blobs[f.id]; recs.push({ id: f.id, projectId: p.id, kind: f.kind, name: f.name, type: f.type || b.type, size: b.size, added: f.added, blob: b }); f.size = b.size; delete f.path; });
+      if (p.coverId && !p.files.some(function (f) { return f.id === p.coverId; })) p.coverId = '';
+      return pjWrite(p, recs, dels.filter(function (id) { return !it.blobs[id]; })).then(function () {
+        pjList = pjList.filter(function (x) { return x.id !== p.id; }); pjList.push(p); done.push(p);
+      });
+    });
+  });
+  return chain.then(function () { pjSort(); return done; });
+}
+function pjImportFiles(files) {
+  if (!files || !files.length) return Promise.resolve([]);
+  if (!pjReady || pjMode !== 'idb') { toast('Project storage is not open on this browser.'); return Promise.resolve([]); }
+  var all = [], chain = Promise.resolve(), problems = [];
+  toast('Opening ' + (files.length === 1 ? files[0].name : files.length + ' files') + '...');
+  each(files, function (f) {
+    chain = chain.then(function () { return pjReadBuf(f); }).then(function (u) { return pjImportBytes(u, f.name); })
+      .then(function (l) { all = all.concat(l); }, function (e) { problems.push(e && e.message || 'Could not open ' + f.name); });
+  });
+  return chain.then(function () {
+    if (all.length) pjAskKeep();
+    renderProjects();
+    if (all.length === 1 && !problems.length) { toast('Added "' + (all[0].title || 'Untitled') + '" to My Projects.'); pjOpenProject(all[0].id); }
+    else if (all.length) toast(all.length + ' projects added.' + (problems.length ? ' ' + problems[0] : ''));
+    else toast(problems[0] || 'Nothing was added.');
+    return all;
+  });
+}
+/* Files shared to the app from Drive or Downloads (Android share sheet, see sw.js) */
+function pjCheckInbox() {
+  if (!/[?&]shared=/.test(location.search)) return Promise.resolve();
+  var ok = /[?&]shared=1/.test(location.search);
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  go('projects');
+  if (!ok) { toast('Could not open the shared file. Try Import project file.'); return Promise.resolve(); }
+  if (!window.caches) return Promise.resolve();
+  return caches.open(PJ_INBOX).then(function (c) {
+    return c.keys().then(function (reqs) {
+      var files = [];
+      return Promise.all(reqs.map(function (rq) {
+        return c.match(rq).then(function (r) {
+          if (!r) return;
+          var name = decodeURIComponent(r.headers.get('x-name') || 'project.zip');
+          return r.blob().then(function (b) { b.name = name; files.push(b); });
+        });
+      })).then(function () { return pjImportFiles(files); }).then(function () { return Promise.all(reqs.map(function (rq) { return c['delete'](rq); })); });
+    });
+  })['catch'](function () { toast('Could not open the shared file. Try Import project file.'); });
+}
+
+/* Keep my projects: navigator.storage.persist() */
+function pjAskKeep() {
+  return persistStatus().then(function (s) { if (s === 'yes') return s; return askPersist(); }).then(function (s) { pjKeepLine(s); return s; });
+}
+function pjKeepLine(s) {
+  var el = $('pj-keep'); if (!el) return;
+  var b = $('pj-persist');
+  if (s === 'yes') { el.textContent = 'This phone has agreed to keep your projects, even when space runs low.'; if (b) b.className = 'btn ghost small hidden'; }
+  else { el.textContent = s === 'no' ? 'The browser may clear projects if the phone runs low on space. Export all now and then.' : 'Export all now and then, and keep the file in Drive.'; if (b) b.className = navigator.storage && navigator.storage.persist ? 'btn ghost small' : 'btn ghost small hidden'; }
+}
+
+/* ---------- Screens ---------- */
+function pjFreeList() { each(pjListUrls, function (u) { try { URL.revokeObjectURL(u); } catch (e) {} }); pjListUrls = []; }
+function pjPrice(p) {
+  var bits = [];
+  each(PJ_PRICES, function (k) { var v = p.prices[k[0]]; if (v != null) bits.push(money(v) + ' ' + k[1].toLowerCase()); });
+  return bits.join(', ');
+}
+function renderProjects() {
+  var el = $('pjList'); if (!el) return;
+  var tools = $('pj-tools');
+  if (!pjReady) { el.innerHTML = '<div class="empty">Opening your projects...</div>'; return; }
+  if (pjMode !== 'idb') {
+    if (tools) tools.className = 'hidden';
+    el.innerHTML = '<div class="card"><p class="mt0 small">This browser cannot save book projects. Open PD Press in Chrome to use My Projects.</p></div>'; return;
+  }
+  var sh = $('pj-shareall'); if (sh) sh.className = pjCanShare() ? 'btn ghost small' : 'btn ghost small hidden';
+  $('pj-count').textContent = pjList.length ? pjList.length + (pjList.length === 1 ? ' project' : ' projects') + ' on this phone' : '';
+  if (!pjList.length) { pjFreeList(); el.innerHTML = '<div class="empty">No book projects yet. Tap New project, or Import project file to load a project someone sent you.</div>'; return; }
+  var h = '';
+  each(pjList, function (p) {
+    var open = p.factChecks.filter(function (f) { return f.status !== 'checked'; }).length, w = 0;
+    each(p.chapters, function (c) { w += pjWords(c.text || c.original); });
+    var who = [p.author, p.translator ? 'translated by ' + p.translator : '', p.annotator ? 'annotated by ' + p.annotator : ''].filter(function (x) { return x; }).join(', ');
+    h += '<button class="item pj-item" data-pj="' + esc(p.id) + '"><span class="pj-cv" data-cv="' + esc(p.coverId) + '"><b>' + esc((p.title || '?').charAt(0)) + '</b></span><span class="pj-main">' +
+      '<span class="item-title">' + esc(p.title || 'Untitled') + '</span>' + (who ? '<span class="item-sub">' + esc(who) + (p.year ? ' (' + esc(p.year) + ')' : '') + '</span>' : '') +
+      '<span class="tags"><span class="tag accent">' + esc(p.status) + '</span>' + (open ? '<span class="tag warn">' + open + ' to check</span>' : '') + '</span>' +
+      '<span class="item-meta">' + p.chapters.length + (p.chapters.length === 1 ? ' chapter' : ' chapters') + (w ? ', ' + pjW(w) : '') + ', ' + p.files.length + (p.files.length === 1 ? ' file' : ' files') +
+      (pjPrice(p) ? '<br>' + esc(pjPrice(p)) : '') + '</span></span></button>';
+  });
+  pjFreeList();
+  el.innerHTML = h;
+  each(el.querySelectorAll('[data-cv]'), function (s) {
+    var id = s.getAttribute('data-cv'); if (!id) return;
+    pjGetFile(id).then(function (r) {
+      var b = pjBlob(r); if (!b || !/^image\//.test(b.type || r.type)) return;
+      var u = URL.createObjectURL(b); pjListUrls.push(u);
+      s.innerHTML = '<img alt="" src="' + u + '">'; s.className = 'pj-cv has';
+    }, function () {});
+  });
+}
+function pjOpenProject(id) {
+  var p = pjFind(id); if (!p) return;
+  pjCur = p; pjTab = 'details'; pjChap = -1; pjFiles = [];
+  pjRenderSheet();
+  $('pjSheet').className = 'sheet editor';
+  $('pjSheet').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  pjLoadFiles();
+}
+function pjLoadFiles() {
+  var p = pjCur; if (!p) return;
+  pjGetAll('files', p.id).then(function (recs) { if (pjCur !== p) return; pjFiles = recs; if (pjTab === 'files' || pjTab === 'details') { var st = $('pjSheet').scrollTop; pjRenderSheet(); $('pjSheet').scrollTop = st; } }, function () {});
+}
+function pjCloseSheet() {
+  pjFlush();
+  $('pjSheet').className = 'sheet editor hidden';
+  pjCur = null; pjFiles = []; pjFreeUrls();
+  document.body.style.overflow = '';
+  renderProjects();
+}
+function pjFreeUrls() { each(pjUrls, function (u) { try { URL.revokeObjectURL(u); } catch (e) {} }); pjUrls = []; }
+function pjField(label, attr, val, opts) {
+  opts = opts || {};
+  var inner = opts.area
+    ? '<textarea ' + attr + (opts.cls ? ' class="' + opts.cls + '"' : '') + (opts.rows ? ' rows="' + opts.rows + '"' : '') + ' placeholder="' + esc(opts.ph || '') + '">' + esc(val) + '</textarea>'
+    : '<input type="text" ' + attr + (opts.mode ? ' inputmode="' + opts.mode + '"' : '') + ' value="' + esc(val) + '" placeholder="' + esc(opts.ph || '') + '">';
+  return '<label class="f"><span>' + esc(label) + '</span>' + inner + (opts.em ? '<em' + (opts.emId ? ' id="' + opts.emId + '"' : '') + '>' + opts.em + '</em>' : '') + '</label>';
+}
+function pjRenderSheet() {
+  var p = pjCur, el = $('pjBody'); if (!p || !el) return;
+  pjFreeUrls();
+  var tabs = [['details', 'Details'], ['text', 'Text'], ['notes', 'Notes'], ['listing', 'Listing'], ['files', 'Files'], ['checks', 'Facts']];
+  var h = '<div class="pj-head"><div class="eyebrow">Book project</div><h2 class="pj-h" id="pj-htitle">' + esc(p.title || 'Untitled') + '</h2>' +
+    '<div class="small muted">Saved on this phone. Last change ' + esc(new Date(p.updated).toLocaleString()) + '</div></div>' +
+    '<div class="tabs2" id="pjTabs">' + tabs.map(function (t) { return '<button data-pjtab="' + t[0] + '"' + (pjTab === t[0] ? ' class="on"' : '') + '>' + t[1] + '</button>'; }).join('') + '</div>';
+  h += pjTabHtml(p);
+  el.innerHTML = h;
+  if (pjTab === 'files' || pjTab === 'details') pjShowCover();
+}
+function pjTabHtml(p) {
+  var h = '';
+  if (pjTab === 'details') {
+    h += '<div class="pj-coverbox small-cv" id="pj-coverbox"></div>';
+    h += pjField('Title', 'data-pk="title"', p.title) + pjField('Subtitle', 'data-pk="subtitle"', p.subtitle) + pjField('Author', 'data-pk="author"', p.author) +
+      pjField('Translator', 'data-pk="translator"', p.translator) + pjField('Annotator', 'data-pk="annotator"', p.annotator, { ph: 'Annotated by PD Press' }) +
+      '<div class="pj-two">' + pjField('Year first published', 'data-pk="year"', p.year, { mode: 'numeric' }) + pjField('Pages', 'data-pk="pages"', p.pages, { mode: 'numeric' }) + '</div>' +
+      pjField('Original language', 'data-pk="language"', p.language, { ph: 'Russian' }) +
+      '<label class="f"><span>Status</span><select data-pk="status">' + PJ_STATUSES.map(function (s) { return '<option' + (s === p.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select></label>' +
+      '<h3 class="ed-h">Prices</h3><div class="pj-two">' + PJ_PRICES.map(function (k) { var v = p.prices[k[0]]; return pjField(k[1], 'data-pp="' + k[0] + '"', v == null ? '' : v.toFixed(2), { mode: 'decimal', ph: '0.00' }); }).join('') + '</div>' +
+      '<h3 class="ed-h">Keep a copy</h3><div class="card"><p class="mt0 small">Export saves this whole project, with its cover and finished files, as one file you can keep in Downloads or Drive.</p>' +
+      '<div class="btns"><button class="btn" id="pj-export">Export project</button>' + (pjCanShare() ? '<button class="btn ghost" id="pj-share">Save to Drive or share</button>' : '') + '</div></div>' +
+      '<div class="card"><p class="mt0 small muted">Delete removes this project and its files from this phone. Export it first if you may want it back.</p><button class="btn ghost small" id="pj-delete">Delete project</button></div>';
+  } else if (pjTab === 'text') {
+    if (pjChap >= 0 && p.chapters[pjChap]) {
+      var c = p.chapters[pjChap];
+      h += '<button class="btn ghost small" id="pj-chapback">All chapters</button><div class="small muted" style="margin:10px 0">Chapter ' + (pjChap + 1) + ' of ' + p.chapters.length + '</div>' +
+        pjField('Chapter title', 'data-pc="title"', c.title) +
+        pjField('Original text', 'data-pc="original"', c.original, { area: 1, cls: 'pj-text', em: pjW(pjWords(c.original)), emId: 'pj-wc-original' }) +
+        pjField(p.translator ? 'Translation' : 'Translation or annotated text', 'data-pc="text"', c.text, { area: 1, cls: 'pj-text', em: pjW(pjWords(c.text)), emId: 'pj-wc-text' }) +
+        '<div class="btns"><button class="btn ghost small" data-chmove="-1"' + (pjChap ? '' : ' disabled') + '>Move up</button><button class="btn ghost small" data-chmove="1"' + (pjChap < p.chapters.length - 1 ? '' : ' disabled') + '>Move down</button><button class="btn ghost small" id="pj-chapdel">Delete chapter</button></div>';
+    } else {
+      var tw = 0, ow = 0; each(p.chapters, function (c) { tw += pjWords(c.text); ow += pjWords(c.original); });
+      h += '<p class="small muted mt0">' + (p.chapters.length ? p.chapters.length + ' chapters. Original ' + commas(ow) + ' words, translation or annotated text ' + commas(tw) + ' words.' : 'Add a chapter for each part of the book. Each one holds the original text and your translation or annotated text.') + '</p>';
+      each(p.chapters, function (c, i) {
+        h += '<button class="item pj-chap" data-chap="' + i + '"><span class="item-title">' + (i + 1) + '. ' + esc(c.title || 'Untitled chapter') + '</span><span class="item-meta">Original ' + commas(pjWords(c.original)) + ' words, translation ' + commas(pjWords(c.text)) + ' words</span></button>';
+      });
+      h += '<button class="btn" id="pj-addchap">Add chapter</button>';
+    }
+  } else if (pjTab === 'notes') {
+    h += pjField('Introduction', 'data-pk="introduction"', p.introduction, { area: 1, cls: 'pj-text', em: pjW(pjWords(p.introduction)), emId: 'pj-wc-introduction' }) +
+      pjField('Notes', 'data-pk="notes"', p.notes, { area: 1, cls: 'pj-text', ph: 'Endnotes, translator notes, sources', em: pjW(pjWords(p.notes)), emId: 'pj-wc-notes' });
+  } else if (pjTab === 'listing') {
+    var L = p.listing;
+    h += '<p class="small muted mt0">The words for the Amazon KDP page. Copy each one into KDP when you upload.</p>' +
+      pjField('Book title on KDP', 'data-pl="title"', L.title, { ph: p.title }) + pjField('Subtitle on KDP', 'data-pl="subtitle"', L.subtitle) +
+      pjField('Description', 'data-pl="description"', L.description, { area: 1, rows: 10, em: commas(L.description.length) + ' of 4,000 characters', emId: 'pj-lc-description' }) +
+      pjField('Keywords, one per line', 'data-pl="keywords"', L.keywords.join('\n'), { area: 1, rows: 7, em: L.keywords.length + ' of 7 boxes used', emId: 'pj-lc-keywords' }) +
+      pjField('Categories, one per line', 'data-pl="categories"', L.categories.join('\n'), { area: 1, rows: 3 }) +
+      pjField('Other listing notes', 'data-pl="other"', L.other, { area: 1, rows: 3, ph: 'AI disclosure answers, series name, age range' }) +
+      '<button class="btn ghost small" id="pj-copydesc">Copy description</button>';
+  } else if (pjTab === 'files') {
+    h += '<div class="pj-coverbox" id="pj-coverbox"></div>';
+    h += '<h3 class="ed-h">Finished files</h3>';
+    var shown = p.files.slice().sort(function (a, b) { return PJ_KIND_ORDER.indexOf(a.kind) - PJ_KIND_ORDER.indexOf(b.kind); });
+    if (!shown.length) h += '<p class="small muted">No files yet. Add the ebook, interior PDF, cover wrap PDF and ebook cover here, so they are kept with the project.</p>';
+    each(shown, function (f) {
+      h += '<div class="card pj-file"><div class="pj-fname">' + esc(f.name) + '</div><div class="tags"><span class="tag accent">' + esc(PJ_KINDS[f.kind]) + '</span><span class="tag">' + esc(sizeText(f.size)) + '</span>' + (f.id === p.coverId ? '<span class="tag start">Shown as cover</span>' : '') + '</div>' +
+        '<div class="btns"><button class="btn ghost small" data-fdl="' + esc(f.id) + '">Download</button>' + (/^image\//.test(f.type) && f.id !== p.coverId ? '<button class="btn ghost small" data-fcover="' + esc(f.id) + '">Use as cover</button>' : '') + '<button class="btn ghost small" data-fdel="' + esc(f.id) + '">Remove</button></div></div>';
+    });
+    h += '<div class="card"><label class="f"><span>Kind of file to add</span><select id="pj-addkind">' + PJ_KIND_ORDER.map(function (k) { return '<option value="' + k + '"' + (k === pjAddKind ? ' selected' : '') + '>' + PJ_KINDS[k] + '</option>'; }).join('') + '</select></label>' +
+      '<button class="btn" id="pj-addfile">Add a file</button></div>';
+  } else if (pjTab === 'checks') {
+    var c3 = { open: 0, checked: 0, fix: 0 }; each(p.factChecks, function (f) { c3[f.status]++; });
+    h += '<p class="small muted mt0">' + (p.factChecks.length ? c3.open + ' open, ' + c3.checked + ' checked, ' + c3.fix + ' need a fix.' : 'List each fact in the introduction and notes that should be checked before the book goes up.') + '</p>';
+    each(p.factChecks, function (f, i) {
+      h += '<div class="card pj-fact st-' + f.status + '">' + pjField('Fact ' + (i + 1), 'data-pf="' + i + '.claim"', f.claim, { area: 1, rows: 2 }) +
+        pjField('Source', 'data-pf="' + i + '.source"', f.source, { ph: 'Book, page, or web address' }) +
+        '<div class="seg ed-seg">' + keys(PJ_FACT).map(function (k) { return '<button data-fst="' + i + '.' + k + '"' + (f.status === k ? ' class="on"' : '') + '>' + PJ_FACT[k] + '</button>'; }).join('') + '</div>' +
+        pjField('What to change', 'data-pf="' + i + '.note"', f.note) + '<button class="btn ghost small" data-fx="' + i + '">Remove</button></div>';
+    });
+    h += '<button class="btn" id="pj-addfact">Add a fact to check</button>';
+  }
+  return h;
+}
+function pjShowCover() {
+  var p = pjCur, box = $('pj-coverbox'); if (!p || !box) return;
+  var rec = null; each(pjFiles, function (r) { if (r.id === p.coverId) rec = r; });
+  var b = pjBlob(rec), img = '';
+  if (b) { var u = URL.createObjectURL(b); pjUrls.push(u); img = '<img alt="Cover" src="' + u + '">'; }
+  box.innerHTML = (img || '<div class="pj-nocover">' + (p.coverId && !pjFiles.length ? 'Opening cover...' : 'No cover yet') + '</div>') +
+    (pjTab === 'files' ? '<div class="btns" style="margin-top:10px"><button class="btn ghost small" id="pj-coverbtn">' + (b ? 'Change cover' : 'Choose cover picture') + '</button></div>' : '');
+}
+function pjDirty(rerenderList) {
+  var p = pjCur; if (!p) return;
+  p.updated = new Date().toISOString();
+  var s = $('pjSaved'); if (s) s.textContent = 'Saving';
+  clearTimeout(pjSaveT); pjSaveT = setTimeout(pjFlush, 500);
+}
+function pjFlush() {
+  if (!pjSaveT) return Promise.resolve();
+  clearTimeout(pjSaveT); pjSaveT = null;
+  var p = pjCur; if (!p) return Promise.resolve();
+  return pjWrite(p).then(function () { var s = $('pjSaved'); if (s) s.textContent = 'Saved'; pjSort(); }, function (e) { toast('Could not save: ' + pjErr(e)); });
+}
+function pjInput(e) {
+  var t = e.target, p = pjCur; if (!p || !t.getAttribute) return;
+  var k = t.getAttribute('data-pk'), pp = t.getAttribute('data-pp'), pc = t.getAttribute('data-pc'), pl = t.getAttribute('data-pl'), pf = t.getAttribute('data-pf'), wc;
+  if (k) {
+    p[k] = t.value;
+    if (k === 'title') { var ht = $('pj-htitle'); if (ht) ht.textContent = t.value || 'Untitled'; }
+    wc = $('pj-wc-' + k); if (wc) wc.textContent = pjW(pjWords(t.value));
+  } else if (pp) { var n = parseFloat(String(t.value).replace(/[$,\s]/g, '')); p.prices[pp] = isFinite(n) ? Math.round(n * 100) / 100 : null; }
+  else if (pc && p.chapters[pjChap]) { p.chapters[pjChap][pc] = t.value; wc = $('pj-wc-' + pc); if (wc) wc.textContent = pjW(pjWords(t.value)); }
+  else if (pl) {
+    if (pl === 'keywords' || pl === 'categories') p.listing[pl] = t.value.split('\n').map(function (s) { return s.trim(); }).filter(function (s) { return s; });
+    else p.listing[pl] = t.value;
+    if (pl === 'keywords') $('pj-lc-keywords').textContent = p.listing.keywords.length + ' of 7 boxes used';
+    if (pl === 'description') $('pj-lc-description').textContent = commas(t.value.length) + ' of 4,000 characters';
+  } else if (pf) { var a = pf.split('.'), f = p.factChecks[+a[0]]; if (f) f[a[1]] = t.value; }
+  else return;
+  pjDirty();
+}
+function pjPick(accept, multiple, cb) {
+  var inp = $('pjFile');
+  inp.value = ''; inp.setAttribute('accept', accept || ''); inp.multiple = !!multiple;
+  inp.onchange = function () { var fs = []; for (var i = 0; i < inp.files.length; i++) fs.push(inp.files[i]); inp.value = ''; if (fs.length) cb(fs); };
+  inp.click();
+}
+function pjAddFiles(fs, kind) {
+  var p = pjCur; if (!p) return Promise.resolve();
+  var recs = fs.map(function (f) { return pjFileRec(p, f, f.name || 'file', kind === 'auto' ? pjGuessKind(f.name, f.type) : kind); });
+  each(recs, function (r) { p.files.push(pjMeta(r)); if (r.kind === 'cover') p.coverId = r.id; });
+  p.updated = new Date().toISOString();
+  return pjWrite(p, recs).then(function () {
+    pjFiles = pjFiles.concat(recs); pjAskKeep();
+    toast(recs.length === 1 ? 'Added ' + recs[0].name : recs.length + ' files added');
+    pjRenderSheet();
+  }, function (e) {
+    var ids = recs.map(function (r) { return r.id; });
+    p.files = p.files.filter(function (f) { return ids.indexOf(f.id) < 0; });
+    if (ids.indexOf(p.coverId) >= 0) p.coverId = '';
+    toast('Could not add the file: ' + pjErr(e)); pjRenderSheet();
+  });
+}
+function pjClick(e) {
+  var b = e.target.closest ? e.target.closest('button') : null, p = pjCur; if (!b || !p) return;
+  var a;
+  if ((a = b.getAttribute('data-pjtab'))) { pjFlush(); pjTab = a; pjChap = -1; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
+  if ((a = b.getAttribute('data-chap')) !== null) { pjChap = +a; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
+  if (b.id === 'pj-chapback') { pjChap = -1; pjRenderSheet(); return; }
+  if (b.id === 'pj-addchap') { p.chapters.push({ id: 'c' + uid().slice(1), title: 'Chapter ' + (p.chapters.length + 1), original: '', text: '' }); pjChap = p.chapters.length - 1; pjDirty(); pjRenderSheet(); return; }
+  if ((a = b.getAttribute('data-chmove'))) { var j = pjChap + (+a), c = p.chapters[pjChap]; if (j < 0 || j >= p.chapters.length) return; p.chapters.splice(pjChap, 1); p.chapters.splice(j, 0, c); pjChap = j; pjDirty(); pjRenderSheet(); return; }
+  if (b.id === 'pj-chapdel') { if (!window.confirm('Delete this chapter and its text?')) return; p.chapters.splice(pjChap, 1); pjChap = -1; pjDirty(); pjRenderSheet(); return; }
+  if (b.id === 'pj-addfact') { p.factChecks.push({ id: 'f' + uid().slice(1), claim: '', source: '', status: 'open', note: '' }); pjDirty(); pjRenderSheet(); var ta = document.querySelectorAll('[data-pf$=".claim"]'); if (ta.length) ta[ta.length - 1].focus(); return; }
+  if ((a = b.getAttribute('data-fst'))) { var s = a.split('.'), f = p.factChecks[+s[0]]; if (f) { f.status = s[1]; pjDirty(); var st = $('pjSheet').scrollTop; pjRenderSheet(); $('pjSheet').scrollTop = st; } return; }
+  if ((a = b.getAttribute('data-fx')) !== null) { p.factChecks.splice(+a, 1); pjDirty(); pjRenderSheet(); return; }
+  if (b.id === 'pj-copydesc') { try { navigator.clipboard.writeText(p.listing.description).then(function () { toast('Description copied'); }, function () { toast('Could not copy. Press and hold the text instead.'); }); } catch (x) { toast('Could not copy. Press and hold the text instead.'); } return; }
+  if (b.id === 'pj-coverbtn') { pjPick('image/*', false, function (fs) { pjAddFiles(fs, 'cover'); }); return; }
+  if (b.id === 'pj-addfile') { var k = $('pj-addkind').value; pjAddKind = k; pjPick(k === 'cover' || k === 'ebook-cover' ? 'image/*' : '', true, function (fs) { pjAddFiles(fs, k); }); return; }
+  if ((a = b.getAttribute('data-fcover'))) { p.coverId = a; pjDirty(); pjRenderSheet(); return; }
+  if ((a = b.getAttribute('data-fdl'))) {
+    var meta = null; each(p.files, function (f) { if (f.id === a) meta = f; });
+    pjGetFile(a).then(function (r) { var bl = pjBlob(r); if (!bl) { toast('That file is missing.'); return; } pjSaveBlob(bl, meta ? meta.name : 'file'); toast('Downloaded ' + (meta ? meta.name : 'the file')); }, function () { toast('Could not open that file.'); });
+    return;
+  }
+  if ((a = b.getAttribute('data-fdel'))) {
+    if (!window.confirm('Remove this file from the project?')) return;
+    p.files = p.files.filter(function (f) { return f.id !== a; }); if (p.coverId === a) p.coverId = '';
+    pjFiles = pjFiles.filter(function (r) { return r.id !== a; });
+    p.updated = new Date().toISOString();
+    pjWrite(p, [], [a]).then(function () { toast('File removed'); pjRenderSheet(); }, function (x) { toast('Could not remove it: ' + pjErr(x)); });
+    return;
+  }
+  if (b.id === 'pj-export') { pjExport([p.id], false); return; }
+  if (b.id === 'pj-share') { pjExport([p.id], true); return; }
+  if (b.id === 'pj-delete') {
+    if (!window.confirm('Delete "' + (p.title || 'Untitled') + '" from this phone? This cannot be undone unless you exported it.')) return;
+    clearTimeout(pjSaveT); pjSaveT = null;
+    pjTx(['projects', 'files'], 'readwrite', function (tx) { var fs = tx.objectStore('files'); each(p.files, function (f) { fs['delete'](f.id); }); tx.objectStore('projects')['delete'](p.id); })
+      .then(function () { pjList = pjList.filter(function (x) { return x.id !== p.id; }); toast('Project deleted'); pjCloseSheet(); }, function (x) { toast('Could not delete it: ' + pjErr(x)); });
+  }
+}
+function pjNewProject() {
+  if (pjMode !== 'idb') { toast('This browser cannot save book projects.'); return; }
+  var p = pjNorm({ title: 'New book', annotator: 'PD Press' });
+  pjWrite(p).then(function () { pjList.unshift(p); pjAskKeep(); renderProjects(); pjOpenProject(p.id); setTimeout(function () { var i = document.querySelector('[data-pk=title]'); if (i) { i.focus(); i.select(); } }, 50); }, function (e) { toast('Could not save: ' + pjErr(e)); });
+}
+function pjBind() {
+  $('pj-new').onclick = pjNewProject;
+  $('pj-import').onclick = function () { pjPick('.zip,.json,application/zip,application/json,application/octet-stream', true, pjImportFiles); };
+  $('pj-exall').onclick = function () { pjExport(null, false); };
+  $('pj-shareall').onclick = function () { pjExport(null, true); };
+  $('pj-persist').onclick = function () { pjAskKeep(); };
+  $('pjList').onclick = function (e) { var b = e.target.closest ? e.target.closest('[data-pj]') : null; if (b) pjOpenProject(b.getAttribute('data-pj')); };
+  $('pjBack').onclick = pjCloseSheet;
+  $('pjBody').addEventListener('input', pjInput);
+  $('pjBody').addEventListener('change', pjInput);
+  $('pjBody').addEventListener('click', pjClick);
+  window.addEventListener('pagehide', function () { pjFlush(); });
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') pjFlush(); });
+}
+function initProjects() {
+  pjBind();
+  var fin = function () { pjReady = true; window.__pdProjReady = true; renderProjects(); persistStatus().then(pjKeepLine); return pjCheckInbox(); };
+  pjOpenDb().then(function (db) { pjDb = db; pjMode = 'idb'; return pjGetAll('projects'); })
+    .then(function (l) { pjList = l.map(pjNorm); pjSort(); }, function () { if (!pjDb) pjMode = 'none'; })
+    .then(fin, fin);
+}
+
 /* Editor list in the bottom nav */
 function renderBooks() {
   var el = $('booksList'); if (!el) return;
@@ -3113,11 +4252,11 @@ function renderBooks() {
     var part = '';
     each(state.titles, function (t) {
       if (t.group !== g || !t.editing) return; fixBook(t); n++;
-      var w = wordCount(t.editor.intro) + wordCount(t.editor.notes) + wordCount(t.editor.backmatter);
+      var w = annWords(t).total, nn = t.ann.notes.length;
       part += '<button class="item" data-ed="' + t.id + '"><div class="item-title">' + esc(t.title || 'Untitled') + '</div>' +
         '<div class="item-sub">' + esc(t.author) + '</div>' +
         '<div class="tags"><span class="tag accent">' + esc(trimName(t.trim)) + '</span><span class="tag ' + (t.book.ink === 'bw' ? 'accent' : 'warn') + '">' + esc(nameOf(INKS, t.book.ink)) + '</span></div>' +
-        '<div class="item-meta">' + (w ? commas(w) + ' words written' : 'Nothing written yet') + ' &middot; ' + (t.artCount ? t.artCount + (t.artCount === 1 ? ' picture' : ' pictures') : 'no art yet') + '</div></button>';
+        '<div class="item-meta">' + (w ? commas(w) + ' words written' : 'Nothing written yet') + (nn ? ' &middot; ' + nn + (nn === 1 ? ' note' : ' notes') : '') + ' &middot; ' + (t.artCount ? t.artCount + (t.artCount === 1 ? ' picture' : ' pictures') : 'no art yet') + '</div></button>';
     });
     if (part) h += '<div class="section-title"><h2>' + GROUPS[g] + '</h2></div>' + part;
   });
@@ -3140,7 +4279,12 @@ renderList();
 tick(); setInterval(tick, 20000);
 calc();
 registerSW();
+initProjects();
 window.__pd = { artMode: function () { return artMode; }, artBlobs: function () { return artBlobs; }, artMeta: function (id) { return artMeta(id); }, artTotals: artTotals, artMigrate: function () { return artMigrate; }, openEditor: openEditor, importFiles: importFiles, mdInsert: mdInsert, migrated: function () { return migrated; }, startAll: function () { each(state.titles, function (t) { t.editing = true; }); save(); renderList(); }, untouched: function (id) { return untouchedSeed(find(id)); }, sugCount: function () { return starters().length + sugFor().length; }, gx: function () { return GX; }, state: function () { return state; }, royalty: royalty, outlineMd: function (id) { return outlineMd(find(id)); } };
+window.__pd.proj = { list: function () { return pjList; }, mode: function () { return pjMode; }, norm: pjNorm, importBytes: function (a) { return pjImportBytes(new Uint8Array(a)).then(function (l) { renderProjects(); return l.map(function (p) { return p.id; }); }); },
+  bundleBase64: function (ids) { return pjBundle(ids ? pjList.filter(function (p) { return ids.indexOf(p.id) >= 0; }) : pjList, ids ? 'project' : 'backup').then(pjReadBuf).then(function (u) { var s = ''; for (var i = 0; i < u.length; i += 8192) s += String.fromCharCode.apply(null, u.subarray(i, i + 8192)); return btoa(s); }); },
+  files: function (id) { return pjGetAll('files', id).then(function (l) { return l.map(function (r) { var b = pjBlob(r); return { id: r.id, kind: r.kind, name: r.name, size: b ? b.size : -1 }; }); }); },
+  open: pjOpenProject, close: pjCloseSheet, flush: pjFlush, lastExport: function () { return window.__pjLastExport || null; } };
 window.__pdReady = true;
 })();
 </script>

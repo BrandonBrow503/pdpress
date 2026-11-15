@@ -7,10 +7,27 @@ It is one HTML file, with no sign-in, no ads and no outside code. Your data stay
 - **On a computer:** double-click `index.html`.
 - **On your phone (GitHub Pages, set up the same way as bbtracker):**
   1. On github.com, create a new public repository named `pdpress`.
-  2. Choose **Add file > Upload files** and upload `index.html`, `sw.js`, `manifest.webmanifest`, `icon-192.png` and `icon-512.png`. Then tap **Commit changes**.
+  2. Choose **Add file > Upload files** and upload `index.html`, `sw.js`, `manifest.webmanifest`, `icon-192.png` and `icon-512.png` (plus the `fonts` folder and the three background `.jpg` files). Then tap **Commit changes**.
   3. Open **Settings > Pages**. Under "Branch", choose `main` and `/ (root)`, then tap **Save**.
   4. After a minute or two, open **https://brandonbrow503.github.io/pdpress/**.
   5. In Chrome's menu, tap **Add to Home screen** to use it like an app.
+
+## What's new in version 2.9
+- **My Projects** (new Projects button at the bottom). Each book project is saved on this phone in the browser's database, so it stays after reloads and works offline. A project holds the title, author, translator, annotator, year, status and prices, every chapter (original text plus translation or annotated text), the introduction and notes, the KDP listing (description, keywords, categories), a fact check list, the cover picture and the finished files (ebook, interior PDF, cover wrap PDF, ebook cover JPG).
+- **Keep my projects:** the app asks the phone to keep this data even when space runs low (`navigator.storage.persist()`), and shows whether it agreed.
+- **Export project** and **Export all** save one `.pdpress.zip` file to Downloads. On Android, **Save to Drive or share** sends it straight to Drive.
+- **Import project file** loads a project or an Export all backup. If a project is already on the phone, OK replaces it and Cancel keeps both.
+- **Share to PD Press:** once PD Press is on the home screen, a `.pdpress.zip` file opened from Drive or Files can be shared to PD Press and it loads by itself. (Android may need PD Press removed and added to the home screen again before PD Press shows up in the share list.)
+- The file format is described in `books/tools/BUNDLE-FORMAT.md`. `books/tools/make_pdpress_bundle.py` makes these files on the computer from a book folder.
+- Book projects are separate from the Backup tab. The Backup tab file still covers titles and art; use Export all for projects.
+
+## What's new in version 2.8
+- **Annotations tab in the Book editor.** For each book you can write a credit line, introduction (shared with the Text tab), author bio, timeline (one event per line) and discussion questions (one per line, numbered for you).
+- **Endnotes tied to the text.** Paste the book text, select a word or tap a spot, then tap **Add note here**. Markers like [^3] go into the text and every note renumbers itself in reading order. Deleting a marker unplaces its note; **Place here** puts it back.
+- **Live word count** of your original material, and how big it is next to the book text.
+- **KDP check:** title says (Annotated), credit kept out of the title, description opens with bullets of 80 characters or fewer, no web address in the description, real content beyond an introduction (an introduction alone gets rejected), every note placed.
+- **Credit line** defaults to "Annotated by PD Press" with a link back to this site. You can change both.
+- **Export ebook (.epub):** title page with the credit and link, copyright page, introduction, the text with tappable note numbers, notes that link back, timeline, questions and bio. Built in the app, nothing uploaded. Annotations also go into the outline export and the backup file.
 
 ## What's new in version 2
 - **Publish now** is the main list. It holds 15 books that are already free in the US in 2026 (published 1930 or earlier), all marked *Ready to annotate*: The Great Gatsby, The Adventures of Sherlock Holmes, Dracula, Frankenstein, The Tale of Peter Rabbit, The Velveteen Rabbit, Millions of Cats, The Little Engine That Could (1930 Lois Lenski edition), Winnie-the-Pooh, Alice's Adventures in Wonderland, The Wonderful Wizard of Oz, Peter and Wendy, The Wind in the Willows, Art Forms in Nature (Haeckel) and The Birds of America (Audubon). Each has a product idea and legal cautions where needed.
