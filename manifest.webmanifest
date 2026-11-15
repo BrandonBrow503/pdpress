@@ -32,13 +32,23 @@
         {
           "name": "bundle",
           "accept": [
+            "*/*",
             "application/zip",
             "application/x-zip-compressed",
             "application/json",
             "application/octet-stream",
+            "application/epub+zip",
+            "application/pdf",
+            "image/*",
+            "text/*",
             ".zip",
             ".json",
-            ".pdpress"
+            ".pdpress",
+            ".epub",
+            ".pdf",
+            ".txt",
+            ".md",
+            ".docx"
           ]
         }
       ]

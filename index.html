@@ -549,6 +549,14 @@ label.f > span { font-size: 15px; color: #2b2620; }
 .btn[disabled] { opacity: 0.4; }
 .pj-coverbox.small-cv img { max-height: 190px; }
 .pj-coverbox.small-cv .pj-nocover { width: 110px; height: 160px; line-height: 160px; }
+/* v2.10 import summary and file kinds */
+#pjImp { z-index: 45; }
+.pj-imptitle { font-family: "Federo", Georgia, serif; font-size: 21px; line-height: 1.25; overflow-wrap: break-word; word-wrap: break-word; }
+.pj-implist { list-style: none; margin: 10px 0 8px; padding: 0; }
+.pj-implist li { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: space-between; justify-content: space-between; padding: 6px 0; border-top: 1px solid rgba(176,141,74,0.35); }
+.pj-implist .pj-impname { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; min-width: 0; font-size: 14px; overflow-wrap: anywhere; word-break: break-word; margin-right: 8px; }
+.pj-implist .tag { -webkit-flex: none; flex: none; margin: 0; font-size: 12px; }
+.pj-kind { margin: 4px 0 10px; }
 </style>
 </head>
 <body>
@@ -700,7 +708,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.9. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.10. Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -711,7 +719,7 @@ label.f > span { font-size: 15px; color: #2b2620; }
     <div id="pj-tools">
       <div class="card" style="margin-top:14px">
         <div class="btns"><button class="btn" id="pj-new">New project</button><button class="btn ghost" id="pj-import">Import project file</button></div>
-        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress) from your computer or a backup? Tap Import project file and pick it from Downloads or Drive.</p>
+        <p class="small mt0" style="margin-bottom:8px">Got a project file (.pdpress), or loose book files like an EPUB, PDF, cover picture or KDP listing? Tap Import project file and pick them all from Downloads or Drive.</p>
         <div class="btns"><button class="btn ghost small" id="pj-exall">Export all</button><button class="btn ghost small hidden" id="pj-shareall">Save all to Drive</button></div>
         <p class="small muted" id="pj-keep" style="margin:0"></p>
         <button class="btn ghost small hidden" id="pj-persist" style="margin-top:10px">Ask the phone to keep my projects</button>
@@ -747,6 +755,13 @@ label.f > span { font-size: 15px; color: #2b2620; }
   <div class="wrap" id="pjBody"></div>
 </div>
 <input type="file" id="pjFile" class="hidden">
+<div id="pjImp" class="sheet editor hidden" role="dialog" aria-modal="true" aria-label="Import summary">
+  <div class="sheet-bar"><div class="wrap">
+    <button class="back" id="pjImpBack"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1d1b18" stroke-width="1.8"><path d="M11 3L5 9l6 6"/></svg><span>Cancel</span></button>
+    <span class="saved">Not saved yet</span>
+  </div></div>
+  <div class="wrap" id="pjImpBody"></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <nav class="nav" aria-label="Sections"><div class="wrap">
@@ -3621,7 +3636,7 @@ function exportEpub(t) {
   } catch (x) { toast('Could not build the ebook on this browser.'); }
 }
 
-var PJ_APPVER = '2.9';
+var PJ_APPVER = '2.10';
 /* ---- My Projects (v2.9): whole book projects kept on this phone ----
    Each project (details, chapters, notes, KDP listing, fact checks) is one record in the IndexedDB
    database "pdpress-projects", store "projects". Cover art and finished files (EPUB, PDFs, JPG) are
@@ -3629,8 +3644,8 @@ var PJ_APPVER = '2.9';
    BUNDLE-FORMAT.md. */
 var PJ_DB = 'pdpress-projects', PJ_VER = 1, PJ_FMT = 'pdpress-bundle', PJ_FMT_VER = 1, PJ_INBOX = 'pdpress-inbox';
 var PJ_STATUSES = ['Planning', 'Translating', 'Annotating', 'Editing', 'Ready to upload', 'Published'];
-var PJ_KINDS = { cover: 'Cover art', epub: 'Ebook (EPUB)', interior: 'Interior PDF', wrap: 'Cover wrap PDF', 'ebook-cover': 'Ebook cover JPG', other: 'Other file' };
-var PJ_KIND_ORDER = ['cover', 'ebook-cover', 'epub', 'interior', 'wrap', 'other'];
+var PJ_KINDS = { cover: 'Cover art', epub: 'Ebook (EPUB)', interior: 'Interior PDF', wrap: 'Cover wrap PDF', 'ebook-cover': 'Ebook cover JPG', listing: 'KDP listing text', facts: 'Facts to check', text: 'Chapter text', other: 'Other file' };
+var PJ_KIND_ORDER = ['cover', 'ebook-cover', 'epub', 'interior', 'wrap', 'listing', 'facts', 'text', 'other'];
 var PJ_PRICES = [['ebook', 'Ebook'], ['paperback', 'Paperback'], ['hardcover', 'Hardcover'], ['bundle', 'Bundle']];
 var PJ_FACT = { open: 'Open', checked: 'Checked', fix: 'Needs fix' };
 var pjDb = null, pjMode = 'none', pjList = [], pjReady = false, pjCur = null, pjTab = 'details', pjChap = -1, pjSaveT = null;
@@ -3846,14 +3861,14 @@ function pjExport(ids, share) {
   if (!list.length) { toast('No projects to export yet.'); return Promise.resolve(); }
   pjBusy = true; toast('Packing ' + (list.length === 1 ? 'the project' : list.length + ' projects') + '...');
   pjFlush();
-  var name = list.length === 1 && ids ? slug(list[0].title || 'project') + '.pdpress.zip' : 'pdpress-projects-' + pjStamp() + '.pdpress.zip';
+  var name = list.length === 1 && ids ? slug(list[0].title || 'project') + '.pdpress' : 'pdpress-projects-' + pjStamp() + '.pdpress';
   return pjBundle(list, ids ? 'project' : 'backup').then(function (blob) {
     pjBusy = false; window.__pjLastExport = { name: name, size: blob.size };
     if (share && pjCanShare()) {
       var f = new File([blob], name, { type: 'application/zip' });
       return navigator.share({ files: [f], title: name }).then(function () { toast('Shared ' + name); }, function () {});
     }
-    pjSaveBlob(blob, name);
+    pjSaveBlob(new Blob([blob], { type: 'application/octet-stream' }), name);
     toast('Downloaded ' + name + ' (' + sizeText(blob.size) + '). It is in your Downloads folder.');
   }, function (e) { pjBusy = false; toast('Could not pack the file: ' + (e && e.message || 'unknown problem')); });
 }
@@ -3927,18 +3942,21 @@ function pjStoreImported(items) {
 function pjImportFiles(files) {
   if (!files || !files.length) return Promise.resolve([]);
   if (!pjReady || pjMode !== 'idb') { toast('Project storage is not open on this browser.'); return Promise.resolve([]); }
-  var all = [], chain = Promise.resolve(), problems = [];
-  toast('Opening ' + (files.length === 1 ? files[0].name : files.length + ' files') + '...');
-  each(files, function (f) {
-    chain = chain.then(function () { return pjReadBuf(f); }).then(function (u) { return pjImportBytes(u, f.name); })
-      .then(function (l) { all = all.concat(l); }, function (e) { problems.push(e && e.message || 'Could not open ' + f.name); });
-  });
-  return chain.then(function () {
+  var all = [], problems = [];
+  toast('Opening ' + (files.length === 1 ? pjCleanName(files[0].name) : files.length + ' files') + '...');
+  return pjSortPicked(files).then(function (s) {
+    var chain = Promise.resolve();
+    each(s.bundles, function (it) {
+      chain = chain.then(function () { return pjImportBytes(it.u, it.clean); }).then(function (l) { all = all.concat(l); }, function (e) { problems.push(e && e.message || 'Could not open ' + it.clean); });
+    });
+    if (!s.bundles.length && !s.projects.length && !s.loose.length) problems.push('That file only lists what is in a project. Pick it together with the other files.');
+    return chain.then(function () { if (s.projects.length || s.loose.length) return pjImportLoose(s).then(function (l) { all = all.concat(l); }); });
+  })['catch'](function (e) { problems.push(e && e.message || 'Could not open the files.'); }).then(function () {
     if (all.length) pjAskKeep();
-    renderProjects();
-    if (all.length === 1 && !problems.length) { toast('Added "' + (all[0].title || 'Untitled') + '" to My Projects.'); pjOpenProject(all[0].id); }
-    else if (all.length) toast(all.length + ' projects added.' + (problems.length ? ' ' + problems[0] : ''));
-    else toast(problems[0] || 'Nothing was added.');
+    pjSort(); renderProjects();
+    if (all.length === 1 && !problems.length) { toast('Saved "' + (all[0].title || 'Untitled') + '" in My Projects.'); pjOpenProject(all[0].id); }
+    else if (all.length) toast(all.length + ' projects saved.' + (problems.length ? ' ' + problems[0] : ''));
+    else if (problems.length) toast(problems[0]);
     return all;
   });
 }
@@ -4099,13 +4117,13 @@ function pjTabHtml(p) {
     h += '<div class="pj-coverbox" id="pj-coverbox"></div>';
     h += '<h3 class="ed-h">Finished files</h3>';
     var shown = p.files.slice().sort(function (a, b) { return PJ_KIND_ORDER.indexOf(a.kind) - PJ_KIND_ORDER.indexOf(b.kind); });
+    h += '<div class="card"><p class="small mt0">Add any files for this book: ebook, PDFs, pictures, KDP listing, facts to check or chapter text. PD Press guesses what each one is; change the kind below if it guessed wrong.</p><button class="btn" id="pj-addfiles">Add files</button></div>';
     if (!shown.length) h += '<p class="small muted">No files yet. Add the ebook, interior PDF, cover wrap PDF and ebook cover here, so they are kept with the project.</p>';
     each(shown, function (f) {
       h += '<div class="card pj-file"><div class="pj-fname">' + esc(f.name) + '</div><div class="tags"><span class="tag accent">' + esc(PJ_KINDS[f.kind]) + '</span><span class="tag">' + esc(sizeText(f.size)) + '</span>' + (f.id === p.coverId ? '<span class="tag start">Shown as cover</span>' : '') + '</div>' +
-        '<div class="btns"><button class="btn ghost small" data-fdl="' + esc(f.id) + '">Download</button>' + (/^image\//.test(f.type) && f.id !== p.coverId ? '<button class="btn ghost small" data-fcover="' + esc(f.id) + '">Use as cover</button>' : '') + '<button class="btn ghost small" data-fdel="' + esc(f.id) + '">Remove</button></div></div>';
+        '<label class="f pj-kind"><span>Kind</span><select data-fkind="' + esc(f.id) + '">' + PJ_KIND_ORDER.map(function (k) { return '<option value="' + k + '"' + (k === f.kind ? ' selected' : '') + '>' + PJ_KINDS[k] + '</option>'; }).join('') + '</select></label>' +
+        '<div class="btns"><button class="btn ghost small" data-fdl="' + esc(f.id) + '">Download</button>' + (f.kind === 'listing' || f.kind === 'facts' || f.kind === 'text' ? '<button class="btn ghost small" data-fload="' + esc(f.id) + '">Load into project</button>' : '') + (/^image\//.test(f.type) && f.id !== p.coverId ? '<button class="btn ghost small" data-fcover="' + esc(f.id) + '">Use as cover</button>' : '') + '<button class="btn ghost small" data-fdel="' + esc(f.id) + '">Remove</button></div></div>';
     });
-    h += '<div class="card"><label class="f"><span>Kind of file to add</span><select id="pj-addkind">' + PJ_KIND_ORDER.map(function (k) { return '<option value="' + k + '"' + (k === pjAddKind ? ' selected' : '') + '>' + PJ_KINDS[k] + '</option>'; }).join('') + '</select></label>' +
-      '<button class="btn" id="pj-addfile">Add a file</button></div>';
   } else if (pjTab === 'checks') {
     var c3 = { open: 0, checked: 0, fix: 0 }; each(p.factChecks, function (f) { c3[f.status]++; });
     h += '<p class="small muted mt0">' + (p.factChecks.length ? c3.open + ' open, ' + c3.checked + ' checked, ' + c3.fix + ' need a fix.' : 'List each fact in the introduction and notes that should be checked before the book goes up.') + '</p>';
@@ -4141,6 +4159,8 @@ function pjFlush() {
 }
 function pjInput(e) {
   var t = e.target, p = pjCur; if (!p || !t.getAttribute) return;
+  var fk = t.getAttribute('data-fkind');
+  if (fk) { if (e.type === 'change') pjSetKind(fk, t.value); return; }
   var k = t.getAttribute('data-pk'), pp = t.getAttribute('data-pp'), pc = t.getAttribute('data-pc'), pl = t.getAttribute('data-pl'), pf = t.getAttribute('data-pf'), wc;
   if (k) {
     p[k] = t.value;
@@ -4193,7 +4213,8 @@ function pjClick(e) {
   if ((a = b.getAttribute('data-fx')) !== null) { p.factChecks.splice(+a, 1); pjDirty(); pjRenderSheet(); return; }
   if (b.id === 'pj-copydesc') { try { navigator.clipboard.writeText(p.listing.description).then(function () { toast('Description copied'); }, function () { toast('Could not copy. Press and hold the text instead.'); }); } catch (x) { toast('Could not copy. Press and hold the text instead.'); } return; }
   if (b.id === 'pj-coverbtn') { pjPick('image/*', false, function (fs) { pjAddFiles(fs, 'cover'); }); return; }
-  if (b.id === 'pj-addfile') { var k = $('pj-addkind').value; pjAddKind = k; pjPick(k === 'cover' || k === 'ebook-cover' ? 'image/*' : '', true, function (fs) { pjAddFiles(fs, k); }); return; }
+  if (b.id === 'pj-addfiles') { pjPick('', true, pjAddAny); return; }
+  if ((a = b.getAttribute('data-fload'))) { pjLoadInto(a); return; }
   if ((a = b.getAttribute('data-fcover'))) { p.coverId = a; pjDirty(); pjRenderSheet(); return; }
   if ((a = b.getAttribute('data-fdl'))) {
     var meta = null; each(p.files, function (f) { if (f.id === a) meta = f; });
@@ -4224,7 +4245,9 @@ function pjNewProject() {
 }
 function pjBind() {
   $('pj-new').onclick = pjNewProject;
-  $('pj-import').onclick = function () { pjPick('.pdpress,.zip,.json,application/zip,application/json,application/octet-stream', true, pjImportFiles); };
+  $('pj-import').onclick = function () { pjPick('', true, pjImportFiles); };
+  $('pjImpBack').onclick = function () { pjImpClose(false); };
+  $('pjImpBody').addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('button') : null; if (!b) return; if (b.id === 'pjImpGo') pjImpClose(true); if (b.id === 'pjImpNo') pjImpClose(false); });
   $('pj-exall').onclick = function () { pjExport(null, false); };
   $('pj-shareall').onclick = function () { pjExport(null, true); };
   $('pj-persist').onclick = function () { pjAskKeep(); };
@@ -4242,6 +4265,464 @@ function initProjects() {
   pjOpenDb().then(function (db) { pjDb = db; pjMode = 'idb'; return pjGetAll('projects'); })
     .then(function (l) { pjList = l.map(pjNorm); pjSort(); }, function () { if (!pjDb) pjMode = 'none'; })
     .then(fin, fin);
+}
+
+/* ---- v2.10: loose files ----
+   Chat apps on Android can unpack a project file into loose pieces named like
+   "f7e6183ddde-struggle-of-the-age-cover-wrap.pdf". Import takes any files: whole bundles import as
+   before; a project.json among the pieces rebuilds its project; anything else is sorted by kind and
+   grouped by the book name in the file name, then shown in a summary before anything is saved. */
+var PJ_PREFIX = /^(?:[0-9a-f]{8,16}|f(?=[0-9a-z]*[0-9])[0-9a-z]{9,20})-(?=.)/;
+var PJ_ROLE = /[-_. ]+(?:cover[-_ ]?wrap|full[-_ ]?wrap|wrap|jacket|cover|interior(?:[-_ ]?\d+(?:\.\d+)?x\d+(?:\.\d+)?)?|\d+(?:\.\d+)?x\d+(?:\.\d+)?|ebook[-_ ]?cover|ebook|kindle|paperback|hardcover|print|kdp[-_ ]?listing|listing|facts[-_ ]?to[-_ ]?verify|facts|fact[-_ ]?check|notes|endnotes|intro(?:duction)?|annotated|translated|final|draft|v\d+)$/i;
+var PJ_LONE = /^(?:kdp|kdp[-_ ]?listing|listing|facts[-_ ]?to[-_ ]?verify|facts|fact[-_ ]?check|cover|cover[-_ ]?wrap|wrap|interior|ebook|ebook[-_ ]?cover|notes|endnotes|intro|introduction|project|readme|book|manuscript|text|chapter[-_ ]?\d*|document|untitled)$/i;
+var PJ_ANCHOR = { epub: 1, interior: 1, wrap: 1, cover: 1, 'ebook-cover': 1 };
+
+function pjCleanName(n) {
+  n = String(n || 'file').split(/[\\\/]/).pop();
+  n = n.replace(PJ_PREFIX, '');
+  n = n.replace(/\s*\(\d{1,3}\)(?=\.[^.]+$|$)/, '');
+  return n || 'file';
+}
+function pjExt(n) { var m = /\.([a-z0-9]{1,8})$/i.exec(n || ''); return m ? m[1].toLowerCase() : ''; }
+function pjKindOf(name, type) {
+  var n = pjCleanName(name).toLowerCase(), e = pjExt(n), t = String(type || ''), texty = !e || e === 'txt' || e === 'md' || e === 'csv';
+  if (/kdp[-_ ]?listing/.test(n) && texty) return 'listing';
+  if (/facts?[-_ ]?to[-_ ]?verify|fact[-_ ]?check/.test(n) && texty) return 'facts';
+  if (e === 'epub' || t === 'application/epub+zip') return 'epub';
+  if (e === 'pdf' || t === 'application/pdf') return /cover|wrap|jacket/.test(n) ? 'wrap' : 'interior';
+  if (/^(jpe?g|png|webp|gif)$/.test(e) || /^image\//.test(t)) return /ebook|kindle/.test(n) ? 'ebook-cover' : 'cover';
+  if (/^(txt|md|markdown|html?|xhtml|docx)$/.test(e)) return 'text';
+  return 'other';
+}
+function pjBookKey(name) {
+  var b = pjCleanName(name).toLowerCase().replace(/\.[a-z0-9]{1,8}$/, ''), prev;
+  b = b.replace(/\.(en|ru|fr|de|paras)(\.paras)?$/, '');
+  do { prev = b; b = b.replace(PJ_ROLE, ''); } while (b !== prev);
+  if (PJ_LONE.test(b)) b = '';
+  return b.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+function pjHuman(key) { var s = String(key || '').replace(/[-_]+/g, ' ').trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+function pjTitleCase(key) {
+  var small = { a: 1, an: 1, and: 1, the: 1, of: 1, or: 1, in: 1, on: 1, to: 1, for: 1, by: 1 };
+  return String(key || '').split(/[-_ ]+/).filter(function (w) { return w; }).map(function (w, i) { return i && small[w] ? w : w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+}
+
+/* Text out of txt, md, html and docx */
+function pjTextOf(item) {
+  var e = pjExt(item.clean);
+  if (e === 'docx') {
+    return pjUnzip(item.u).then(function (z) {
+      var x = z['word/document.xml']; if (!x) return '';
+      var d = new DOMParser().parseFromString(pjUtf8Dec(x), 'application/xml'), W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main', out = [];
+      each(d.getElementsByTagNameNS(W, 'p'), function (p) {
+        var t = ''; each(p.getElementsByTagNameNS(W, 't'), function (n) { t += n.textContent; });
+        var st = p.getElementsByTagNameNS(W, 'pStyle'), sv = st.length ? (st[0].getAttributeNS(W, 'val') || st[0].getAttribute('w:val') || '') : '';
+        if (t.trim()) out.push((/^(heading|title)/i.test(sv) ? '## ' : '') + t.trim());
+      });
+      return out.join('\n\n');
+    }, function () { return ''; });
+  }
+  var s = pjUtf8Dec(item.u).replace(/^\ufeff/, '').replace(/\r\n?/g, '\n');
+  if (/^(html?|xhtml)$/.test(e)) {
+    s = s.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '').replace(/<h[1-6][^>]*>/gi, '\n\n## ').replace(/<\/(p|div|h[1-6]|li|blockquote|section)>|<br\s*\/?>/gi, '\n\n');
+    var d2 = new DOMParser().parseFromString('<body>' + s + '</body>', 'text/html');
+    s = (d2.body ? d2.body.textContent : s).replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n');
+  } else if (/\[\d+\|[a-z]\]/.test(s)) {
+    s = s.split(/\n\s*\n/).map(function (bk) { var m = /^\s*\[\d+\|(\w)\]\s*([\s\S]*)$/.exec(bk); return m ? (m[1] === 's' || m[1] === 'h' ? '## ' : '') + m[2].trim() : bk.trim(); }).filter(function (x) { return x; }).join('\n\n');
+  }
+  return Promise.resolve(s.trim());
+}
+function pjChapterTitle(text, clean) {
+  var m = /^\s*#{1,3}\s*(.{1,90})$/m.exec(text || '');
+  var first = m && (text.indexOf(m[0]) < 200) ? m[1].trim() : '';
+  if (first && !/^[ivxlc\d]+\.?$/i.test(first)) return first;
+  return pjHuman(pjCleanName(clean).split('.')[0]) || 'Chapter';
+}
+
+/* EPUB title and people from the OPF file */
+function pjEpubMeta(u) {
+  return pjUnzip(u).then(function (z) {
+    var opf = null, c = z['META-INF/container.xml'];
+    if (c) { var m = /full-path\s*=\s*["']([^"']+)["']/.exec(pjUtf8Dec(c)); if (m && z[m[1]]) opf = m[1]; }
+    if (!opf) each(keys(z), function (k) { if (!opf && /\.opf$/i.test(k)) opf = k; });
+    if (!opf) return {};
+    var d = new DOMParser().parseFromString(pjUtf8Dec(z[opf]), 'application/xml'), DC = 'http://purl.org/dc/elements/1.1/', OPF = 'http://www.idpf.org/2007/opf';
+    var out = { title: '', subtitle: '', author: '', translator: '', annotator: '', language: '' };
+    var t = d.getElementsByTagNameNS(DC, 'title'); if (t.length) out.title = t[0].textContent.trim();
+    var sp = /^(.{3,}?):\s+(.+)$/.exec(out.title); if (sp) { out.title = sp[1].trim(); out.subtitle = sp[2].trim(); }
+    var l = d.getElementsByTagNameNS(DC, 'language'); if (l.length) out.language = l[0].textContent.trim();
+    var roles = {};
+    each(d.getElementsByTagName('meta'), function (mm) { var r = mm.getAttribute('refines'); if (r && mm.getAttribute('property') === 'role') roles[r.replace(/^#/, '')] = mm.textContent.trim(); });
+    function person(cr, isCreator) {
+      var role = cr.getAttributeNS(OPF, 'role') || cr.getAttribute('opf:role') || roles[cr.getAttribute('id') || ''] || '', name = cr.textContent.trim();
+      if (!name) return;
+      if (role === 'trl') { if (!out.translator) out.translator = name; }
+      else if (role === 'ann') { if (!out.annotator) out.annotator = name; }
+      else if (role === 'aut' || (!role && isCreator)) { if (!out.author) out.author = name; }
+    }
+    each(d.getElementsByTagNameNS(DC, 'creator'), function (cr) { person(cr, true); });
+    each(d.getElementsByTagNameNS(DC, 'contributor'), function (cr) { person(cr, false); });
+    return out;
+  }, function () { return {}; });
+}
+
+/* KDP-listing.txt */
+var PJ_LKEYS = { title: 'title', subtitle: 'subtitle', author: 'author', authors: 'author', contributors: 'contributors', contributor: 'contributors', translator: 'translator', annotator: 'annotator',
+  language: 'language', description: 'description', keywords: 'keywords', keyword: 'keywords', categories: 'categories', category: 'categories', ebook: 'ebook', kindle: 'ebook', paperback: 'paperback', hardcover: 'hardcover', bundle: 'bundle', pages: 'pages', 'page count': 'pages' };
+function pjParseListing(t) {
+  var L = { title: '', subtitle: '', description: '', keywords: [], categories: [], other: '' }, meta = { prices: {} }, other = [], sec = null, desc = [];
+  var lines = String(t || '').replace(/\r\n?/g, '\n').split('\n');
+  function listAdd(arr, v) { each(String(v).split(/\s*;\s*/), function (x) { x = x.replace(/^[-*\u2022\s]+/, '').trim(); if (x) arr.push(x); }); }
+  each(lines, function (line, i) {
+    var m = /^\s*([A-Za-z][A-Za-z ]{0,30}?)\s*(?:\([^)]*\))?\s*:\s*(.*)$/.exec(line), key = m ? PJ_LKEYS[m[1].toLowerCase()] : null;
+    if (/^\s*kdp listing\b/i.test(line)) return;
+    if (key) {
+      var v = m[2].trim(); sec = null;
+      if (key === 'title' || key === 'subtitle') L[key] = v;
+      else if (key === 'author' || key === 'translator' || key === 'annotator' || key === 'language') { meta[key] = v; if (key === 'language') other.push(line.trim()); }
+      else if (key === 'contributors') {
+        var tr = /translat(?:or|ed by)\s*:?\s*([^.;,]+)/i.exec(v), an = /annotat(?:or|ed by)\s*:?\s*([^.;,]+)/i.exec(v);
+        if (tr) meta.translator = tr[1].trim(); if (an) meta.annotator = an[1].trim();
+      } else if (key === 'description') { sec = 'description'; if (v) desc.push(v); }
+      else if (key === 'keywords' || key === 'categories') { sec = key; if (v) listAdd(L[key], v); }
+      else if (key === 'pages') { var pg = /(\d+)/.exec(v); if (pg) meta.pages = pg[1]; }
+      else {
+        var pr = /\$\s*([0-9]+(?:\.[0-9]{1,2})?)/.exec(v); if (pr) meta.prices[key] = parseFloat(pr[1]);
+        var pp = /(\d+)\s*pages/i.exec(v); if (pp && key === 'paperback') meta.pages = pp[1];
+        other.push(line.trim());
+      }
+      return;
+    }
+    if (sec === 'description') {
+      if (/^[A-Z][A-Z0-9 ()&,]{5,}$/.test(line.trim())) { sec = null; other.push(line.trim()); return; }
+      desc.push(line); return;
+    }
+    if (sec === 'keywords' || sec === 'categories') {
+      if (!line.trim()) { if (L[sec].length) sec = null; return; }
+      listAdd(L[sec], line); return;
+    }
+    if (line.trim()) other.push(line.trim());
+  });
+  L.description = desc.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  L.other = other.join('\n');
+  L.keywords = L.keywords.slice(0, 7);
+  return { listing: L, meta: meta };
+}
+/* FACTS-TO-VERIFY.txt, a markdown checklist, or a CSV */
+function pjParseFacts(t) {
+  var out = [], cur = null, lines = String(t || '').replace(/\r\n?/g, '\n').split('\n');
+  if (/^\s*"?claim"?\s*,/i.test(lines[0] || '')) {
+    each(lines.slice(1), function (ln) {
+      if (!ln.trim()) return;
+      var c = ln.match(/("([^"]|"")*"|[^,]*)(,|$)/g).map(function (x) { return x.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"').trim(); });
+      var st = (c[2] || '').toLowerCase();
+      out.push({ claim: c[0] || '', source: c[1] || '', status: PJ_FACT[st] ? st : 'open', note: c[3] || '' });
+    });
+  } else {
+    each(lines, function (ln) {
+      var s = ln.trim(), m;
+      if (!s) { cur = null; return; }
+      if (/^[=\-_*]{3,}$/.test(s)) { cur = null; return; }
+      if ((m = /^(?:[-*]\s*)?\[( |x|X|!)\]\s*(.+)$/.exec(s))) {
+        var parts = m[2].split(' | ');
+        cur = { claim: parts[0].trim(), source: (parts[1] || '').trim(), status: m[1] === '!' ? 'fix' : m[1] === ' ' ? 'open' : 'checked', note: '' }; out.push(cur); return;
+      }
+      if ((m = /^(?:\d{1,3}[.)]|[-*\u2022])\s+(.+)$/.exec(s))) { cur = { claim: m[1].trim(), source: '', status: 'open', note: '' }; out.push(cur); return; }
+      if (cur) cur.claim += ' ' + s;
+    });
+  }
+  return out.filter(function (f) { return f.claim; }).map(function (f, i) { f.id = 'f' + uid().slice(1) + i; return f; });
+}
+
+/* Fold parsed pieces into a project; only empty fields are filled */
+function pjFill(p, part) {
+  var n = { listing: 0, facts: 0, chapters: 0 };
+  each(['title', 'subtitle', 'author', 'translator', 'annotator', 'year', 'language', 'pages'], function (k) { if (part[k] && !p[k]) p[k] = String(part[k]); });
+  if (part.prices) each(PJ_PRICES, function (k) { var v = part.prices[k[0]]; if (v != null && p.prices[k[0]] == null) p.prices[k[0]] = v; });
+  if (part.listing) {
+    var L = part.listing;
+    each(['title', 'subtitle', 'description', 'other'], function (k) { if (L[k] && !p.listing[k]) { p.listing[k] = L[k]; n.listing++; } });
+    each(['keywords', 'categories'], function (k) { if (L[k] && L[k].length && !p.listing[k].length) { p.listing[k] = L[k].slice(); n.listing++; } });
+  }
+  if (part.introduction && !p.introduction) p.introduction = part.introduction;
+  if (part.notes && !p.notes) p.notes = part.notes;
+  each(part.factChecks || [], function (f) {
+    var c = f.claim.toLowerCase();
+    if (p.factChecks.some(function (x) { return x.claim.toLowerCase() === c; })) return;
+    p.factChecks.push({ id: f.id || 'f' + uid().slice(1), claim: f.claim, source: f.source || '', status: f.status || 'open', note: f.note || '' }); n.facts++;
+  });
+  each(part.chapters || [], function (c) {
+    if (p.chapters.some(function (x) { return x.title === c.title && x.text === c.text && x.original === c.original; })) return;
+    p.chapters.push({ id: 'c' + uid().slice(1), title: c.title, original: c.original || '', text: c.text || '' }); n.chapters++;
+  });
+  return n;
+}
+/* What one loose file adds to a project, besides being kept as a file */
+function pjPartOf(item) {
+  if (item.kind === 'listing') { var r = pjParseListing(pjUtf8Dec(item.u)); var part = r.meta; part.listing = r.listing; return Promise.resolve(part); }
+  if (item.kind === 'facts') return Promise.resolve({ factChecks: pjParseFacts(pjUtf8Dec(item.u)) });
+  if (item.kind === 'text') return pjTextOf(item).then(function (t) { return t ? { chapters: [{ title: pjChapterTitle(t, item.clean), text: t }] } : {}; });
+  if (item.kind === 'epub') return pjEpubMeta(item.u);
+  return Promise.resolve({});
+}
+
+/* Read the picked files and sort them: bundles, project.json files, loose pieces */
+function pjSortPicked(files) {
+  var out = { bundles: [], projects: [], loose: [] };
+  var chain = Promise.resolve();
+  each(files, function (f) {
+    chain = chain.then(function () { return pjReadBuf(f); }).then(function (u) {
+      var name = f.name || 'file', clean = pjCleanName(name), e = pjExt(clean);
+      var item = { name: name, clean: clean, u: u, type: (f.type && f.type !== 'application/octet-stream' ? f.type : '') || pjMime(clean) };
+      if (u.length > 3 && u[0] === 0x50 && u[1] === 0x4b && e !== 'epub' && e !== 'docx') {
+        return pjUnzip(u).then(function (z) {
+          if (z['pdpress-bundle.json'] || keys(z).some(function (k) { return /(^|\/)project\.json$/.test(k); })) { out.bundles.push(item); return; }
+          item.kind = pjKindOf(clean, item.type); out.loose.push(item);
+        }, function () { item.kind = pjKindOf(clean, item.type); out.loose.push(item); });
+      }
+      var c0 = u.length ? String.fromCharCode(u[0] === 0xef ? u[3] : u[0]) : '';
+      if (e === 'json' || ((e === 'pdpress' || !e) && (c0 === '{' || c0 === '['))) {
+        var o = null; try { o = JSON.parse(pjUtf8Dec(u).replace(/^\ufeff/, '')); } catch (x) {}
+        if (o && o.format === PJ_FMT && o.projects && o.projects.length && o.projects.every(function (x) { return x && x.path && !x.chapters && !x.files; })) { item.manifest = o; return; }
+        if (o && o.format === PJ_FMT && o.projects) { out.bundles.push(item); return; }
+        if (o && typeof o === 'object' && (o.title || o.chapters)) {
+          var paths = (o.files || []).some(function (x) { return x && x.path && !x.data; });
+          if (paths) { item.project = o; out.projects.push(item); } else out.bundles.push(item);
+          return;
+        }
+      }
+      item.kind = pjKindOf(clean, item.type); out.loose.push(item);
+    });
+  });
+  return chain.then(function () { return out; });
+}
+
+/* Turn sorted pieces into candidate projects for the summary */
+function pjLooseName(n) { return String(n || '').split(/[\\\/]/).pop().replace(/\s*\(\d{1,3}\)(?=\.[^.]+$|$)/, ''); }
+function pjCandidates(s) {
+  var cands = [], used = [];
+  // 1. project.json among loose files: rebuild it, matching files by name
+  each(s.projects, function (it) {
+    var o = it.project, p = pjNorm(o), blobs = {}, missing = [];
+    each(p.files, function (f) {
+      var want = f.id + '-' + pjSafeName(f.name), hit = null;
+      var tests = [function (L) { return pjLooseName(L.name) === want; }, function (L) { return L.clean === f.name || L.clean === pjSafeName(f.name); }];
+      each(tests, function (ok) {
+        if (hit) return;
+        var l = s.loose.filter(function (L) { return used.indexOf(L) < 0 && ok(L); });
+        hit = l.filter(function (L) { return f.size && L.u.length === f.size; })[0] || l[0] || null;
+      });
+      if (hit) { used.push(hit); blobs[f.id] = new Blob([hit.u], { type: f.type || hit.type }); f.size = hit.u.length; } else missing.push(f.name);
+    });
+    p.files = p.files.filter(function (f) { return !!blobs[f.id]; });
+    if (p.coverId && !blobs[p.coverId]) p.coverId = '';
+    if (!p.coverId) each(p.files, function (f) { if (!p.coverId && (f.kind === 'cover' || f.kind === 'ebook-cover')) p.coverId = f.id; });
+    cands.push({ rebuild: true, p: p, blobs: blobs, missing: missing, shown: p.files.map(function (f) { return { name: f.name, kind: f.kind }; }) });
+  });
+  // 2. everything else: group by the book name in the file name
+  var rest = s.loose.filter(function (L) { return used.indexOf(L) < 0; });
+  if (!rest.length) return Promise.resolve(cands);
+  var groups = [], byKey = {};
+  each(rest, function (L) { L.key = pjBookKey(L.clean); });
+  each(rest, function (L) { if (PJ_ANCHOR[L.kind] && L.key && !byKey[L.key]) { byKey[L.key] = { key: L.key, items: [] }; groups.push(byKey[L.key]); } });
+  // join names that are the same book ("struggle-of-the-age" and "struggle-of-the-age-6x9")
+  groups.sort(function (a, b) { return a.key.length - b.key.length; });
+  var merged = [];
+  each(groups, function (g) {
+    var into = null; each(merged, function (m) { if (!into && (g.key.indexOf(m.key + '-') === 0)) into = m; });
+    if (into) byKey[g.key] = into; else merged.push(g);
+  });
+  groups = merged;
+  function hintOf(L) { return L.kind === 'listing' || L.kind === 'facts' || L.kind === 'text' ? '-' + pjUtf8Dec(L.u.subarray(0, 600)).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' : ''; }
+  each(rest, function (L) {
+    var g = L.key && byKey[L.key];
+    if (!g && !L.key && groups.length > 1) { var hint = hintOf(L); each(groups, function (m) { if (!g && m.key && hint.indexOf('-' + m.key + '-') >= 0) g = m; }); }
+    if (!g && L.key) each(groups, function (m) { if (!g && (L.key === m.key || L.key.indexOf(m.key + '-') === 0)) g = m; });
+    if (!g) { if (!groups.length) { groups.push({ key: '', items: [] }); } g = groups[0]; each(groups, function (m) { if (m.items.length > g.items.length) g = m; }); }
+    g.items.push(L);
+  });
+  // books with nothing but loose text and no shared name stay as one book
+  var jobs = groups.filter(function (g) { return g.items.length; }).map(function (g) {
+    var p = pjNorm({ title: '' }), blobs = {}, epub = {}, part = { factChecks: [], chapters: [] }, parts = [];
+    var items = g.items.slice().sort(function (a, b) { return a.clean < b.clean ? -1 : a.clean > b.clean ? 1 : 0; });
+    each(items, function (L) {
+      var id = 'f' + uid().slice(1) + p.files.length;
+      p.files.push({ id: id, kind: L.kind, name: L.clean, type: L.type, size: L.u.length, added: new Date().toISOString(), path: '' });
+      blobs[id] = new Blob([L.u], { type: L.type });
+      parts.push(pjPartOf(L).then(function (x) { return { L: L, x: x }; }));
+    });
+    return Promise.all(parts).then(function (res) {
+      var listing = null;
+      each(res, function (r) {
+        if (r.L.kind === 'epub' && !epub.title) epub = r.x;
+        else if (r.L.kind === 'listing') { listing = r.x; pjFill(p, r.x); }
+        else pjFill(p, r.x);
+      });
+      var lt = listing && listing.listing && listing.listing.title ? listing.listing.title.replace(/\s*\((translated|annotated|illustrated)\)\s*$/i, '') : '';
+      p.title = epub.title || lt || pjTitleCase(g.key) || (p.chapters[0] && p.chapters[0].title) || 'Imported book';
+      each(['author', 'translator', 'annotator', 'language'], function (k) { if (epub[k] && !p[k]) p[k] = epub[k]; });
+      if (epub.title && epub.subtitle && !p.subtitle) p.subtitle = epub.subtitle;
+      p.coverId = '';
+      each(['cover', 'ebook-cover'], function (k) { each(p.files, function (f) { if (!p.coverId && f.kind === k && /^image\//.test(f.type)) p.coverId = f.id; }); });
+      return { rebuild: false, p: p, blobs: blobs, missing: [], shown: p.files.map(function (f) { return { name: f.name, kind: f.kind }; }) };
+    });
+  });
+  return Promise.all(jobs).then(function (l) { return cands.concat(l); });
+}
+
+/* The summary screen */
+var pjImpCands = [], pjImpDone = null;
+function pjMatchExisting(c) {
+  var t = (c.p.title || '').toLowerCase().replace(/\s*\((translated|annotated|copy)\)\s*$/, '').trim(), hit = null;
+  if (c.rebuild) each(pjList, function (x) { if (!hit && x.id === c.p.id) hit = x; });
+  if (!hit && t) each(pjList, function (x) { if (!hit && (x.title || '').toLowerCase().replace(/\s*\((translated|annotated|copy)\)\s*$/, '').trim() === t) hit = x; });
+  return hit;
+}
+function pjSummaryText(cands) {
+  var n = cands.length;
+  if (n === 1) return 'Found 1 book: ' + (cands[0].p.title || 'Untitled') + ', ' + cands[0].shown.length + (cands[0].shown.length === 1 ? ' file.' : ' files.');
+  return 'Found ' + n + ' books: ' + cands.map(function (c) { return (c.p.title || 'Untitled') + ' (' + c.shown.length + (c.shown.length === 1 ? ' file)' : ' files)'); }).join(', ') + '.';
+}
+function pjShowSummary(cands) {
+  pjImpCands = cands;
+  var h = '<div class="pj-head"><div class="eyebrow">Import</div><h2 class="pj-h">' + (cands.length === 1 ? 'Found 1 book' : 'Found ' + cands.length + ' books') + '</h2>' +
+    '<p class="small" id="pjImpSum">' + esc(pjSummaryText(cands)) + '</p><p class="small muted">Nothing is saved until you tap Import. Pick where each book should go.</p></div>';
+  each(cands, function (c, i) {
+    var ex = pjMatchExisting(c), p = c.p, adds = [];
+    if (p.chapters.length) adds.push(p.chapters.length + (p.chapters.length === 1 ? ' chapter' : ' chapters'));
+    if (p.listing.description || p.listing.keywords.length) adds.push('the KDP listing');
+    if (p.factChecks.length) adds.push(p.factChecks.length + (p.factChecks.length === 1 ? ' fact to check' : ' facts to check'));
+    var who = [p.author, p.translator ? 'translated by ' + p.translator : ''].filter(function (x) { return x; }).join(', ');
+    h += '<div class="card pj-impcard"><div class="pj-imptitle">' + esc(p.title || 'Untitled') + '</div>' + (who ? '<div class="item-sub">' + esc(who) + '</div>' : '') +
+      (c.rebuild ? '<div class="small muted" style="margin-top:6px">Rebuilt from its project.json file.</div>' : '') +
+      '<ul class="pj-implist">' + c.shown.map(function (f) { return '<li><span class="pj-impname">' + esc(f.name) + '</span><span class="tag accent">' + esc(PJ_KINDS[f.kind] || PJ_KINDS.other) + '</span></li>'; }).join('') + '</ul>' +
+      (adds.length ? '<div class="small">Also fills in ' + esc(adds.join(', ')) + '.</div>' : '') +
+      (c.missing.length ? '<div class="small" style="color:#7a2e1f;font-weight:600;margin-top:6px">' + c.missing.length + (c.missing.length === 1 ? ' file the project lists was' : ' files the project lists were') + ' not picked: ' + esc(c.missing.join(', ')) + '. You can add ' + (c.missing.length === 1 ? 'it' : 'them') + ' later on the Files tab.</div>' : '') +
+      '<label class="f" style="margin:12px 0 0"><span>Save to</span><select data-imp="' + i + '">' +
+      '<option value="new"' + (ex ? '' : ' selected') + '>New project</option>' +
+      (ex && c.rebuild && ex.id === p.id ? '<option value="replace:' + esc(ex.id) + '" selected>Replace "' + esc(ex.title || 'Untitled') + '"</option>' : '') +
+      pjList.map(function (x) { return '<option value="add:' + esc(x.id) + '"' + (ex && x === ex && !(c.rebuild && ex.id === p.id) ? ' selected' : '') + '>Add to existing: ' + esc(x.title || 'Untitled') + '</option>'; }).join('') +
+      '</select></label></div>';
+  });
+  h += '<div class="btns"><button class="btn" id="pjImpGo">Import</button><button class="btn ghost" id="pjImpNo">Cancel</button></div>';
+  $('pjImpBody').innerHTML = h;
+  $('pjImp').className = 'sheet editor';
+  $('pjImp').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  return new Promise(function (res) { pjImpDone = res; });
+}
+function pjImpClose(v) {
+  $('pjImp').className = 'sheet editor hidden';
+  if (!pjCur) document.body.style.overflow = '';
+  var f = pjImpDone; pjImpDone = null; if (f) f(v);
+}
+function pjImpChoices() {
+  return pjImpCands.map(function (c, i) { var s = document.querySelector('[data-imp="' + i + '"]'); return s ? s.value : 'new'; });
+}
+/* Save one candidate the way the person chose */
+function pjApply(c, choice) {
+  var p = c.p, recs = [], dels = [];
+  function rec(f, pid, b) { return { id: f.id, projectId: pid, kind: f.kind, name: f.name, type: f.type || b.type, size: b.size, added: f.added, blob: b }; }
+  if (choice.indexOf('add:') === 0) {
+    var t = pjFind(choice.slice(4)); if (!t) return Promise.resolve(null);
+    pjFill(t, { title: p.title, subtitle: p.subtitle, author: p.author, translator: p.translator, annotator: p.annotator, year: p.year, language: p.language, pages: p.pages, prices: p.prices,
+      listing: p.listing, introduction: p.introduction, notes: p.notes, factChecks: p.factChecks, chapters: p.chapters });
+    each(p.files, function (f) {
+      var b = c.blobs[f.id]; if (!b) return;
+      if (t.files.some(function (x) { return x.name === f.name && x.size === b.size; })) return;
+      var nf = { id: 'f' + uid().slice(1) + recs.length, kind: f.kind, name: f.name, type: f.type || b.type, size: b.size, added: new Date().toISOString() };
+      t.files.push(nf); recs.push(rec(nf, t.id, b));
+      if (f.id === p.coverId && !t.coverId) t.coverId = nf.id;
+    });
+    if (!t.coverId) each(t.files, function (f) { if (!t.coverId && (f.kind === 'cover' || f.kind === 'ebook-cover') && /^image\//.test(f.type)) t.coverId = f.id; });
+    t.updated = new Date().toISOString();
+    return pjWrite(t, recs).then(function () { return t; });
+  }
+  if (choice.indexOf('replace:') === 0) {
+    var old = pjFind(choice.slice(8));
+    if (old) dels = old.files.map(function (f) { return f.id; }).filter(function (id) { return !c.blobs[id]; });
+  } else if (pjFind(p.id)) {
+    var map = {}; p.id = 'p' + uid().slice(1); if (c.rebuild) p.title = (p.title || 'Untitled') + ' (copy)';
+    each(p.files, function (f) { var nid = 'f' + uid().slice(1) + Math.floor(Math.random() * 1e4); map[f.id] = nid; c.blobs[nid] = c.blobs[f.id]; f.id = nid; });
+    if (p.coverId) p.coverId = map[p.coverId] || '';
+  }
+  each(p.files, function (f) { delete f.path; recs.push(rec(f, p.id, c.blobs[f.id])); });
+  p.updated = new Date().toISOString();
+  return pjWrite(p, recs, dels).then(function () { pjList = pjList.filter(function (x) { return x.id !== p.id; }); pjList.push(p); return p; });
+}
+function pjImportLoose(s) {
+  return pjCandidates(s).then(function (cands) {
+    if (!cands.length) return [];
+    return pjShowSummary(cands).then(function (ok) {
+      if (!ok) { toast('Nothing was imported.'); return []; }
+      var choices = pjImpChoices(), done = [], chain = Promise.resolve();
+      each(cands, function (c, i) { chain = chain.then(function () { return pjApply(c, choices[i]); }).then(function (p) { if (p && done.indexOf(p) < 0) done.push(p); }); });
+      return chain.then(function () { pjSort(); return done; });
+    });
+  });
+}
+
+/* Add files on a project's Files tab: any file, kind guessed, and text, listing and facts folded in */
+function pjAddAny(fs) {
+  var p = pjCur; if (!p) return Promise.resolve();
+  var items = [], chain = Promise.resolve();
+  each(fs, function (f) {
+    chain = chain.then(function () { return pjReadBuf(f); }).then(function (u) {
+      var clean = pjCleanName(f.name), type = (f.type && f.type !== 'application/octet-stream' ? f.type : '') || pjMime(clean);
+      items.push({ name: f.name, clean: clean, u: u, type: type, kind: pjKindOf(clean, type) });
+    });
+  });
+  var recs = [], tally = { listing: 0, facts: 0, chapters: 0 };
+  return chain.then(function () {
+    return Promise.all(items.map(function (it) { return pjPartOf(it).then(function (x) { return { it: it, x: x }; }); }));
+  }).then(function (res) {
+    each(res, function (r) {
+      var it = r.it, b = new Blob([it.u], { type: it.type });
+      var rc = pjFileRec(p, b, it.clean, it.kind); recs.push(rc); p.files.push(pjMeta(rc));
+      if (!p.coverId && (it.kind === 'cover' || it.kind === 'ebook-cover') && /^image\//.test(it.type)) p.coverId = rc.id;
+      if (it.kind === 'listing' || it.kind === 'facts' || it.kind === 'text') { var n = pjFill(p, r.x); tally.listing += n.listing; tally.facts += n.facts; tally.chapters += n.chapters; }
+    });
+    p.updated = new Date().toISOString();
+    return pjWrite(p, recs);
+  }).then(function () {
+    pjFiles = pjFiles.concat(recs); pjAskKeep();
+    var bits = [];
+    if (tally.chapters) bits.push(tally.chapters + (tally.chapters === 1 ? ' chapter' : ' chapters'));
+    if (tally.listing) bits.push('the listing');
+    if (tally.facts) bits.push(tally.facts + (tally.facts === 1 ? ' fact to check' : ' facts to check'));
+    toast((recs.length === 1 ? 'Added ' + recs[0].name : recs.length + ' files added') + (bits.length ? '. Filled in ' + bits.join(', ') + '.' : '. Change the kind below if it is wrong.'));
+    pjRenderSheet();
+  }, function (e) {
+    var ids = recs.map(function (r) { return r.id; });
+    p.files = p.files.filter(function (f) { return ids.indexOf(f.id) < 0; });
+    if (ids.indexOf(p.coverId) >= 0) p.coverId = '';
+    toast('Could not add the files: ' + pjErr(e)); pjRenderSheet();
+  });
+}
+function pjSetKind(id, kind) {
+  var p = pjCur; if (!p || !PJ_KINDS[kind]) return;
+  var meta = null; each(p.files, function (f) { if (f.id === id) meta = f; }); if (!meta) return;
+  meta.kind = kind;
+  if (!p.coverId && (kind === 'cover' || kind === 'ebook-cover') && /^image\//.test(meta.type)) p.coverId = id;
+  p.updated = new Date().toISOString();
+  pjGetFile(id).then(function (r) {
+    var recs = []; if (r) { r.kind = kind; recs.push(r); each(pjFiles, function (x, i) { if (x.id === id) pjFiles[i] = r; }); }
+    return pjWrite(p, recs);
+  }).then(function () { toast('Kind changed to ' + PJ_KINDS[kind]); var st = $('pjSheet').scrollTop; pjRenderSheet(); $('pjSheet').scrollTop = st; }, function (e) { toast('Could not save: ' + pjErr(e)); });
+}
+function pjLoadInto(id) {
+  var p = pjCur; if (!p) return;
+  var meta = null; each(p.files, function (f) { if (f.id === id) meta = f; }); if (!meta) return;
+  pjGetFile(id).then(function (r) { var b = pjBlob(r); if (!b) throw new Error('missing'); return pjReadBuf(b); })
+    .then(function (u) { return pjPartOf({ name: meta.name, clean: meta.name, u: u, type: meta.type, kind: meta.kind }); })
+    .then(function (x) {
+      var n = pjFill(p, x); pjDirty(); pjFlush();
+      var bits = [];
+      if (n.chapters) bits.push(n.chapters + (n.chapters === 1 ? ' chapter' : ' chapters'));
+      if (n.listing) bits.push('the listing');
+      if (n.facts) bits.push(n.facts + (n.facts === 1 ? ' fact to check' : ' facts to check'));
+      toast(bits.length ? 'Filled in ' + bits.join(', ') + '.' : 'Nothing new to fill in. Fields that already have words are kept.');
+    }, function () { toast('Could not read that file.'); });
 }
 
 /* Editor list in the bottom nav */
@@ -4284,6 +4765,7 @@ window.__pd = { artMode: function () { return artMode; }, artBlobs: function () 
 window.__pd.proj = { list: function () { return pjList; }, mode: function () { return pjMode; }, norm: pjNorm, importBytes: function (a) { return pjImportBytes(new Uint8Array(a)).then(function (l) { renderProjects(); return l.map(function (p) { return p.id; }); }); },
   bundleBase64: function (ids) { return pjBundle(ids ? pjList.filter(function (p) { return ids.indexOf(p.id) >= 0; }) : pjList, ids ? 'project' : 'backup').then(pjReadBuf).then(function (u) { var s = ''; for (var i = 0; i < u.length; i += 8192) s += String.fromCharCode.apply(null, u.subarray(i, i + 8192)); return btoa(s); }); },
   files: function (id) { return pjGetAll('files', id).then(function (l) { return l.map(function (r) { var b = pjBlob(r); return { id: r.id, kind: r.kind, name: r.name, size: b ? b.size : -1 }; }); }); },
+  clean: pjCleanName, kind: pjKindOf, key: pjBookKey, parseListing: pjParseListing, parseFacts: pjParseFacts, summary: function () { return document.getElementById('pjImpSum') ? document.getElementById('pjImpSum').textContent : ''; },
   open: pjOpenProject, close: pjCloseSheet, flush: pjFlush, lastExport: function () { return window.__pjLastExport || null; } };
 window.__pdReady = true;
 })();

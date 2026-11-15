@@ -1,6 +1,6 @@
 /* Public Domain Press offline cache. Optional: the app works without it.
    Same-site files only. Catalog searches (gutendex.com) always go to the network. */
-var CACHE = 'pdpress-v12', INBOX = 'pdpress-inbox';
+var CACHE = 'pdpress-v13', INBOX = 'pdpress-inbox';
 var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './study-bg-2.jpg', './study-bg.jpg', './library-bg.jpg',
   './fonts/federo-latin.woff2', './fonts/marcellus-sc-latin.woff2', './fonts/josefin-sans-latin.woff2',
   './fonts/poiret-one-latin.woff2', './fonts/limelight-latin.woff2'];
@@ -14,13 +14,13 @@ self.addEventListener('activate', function (e) {
 });
 self.addEventListener('fetch', function (e) {
   var req = e.request, u = new URL(req.url);
-  // v2.9: a project file shared to PD Press from Drive or Downloads (Android share sheet).
+  // v2.9+: project files or any loose book files shared to PD Press from Drive or Downloads (Android share sheet).
   if (req.method === 'POST' && u.origin === self.location.origin && u.searchParams.has('share-target')) {
     e.respondWith(req.formData().then(function (fd) {
       var files = fd.getAll('bundle').filter(function (f) { return f && typeof f !== 'string'; });
       return caches.open(INBOX).then(function (c) {
         return Promise.all(files.map(function (f, i) {
-          return c.put('./__inbox/' + Date.now() + '-' + i, new Response(f, { headers: { 'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name || 'project.pdpress.zip') } }));
+          return c.put('./__inbox/' + Date.now() + '-' + i, new Response(f, { headers: { 'content-type': f.type || 'application/octet-stream', 'x-name': encodeURIComponent(f.name || 'shared-file') } }));
         }));
       }).then(function () { return files.length; });
     }).then(function (n) { return Response.redirect(new URL('./?shared=' + (n ? 1 : 0), self.location).href, 303); },

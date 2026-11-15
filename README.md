@@ -12,6 +12,13 @@ It is one HTML file, with no sign-in, no ads and no outside code. Your data stay
   4. After a minute or two, open **https://brandonbrow503.github.io/pdpress/**.
   5. In Chrome's menu, tap **Add to Home screen** to use it like an app.
 
+## What's new in version 2.10
+- **Import takes any files, several at once.** Pick a project file, or the loose pieces a chat app left behind when it unpacked one (names like `f7e6183ddde-struggle-of-the-age-cover-wrap.pdf` are fine). PD Press works out which book each file belongs to and what it is: the ebook, interior PDF, cover wrap, cover picture, KDP listing, facts to check, or chapter text (.txt, .md, .html, .docx). The title and author come from the ebook.
+- **Check before saving.** A summary shows each book it found and its files. Choose New project or Add to an existing project, then tap Import.
+- **Add files** on a project's Files tab takes any files, guesses their kind, and lets you change the kind afterward. A KDP listing fills the Listing tab and a facts file fills Facts (only empty fields are filled). **Load into project** does it again for a file you changed.
+- Sharing files to PD Press from Drive or Files now works for any file type, several at once.
+- Exports are now named `.pdpress`, so chat apps leave them in one piece.
+
 ## What's new in version 2.9
 - **My Projects** (new Projects button at the bottom). Each book project is saved on this phone in the browser's database, so it stays after reloads and works offline. A project holds the title, author, translator, annotator, year, status and prices, every chapter (original text plus translation or annotated text), the introduction and notes, the KDP listing (description, keywords, categories), a fact check list, the cover picture and the finished files (ebook, interior PDF, cover wrap PDF, ebook cover JPG).
 - **Keep my projects:** the app asks the phone to keep this data even when space runs low (`navigator.storage.persist()`), and shows whether it agreed.
