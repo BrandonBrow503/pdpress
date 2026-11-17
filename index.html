@@ -598,6 +598,22 @@ html.nav-top .toast { bottom: 24px; }
 .pj-implist .pj-impname { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; min-width: 0; font-size: 14px; overflow-wrap: anywhere; word-break: break-word; margin-right: 8px; }
 .pj-implist .tag { -webkit-flex: none; flex: none; margin: 0; font-size: 12px; }
 .pj-kind { margin: 4px 0 10px; }
+
+/* v2.13 narration */
+.nr-line { display: block; width: 100%; text-align: left; background: #fbf9f4; border: 1px solid #e3dccd; border-left: 4px solid #d2c9b6; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; color: #1d1b18; }
+.nr-line.st-approved { border-left-color: #4f7a3a; }
+.nr-line.st-suggested { border-left-color: #c9a45c; }
+.nr-line.open { border-color: #8c3b2a; }
+.nr-tagline { display: block; font-family: Menlo, Consolas, "Roboto Mono", monospace; font-size: 12px; color: #6b5a2e; margin-bottom: 4px; word-wrap: break-word; }
+.nr-line.st-none .nr-tagline { color: #9a9283; font-family: inherit; font-style: italic; }
+.nr-text { display: block; font-size: 15px; line-height: 1.4; }
+.nr-ed { border-color: #8c3b2a; margin-top: -4px; }
+.nr-seg { margin-top: 4px; }
+html .seg.nr-seg button { padding: 10px 2px; font-size: 13px; letter-spacing: 0; text-transform: none; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+html .seg.nr-filter button { font-size: 12px; padding: 9px 2px; letter-spacing: 0.04em; }
+.nr-flag .tag { margin-right: 6px; }
+.nr-lostrow { margin-top: 8px; }
+.tag.nr-sid { text-transform: none; color: #9a9283; }
 </style>
 </head>
 <body>
@@ -754,7 +770,7 @@ html.nav-top .toast { bottom: 24px; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.12. Page reading by Tesseract OCR (Apache License 2.0). Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.13. Page reading by Tesseract OCR (Apache License 2.0). Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -3692,7 +3708,7 @@ function exportEpub(t) {
   } catch (x) { toast('Could not build the ebook on this browser.'); }
 }
 
-var PJ_APPVER = '2.12';
+var PJ_APPVER = '2.13';
 /* ---- My Projects (v2.9): whole book projects kept on this phone ----
    Each project (details, chapters, notes, KDP listing, fact checks) is one record in the IndexedDB
    database "pdpress-projects", store "projects". Cover art and finished files (EPUB, PDFs, JPG) are
@@ -3700,8 +3716,8 @@ var PJ_APPVER = '2.12';
    BUNDLE-FORMAT.md. */
 var PJ_DB = 'pdpress-projects', PJ_VER = 1, PJ_FMT = 'pdpress-bundle', PJ_FMT_VER = 1, PJ_INBOX = 'pdpress-inbox';
 var PJ_STATUSES = ['Planning', 'Translating', 'Annotating', 'Editing', 'Ready to upload', 'Published'];
-var PJ_KINDS = { cover: 'Cover art', epub: 'Ebook (EPUB)', interior: 'Interior PDF', wrap: 'Cover wrap PDF', 'ebook-cover': 'Ebook cover JPG', listing: 'KDP listing text', facts: 'Facts to check', text: 'Chapter text', other: 'Other file' };
-var PJ_KIND_ORDER = ['cover', 'ebook-cover', 'epub', 'interior', 'wrap', 'listing', 'facts', 'text', 'other'];
+var PJ_KINDS = { cover: 'Cover art', epub: 'Ebook (EPUB)', interior: 'Interior PDF', wrap: 'Cover wrap PDF', 'ebook-cover': 'Ebook cover JPG', listing: 'KDP listing text', facts: 'Facts to check', text: 'Chapter text', audio: 'Audiobook chapter', ai: 'AI instructions', other: 'Other file' };
+var PJ_KIND_ORDER = ['cover', 'ebook-cover', 'epub', 'interior', 'wrap', 'listing', 'facts', 'text', 'audio', 'ai', 'other'];
 var PJ_PRICES = [['ebook', 'Ebook'], ['paperback', 'Paperback'], ['hardcover', 'Hardcover'], ['bundle', 'Bundle']];
 var PJ_FACT = { open: 'Open', checked: 'Checked', fix: 'Needs fix' };
 var pjDb = null, pjMode = 'none', pjList = [], pjReady = false, pjCur = null, pjTab = 'details', pjChap = -1, pjSaveT = null;
@@ -3780,6 +3796,8 @@ function pjNorm(o) {
   each(o.files || [], function (f) { if (!f || typeof f !== 'object' || !f.id) return; p.files.push({ id: pjStr(f.id), kind: PJ_KINDS[f.kind] ? f.kind : 'other', name: pjStr(f.name) || 'file', type: pjStr(f.type), size: num(f.size, 0), added: pjStr(f.added) || now, path: pjStr(f.path) }); });
   if (p.coverId && !p.files.some(function (f) { return f.id === p.coverId; })) p.coverId = '';
   if (!p.coverId) each(p.files, function (f) { if (!p.coverId && f.kind === 'cover') p.coverId = f.id; });
+  p.narration = nrNorm(o.narration && typeof o.narration === 'object' ? o.narration : null);
+  nrPullInline(p);
   return p;
 }
 function pjW(n) { return commas(n) + (n === 1 ? ' word' : ' words'); }
@@ -3974,12 +3992,15 @@ function pjBundle(projects, kind) {
   each(projects, function (p) {
     chain = chain.then(function () { return pjGetAll('files', p.id); }).then(function (recs) {
       var copy = JSON.parse(JSON.stringify(p)), byId = {}, base = 'projects/' + p.id + '/';
+      copy.narration = base + 'narration.json';
+      entries.push([base + 'narration.json', JSON.stringify(nrSidecar(p), null, 1)], [base + 'narration-script.txt', nrScript(p)]);
       each(recs, function (r) { byId[r.id] = r; });
       copy.files = [];
       var reads = [];
       each(p.files, function (f) {
         var r = byId[f.id], b = pjBlob(r); if (!b) return;
         var path = base + 'files/' + f.id + '-' + pjSafeName(f.name), m = pjMeta(r); m.path = path; copy.files.push(m);
+        if (f.kind === 'ai' && f.name === 'AI-INSTRUCTIONS.txt') { var au = utf8(NR_AI_TXT); m.size = au.length; entries.push([path, au]); return; }
         reads.push(pjReadBuf(b).then(function (u) { entries.push([path, u]); }));
       });
       return Promise.all(reads).then(function () {
@@ -3989,7 +4010,7 @@ function pjBundle(projects, kind) {
     });
   });
   return chain.then(function () {
-    entries.unshift(['pdpress-bundle.json', JSON.stringify(manifest, null, 1)]);
+    entries.unshift(['pdpress-bundle.json', JSON.stringify(manifest, null, 1)], ['AI-INSTRUCTIONS.txt', NR_AI_TXT], ['NARRATION-SPEC.md', NR_SPEC_MD]);
     return new Blob(zipStore(entries), { type: 'application/zip' });
   });
 }
@@ -4039,6 +4060,9 @@ function pjFromZip(files) {
   if (!paths.length) throw new Error('No book projects were found in this file.');
   return paths.map(function (path) {
     var o = JSON.parse(pjUtf8Dec(files[path])), dir = path.replace(/project\.json$/, ''), blobs = {};
+    var nj = files[dir + 'narration.json'] || (typeof o.narration === 'string' && files[o.narration]);
+    if (typeof o.narration === 'string') o.narration = null;
+    if (nj) { try { o.narration = JSON.parse(pjUtf8Dec(nj)); } catch (e) { o.narration = null; } }
     each(o.files || [], function (f) {
       var d = f && (files[f.path] || files[dir + 'files/' + f.id + '-' + pjSafeName(f.name)]);
       if (d) blobs[f.id] = new Blob([d], { type: f.type || pjMime(f.name) });
@@ -4078,6 +4102,7 @@ function pjStoreImported(items) {
       if (old) {
         if (window.confirm('"' + (old.title || 'Untitled') + '" is already on this phone. Tap OK to replace it with the copy from the file, or Cancel to keep both.')) {
           dels = old.files.map(function (f) { return f.id; });
+          window.__nrLastMerge = nrMerge(old, p);
         } else {
           var map = {}; p.id = 'p' + uid().slice(1); p.title = (p.title || 'Untitled') + ' (copy)';
           each(p.files, function (f) { var nid = 'f' + uid().slice(1); map[f.id] = nid; if (it.blobs[f.id]) { it.blobs[nid] = it.blobs[f.id]; } f.id = nid; });
@@ -4106,7 +4131,7 @@ function pjImportFiles(files) {
     each(s.bundles, function (it) {
       chain = chain.then(function () { return pjImportBytes(it.u, it.clean); }).then(function (l) { all = all.concat(l); }, function (e) { problems.push(e && e.message || 'Could not open ' + it.clean); });
     });
-    if (!s.bundles.length && !s.projects.length && !s.loose.length) problems.push('That file only lists what is in a project. Pick it together with the other files.');
+    if (!s.bundles.length && !s.projects.length && !s.loose.length && !(s.narr && s.narr.length)) problems.push('That file only lists what is in a project. Pick it together with the other files.');
     return chain.then(function () { if (s.projects.length || s.loose.length) return pjImportLoose(s).then(function (l) { all = all.concat(l); }); });
   })['catch'](function (e) { problems.push(e && e.message || 'Could not open the files.'); }).then(function () {
     if (all.length) pjAskKeep();
@@ -4175,7 +4200,7 @@ function renderProjects() {
     var who = [p.author, p.translator ? 'translated by ' + p.translator : '', p.annotator ? 'annotated by ' + p.annotator : ''].filter(function (x) { return x; }).join(', ');
     h += '<button class="item pj-item" data-pj="' + esc(p.id) + '"><span class="pj-cv" data-cv="' + esc(p.coverId) + '"><b>' + esc((p.title || '?').charAt(0)) + '</b></span><span class="pj-main">' +
       '<span class="item-title">' + esc(p.title || 'Untitled') + '</span>' + (who ? '<span class="item-sub">' + esc(who) + (p.year ? ' (' + esc(p.year) + ')' : '') + '</span>' : '') +
-      '<span class="tags"><span class="tag accent">' + esc(p.status) + '</span>' + (open ? '<span class="tag warn">' + open + ' to check</span>' : '') + '</span>' +
+      '<span class="tags"><span class="tag accent">' + esc(p.status) + '</span>' + (open ? '<span class="tag warn">' + open + ' to check</span>' : '') + nrListTag(p) + '</span>' +
       '<span class="item-meta">' + p.chapters.length + (p.chapters.length === 1 ? ' chapter' : ' chapters') + (w ? ', ' + pjW(w) : '') + ', ' + p.files.length + (p.files.length === 1 ? ' file' : ' files') +
       (pjPrice(p) ? '<br>' + esc(pjPrice(p)) : '') + '</span></span></button>';
   });
@@ -4201,7 +4226,7 @@ function pjOpenProject(id) {
 }
 function pjLoadFiles() {
   var p = pjCur; if (!p) return;
-  pjGetAll('files', p.id).then(function (recs) { if (pjCur !== p) return; pjFiles = recs; if (pjTab === 'files' || pjTab === 'details') { var st = $('pjSheet').scrollTop; pjRenderSheet(); $('pjSheet').scrollTop = st; } }, function () {});
+  pjGetAll('files', p.id).then(function (recs) { if (pjCur !== p) return; pjFiles = recs; if (pjTab === 'details') { pjShowCover(); return; } if (pjTab === 'files') { var st = $('pjSheet').scrollTop; pjRenderSheet(); $('pjSheet').scrollTop = st; } }, function () {});
 }
 function pjCloseSheet() {
   pjFlush();
@@ -4221,7 +4246,7 @@ function pjField(label, attr, val, opts) {
 function pjRenderSheet() {
   var p = pjCur, el = $('pjBody'); if (!p || !el) return;
   pjFreeUrls();
-  var tabs = [['details', 'Details'], ['text', 'Text'], ['notes', 'Notes'], ['listing', 'Listing'], ['files', 'Files'], ['checks', 'Facts']];
+  var tabs = [['details', 'Details'], ['text', 'Text'], ['narration', 'Narration'], ['notes', 'Notes'], ['listing', 'Listing'], ['files', 'Files'], ['checks', 'Facts']];
   var h = '<div class="pj-head"><div class="eyebrow">Book project</div><h2 class="pj-h" id="pj-htitle">' + esc(p.title || 'Untitled') + '</h2>' +
     '<div class="small muted">Saved on this phone. Last change ' + esc(new Date(p.updated).toLocaleString()) + '</div></div>' +
     '<div class="tabs2" id="pjTabs">' + tabs.map(function (t) { return '<button data-pjtab="' + t[0] + '"' + (pjTab === t[0] ? ' class="on"' : '') + '>' + t[1] + '</button>'; }).join('') + '</div>';
@@ -4258,6 +4283,8 @@ function pjTabHtml(p) {
       });
       h += '<div class="btns"><button class="btn" id="pj-addchap">Add chapter</button><button class="btn ghost" id="pj-scanbtn">Scan pages</button></div>';
     }
+  } else if (pjTab === 'narration') {
+    h += nrTabHtml(p);
   } else if (pjTab === 'notes') {
     h += pjField('Introduction', 'data-pk="introduction"', p.introduction, { area: 1, cls: 'pj-text', em: pjW(pjWords(p.introduction)), emId: 'pj-wc-introduction' }) +
       pjField('Notes', 'data-pk="notes"', p.notes, { area: 1, cls: 'pj-text', ph: 'Endnotes, translator notes, sources', em: pjW(pjWords(p.notes)), emId: 'pj-wc-notes' });
@@ -4318,6 +4345,7 @@ function pjInput(e) {
   var t = e.target, p = pjCur; if (!p || !t.getAttribute) return;
   var fk = t.getAttribute('data-fkind');
   if (fk) { if (e.type === 'change') pjSetKind(fk, t.value); return; }
+  if (nrInput(t)) return;
   var k = t.getAttribute('data-pk'), pp = t.getAttribute('data-pp'), pc = t.getAttribute('data-pc'), pl = t.getAttribute('data-pl'), pf = t.getAttribute('data-pf'), wc;
   if (k) {
     p[k] = t.value;
@@ -4359,7 +4387,8 @@ function pjAddFiles(fs, kind) {
 function pjClick(e) {
   var b = e.target.closest ? e.target.closest('button') : null, p = pjCur; if (!b || !p) return;
   var a;
-  if ((a = b.getAttribute('data-pjtab'))) { pjFlush(); pjTab = a; pjChap = -1; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
+  if ((a = b.getAttribute('data-pjtab'))) { pjFlush(); if (nrPullInline(p)) { pjDirty(); toast('Narration notes found in the text were moved to the Narration tab.'); } pjTab = a; pjChap = -1; nrOpen = ''; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
+  if (pjTab === 'narration' && nrClick(b, p)) return;
   if ((a = b.getAttribute('data-chap')) !== null) { pjChap = +a; pjRenderSheet(); $('pjSheet').scrollTop = 0; return; }
   if (b.id === 'pj-chapback') { pjChap = -1; pjRenderSheet(); return; }
   if (b.id === 'pj-scanbtn') { scanOpen(p.id, -1); return; }
@@ -4400,8 +4429,9 @@ function pjClick(e) {
 }
 function pjNewProject() {
   if (pjMode !== 'idb') { toast('This browser cannot save book projects.'); return; }
-  var p = pjNorm({ title: 'New book', annotator: 'PD Press' });
-  pjWrite(p).then(function () { pjList.unshift(p); pjAskKeep(); renderProjects(); pjOpenProject(p.id); setTimeout(function () { var i = document.querySelector('[data-pk=title]'); if (i) { i.focus(); i.select(); } }, 50); }, function (e) { toast('Could not save: ' + pjErr(e)); });
+  var p = pjNorm({ title: 'New book', annotator: 'PD Press' }), ai = nrAiRec(p);
+  p.files.push(pjMeta(ai));
+  pjWrite(p, [ai]).then(function () { pjList.unshift(p); pjAskKeep(); renderProjects(); pjOpenProject(p.id); setTimeout(function () { var i = document.querySelector('[data-pk=title]'); if (i) { i.focus(); i.select(); } }, 50); }, function (e) { toast('Could not save: ' + pjErr(e)); });
 }
 function pjBind() {
   $('pj-new').onclick = pjNewProject;
@@ -4695,6 +4725,351 @@ function syInit() {
   window.addEventListener('online', function () { if (syParse((syState || syLoad()).code) && syState.err) syRun(true); });
 }
 
+/* ---- v2.13: Narration notes for audiobooks ----
+   A hidden track per project: who speaks each sentence and how it should sound.
+   Kept in p.narration (IndexedDB) and in projects/<id>/narration.json in bundles.
+   Never part of the chapter text, so it never reaches print or ebook files.
+   Format: NARRATION-SPEC.md (also written into every exported bundle). */
+var NR_FMT = 'pdpress-narration', NR_VER = 1;
+var NR_PACES = ['very slow', 'slow', 'normal', 'fast', 'very fast'];
+var NR_FEEL = ['neutral', 'warm', 'tender', 'happy', 'joyful', 'excited', 'playful', 'hopeful', 'calm', 'proud', 'awed', 'solemn', 'somber', 'sad', 'grieving', 'weary', 'wistful', 'anxious', 'fearful', 'tense', 'urgent', 'stern', 'angry', 'bitter', 'sarcastic', 'cold', 'whispering'];
+var NR_FIELDS = ['speaker', 'emotion', 'strength', 'pace', 'accent', 'language', 'note'];
+var NR_ABBR = { mr: 1, mrs: 1, ms: 1, dr: 1, st: 1, mt: 1, jr: 1, sr: 1, prof: 1, gen: 1, col: 1, capt: 1, lt: 1, sgt: 1, rev: 1, hon: 1, messrs: 1, vs: 1, etc: 1, 'e.g': 1, 'i.e': 1, no: 1, vol: 1, ch: 1, fig: 1, pp: 1, cf: 1 };
+var NR_ROLES = [['narrator', 'Narrator'], ['leader', 'Leader'], ['helper', 'Helper']];
+var NR_INLINE = /\[\s*(?:speaker|emotion|strength|pace|accent|language|note)\s*:[^\]\n]*\]/i;
+var NR_AI_TXT = "PD PRESS: INSTRUCTIONS FOR AI AGENTS\nVersion 1 (PD Press app 2.13)\n\nYou are working on a PD Press book project. PD Press makes new annotated and\ntranslated editions of public domain books, in print, as ebooks and as\naudiobooks. Follow these rules every time you write, translate, annotate or\nedit anything in this project, and tell the person you are working with if a\nrule stops you from doing what they asked.\n\n1. ADD NARRATION NOTES\n   - Whenever you write or translate text for this project, also add narration\n     notes for it. The notes tell the PD Press Voice Studio who is speaking\n     each sentence and how it should sound, so the audiobook can be made in the\n     narrator's own voice.\n   - Notes live in the narration track (narration.json, next to project.json),\n     never in the book text itself. Print books and ebooks never show them.\n   - Follow the format in NARRATION-SPEC.md. The short readable form is:\n       [speaker: Anna | emotion: somber | strength: 3 | pace: slow]\n   - Give every character who speaks a profile (name, usual feeling, voice\n     traits), so characters sound different from each other, even inside one\n     paragraph.\n   - Read the scene and tell close feelings apart. Somber is not sad, stern is\n     not angry, weary is not bored. Use strength 1 to 5 for how strong the\n     feeling is (1 a hint, 3 clear, 5 as strong as it gets).\n   - Mark every note you add as \"status\": \"suggested\" and \"by\": \"ai:<your name>\".\n     Only the narrator or a project leader approves notes.\n\n2. NEVER OVERWRITE EXISTING NARRATION NOTES WITHOUT PERMISSION\n   - If a sentence already has a note, do not change it or delete it.\n   - If you think an existing note should change, leave the note as it is and\n     put your version in that note's \"proposal\" field, with \"by\" set to\n     \"ai:<your name>\". The narrator or a leader will accept or turn it down.\n   - Approved notes (\"status\": \"approved\") are locked. PD Press turns any\n     change to an approved note into a proposal when the file is imported.\n   - Only change or delete an existing note directly when the narrator or a\n     leader has clearly told you to, and say who told you in the \"note\" field.\n\n3. NO EM OR EN DASHES IN TEXT YOU WRITE\n   - Do not use em dashes or en dashes in anything you write or translate:\n     introductions, notes, translations, listings, narration notes.\n     Use commas, periods, colons, semicolons, parentheses, or \"to\" for ranges\n     (1890 to 1913).\n   - The original author's own text keeps its dashes exactly as printed.\n     Never edit the author's words or punctuation.\n\n4. WRITE LIKE THE AUTHOR, NOT LIKE AN AI\n   - Write AI parts (translations, introductions, notes, summaries) in the\n     original author's style, voice and period, so they read as one book.\n   - Avoid AI tells: stock phrases such as \"delve\", \"tapestry\", \"testament to\",\n     \"rich history\", \"in today's world\", \"it is important to note\"; lists of\n     three added for rhythm; a summing up line at the end of every paragraph;\n     hedging filler; modern slang in a period text.\n   - Keep facts checkable. Add anything you are not sure of to the fact check\n     list (factChecks in project.json) instead of guessing.\n\n5. KEEP THE PD PRESS CREDITS\n   - Keep every \"Annotated by PD Press\" credit and its link where it is.\n     Do not remove, move or reword it.\n\nWHERE THINGS ARE IN A .pdpress FILE (a ZIP)\n   pdpress-bundle.json                  list of projects in the file\n   AI-INSTRUCTIONS.txt                  this sheet\n   NARRATION-SPEC.md                    the narration note format\n   projects/<id>/project.json           title, chapters, notes, listing, facts\n   projects/<id>/narration.json         narration notes (the source of truth)\n   projects/<id>/narration-script.txt   the same notes in readable form, for\n                                        reading only; edit narration.json\n   projects/<id>/files/                 cover, ebook, PDFs, audio and other files\n";
+var NR_SPEC_MD = "# PD Press narration notes (format version 1)\n\nNarration notes are a hidden track that tells the PD Press Voice Studio (or any\ntext to speech tool) who speaks each sentence and how it should sound. They are\nkept next to the book text and are **never** included in the print PDF, the\nEPUB, or any other reading copy.\n\nThe format is open. Any person, app or AI agent may read and write it.\n\n## Where the notes live\n\nIn a `.pdpress` bundle (a ZIP):\n\n```\nprojects/<id>/narration.json          the notes (source of truth)\nprojects/<id>/narration-script.txt    readable copy, made on export, read only\nAI-INSTRUCTIONS.txt                   rules for AI agents\nNARRATION-SPEC.md                     this file\n```\n\n`project.json` has `\"narration\": \"projects/<id>/narration.json\"` pointing at the\nsidecar. In the plain JSON form of a project, `narration` may hold the object\nitself instead of a path. On the phone the notes are kept inside the project\nrecord (`narration` field). PD Press 2.12 and older ignore the sidecar, so old\napps still open new files (the notes are simply not shown).\n\n## narration.json\n\n```json\n{\n \"format\": \"pdpress-narration\",\n \"version\": 1,\n \"projectId\": \"pstruggleofage\",\n \"source\": \"text\",\n \"updated\": \"2026-11-17T06:00:00Z\",\n \"characters\": [\n  { \"id\": \"narrator\", \"name\": \"Narrator\", \"emotion\": \"neutral\", \"strength\": 2,\n    \"pace\": \"normal\", \"voice\": \"warm, even, unhurried\", \"accent\": \"\", \"language\": \"\" },\n  { \"id\": \"anna\", \"name\": \"Anna\", \"emotion\": \"somber\", \"strength\": 3,\n    \"pace\": \"slow\", \"voice\": \"low and quiet, holds back tears\", \"accent\": \"\", \"language\": \"\" }\n ],\n \"chapters\": {\n  \"c1\": {\n   \"p3.s2\": {\n    \"anchor\": \"I cannot go back there now, she said.\",\n    \"speaker\": \"anna\", \"emotion\": \"somber\", \"strength\": 3, \"pace\": \"slow\",\n    \"accent\": \"\", \"language\": \"\", \"note\": \"almost a whisper on the last word\",\n    \"status\": \"approved\", \"by\": \"narrator\", \"updated\": \"2026-11-17T06:00:00Z\",\n    \"proposal\": null\n   }\n  }\n }\n}\n```\n\n| Field | Meaning |\n|---|---|\n| `source` | Which chapter field is read aloud: `text` (the translation or annotated text; if a chapter's `text` is empty its `original` is used) or `original`. |\n| `characters[]` | One profile per voice. `id` is a short key used by notes. `emotion`, `strength`, `pace` are the character's usual delivery, used when a note leaves them out. `voice` is free words about the voice (age, pitch, warmth, texture). `accent` and `language` are optional. A character with id `narrator` is always assumed, even if missing. |\n| `chapters` | Keyed by chapter `id` from `project.json`, then by sentence id. |\n| `anchor` | The first 40 characters of the sentence (runs of spaces and line breaks made one space, no space at either end). Used to find the sentence again after the text is edited. |\n| `speaker` | A character `id` (or name). Default `narrator`. |\n| `emotion` | One or two plain words. Suggested: neutral, warm, tender, happy, joyful, excited, playful, hopeful, calm, proud, awed, solemn, somber, sad, grieving, weary, wistful, anxious, fearful, tense, urgent, stern, angry, bitter, sarcastic, cold, whispering. Other words are allowed. |\n| `strength` | 1 to 5. 1 a hint, 2 light, 3 clear, 4 strong, 5 as strong as it gets. |\n| `pace` | `very slow`, `slow`, `normal`, `fast` or `very fast`. |\n| `accent` | Optional, plain words, for example `light Scottish`. |\n| `language` | Optional. The language this sentence is spoken in, when it differs from the book, for example `French`. |\n| `note` | Optional direction for the narrator, for example `pause before the last word`. |\n| `status` | `suggested` (made by an AI or a helper, not checked yet) or `approved` (checked by the narrator or a leader; locked). |\n| `by` | Who made it: `narrator`, `leader`, `helper`, or `ai:<name>`. |\n| `proposal` | `null`, or a suggested change to this note: the same fields (`speaker` ... `note`) plus `by` and `updated`, or `{ \"remove\": true, \"by\": ..., \"updated\": ... }` to propose deleting it. |\n\n## Sentence ids\n\nA sentence id is `p<paragraph>.s<sentence>`, both counted from 1, within the\nchapter's read aloud text:\n\n1. Every non-empty line is a paragraph (lines are split on line breaks; blank\n   lines are skipped). A heading line (`## Title`) is a paragraph too, and the\n   `#` marks are not read aloud.\n2. Inside a paragraph, a sentence ends after `.`, `!`, `?` or `\u2026` (several in a\n   row count as one), plus any closing quotes or brackets right after them\n   (`\" ' \u201d \u2019 \u00bb ) ]`), when a space follows and the next letter is not lower\n   case (so `\"Is it you?\" she asked.` stays one sentence). The end of the line\n   also ends a sentence.\n3. A period does not end a sentence after a short title or abbreviation\n   (Mr, Mrs, Ms, Dr, St, Mt, Jr, Sr, Prof, Gen, Col, Capt, Lt, Sgt, Rev, Hon,\n   Messrs, vs, etc, e.g, i.e, No, Vol, Ch, Fig, Pp, cf) or after a single\n   capital letter used as an initial (J. S. Mill), except the word I.\n\nThe PD Press app and the Voice Studio use the same rules (the Python version is\n`voice_studio/narration.py`, and the tests check both give the same ids).\n\nWhen the text changes, ids may shift. Readers match each note to the sentence\nwhose start equals its `anchor`, first at its own id, then anywhere in the\nchapter. A note that matches nothing is shown as \"sentence changed\" until\nsomeone moves or removes it.\n\n## Readable inline form\n\nFor people and chat based AI agents the same note can be written in one line,\nright before the sentence it belongs to:\n\n```\n[speaker: Anna | emotion: somber | strength: 3 | pace: slow]\n[speaker: narrator | emotion: tense | strength: 2 | pace: normal | note: let it hang]\n[speaker: Pierre | emotion: warm | strength: 2 | pace: normal | accent: light French | language: French]\n```\n\nKeys: `speaker`, `emotion`, `strength`, `pace`, `accent`, `language`, `note`.\nKeys may come in any order; missing keys use the speaker's profile. If inline\ntags are found inside chapter text (for example pasted from a chat), PD Press\nmoves them into the narration track as suggestions (or as proposals, when the\nsentence already has a note) and removes them from the book text, so they never\nreach print. A tag on its own line applies to the\nfirst sentence of the next line.\n\n`narration-script.txt`, written on every export, lists each chapter as:\n\n```\n=== Chapter: <title> (id c1)\np1.s1 [speaker: narrator | emotion: neutral | strength: 2 | pace: normal] (approved)\n    Our century occupies a very instructive place in the history of human development.\n```\n\n## Rules for changing notes\n\n- Never overwrite or delete an existing note without permission from the\n  narrator or a leader. Put the change in `proposal` instead.\n- Approved notes are locked. In the app, editing one makes a proposal that the\n  narrator or a leader accepts or turns down.\n- When a project file is imported over a project already on the phone:\n  sentences with no note take the incoming note; a note that differs from the\n  phone's note becomes a proposal on the phone's note (the phone's note is not\n  changed); an incoming note marked approved only counts as approved if it is\n  the same as the phone's note, or the sentence had no note.\n- New characters are added; existing character profiles on the phone are kept.\n\n## How Voice Studio uses a note\n\nVoice Studio turns each note into VoxCPM2 style guidance in front of the\nsentence, for example `(warm, even voice, clearly somber, slow pace)`. Strength\nwords: 1 \"a hint of\", 2 \"slightly\", 3 \"clearly\", 4 \"very\", 5 \"intensely\".\n`accent` becomes \"with a light French accent\". `language` is used to check the\nsentence is in that language. The narrator can always replay, redo, or record\nany single sentence by hand.\n";
+var nrOpen = '', nrFilter = 'all', nrLostOpen = false;
+
+/* Sentences of a chapter, with ids p<paragraph>.s<sentence>. Same rules as voice_studio/narration.py. */
+function nrSplit(text) {
+  var out = [], lines = pjStr(text).replace(/\r\n?/g, '\n').split('\n'), pn = 0;
+  each(lines, function (line) {
+    var L = line.replace(/\s+/g, ' ').replace(/^ | $/g, ''); if (!L) return;
+    pn++;
+    var sn = 0, start = 0, n = L.length, i, j, ch, w, word;
+    function push(end) { var s = L.slice(start, end).replace(/^ +| +$/g, '').replace(/^#+ */, ''); start = end; if (s) { sn++; out.push({ id: 'p' + pn + '.s' + sn, text: s }); } }
+    for (i = 0; i < n; i++) {
+      ch = L.charAt(i);
+      if (ch !== '.' && ch !== '!' && ch !== '?' && ch !== '\u2026') continue;
+      j = i + 1;
+      while (j < n && /[.!?\u2026]/.test(L.charAt(j))) j++;
+      var punct = j;
+      while (j < n && /["'\u201d\u2019\u00bb)\]]/.test(L.charAt(j))) j++;
+      if (j >= n || L.charAt(j) !== ' ') { i = j - 1; continue; }
+      if (j + 1 < n && /[a-z\u00df-\u00ff\u0430-\u044f]/.test(L.charAt(j + 1))) { i = j - 1; continue; }
+      if (ch === '.' && punct === i + 1) {
+        w = /([A-Za-z\u00c0-\u024f\u0400-\u04ff.]+)$/.exec(L.slice(start, i)); word = w ? w[1] : '';
+        if (NR_ABBR[word.toLowerCase()] || (word.length === 1 && word !== 'I' && /[A-Z\u00c0-\u00de\u0400-\u042f]/.test(word))) { i = j - 1; continue; }
+      }
+      push(j); i = j - 1;
+    }
+    push(n);
+  });
+  return out;
+}
+function nrAnchor(s) { return pjStr(s).replace(/\s+/g, ' ').replace(/^ +| +$/g, '').slice(0, 40).replace(/ +$/, ''); }
+function nrInt(v, d) { var n = parseInt(v, 10); return isFinite(n) ? Math.max(1, Math.min(5, n)) : d; }
+function nrPace(v) { v = pjStr(v).toLowerCase().replace(/[\s_-]+/g, ' ').trim(); return NR_PACES.indexOf(v) >= 0 ? v : 'normal'; }
+function nrCharId(s) { return pjStr(s).toLowerCase().replace(/[^a-z0-9\u00c0-\u024f\u0400-\u04ff]+/g, '') || 'narrator'; }
+function nrFields(o) {
+  o = o || {};
+  return { speaker: nrCharId(o.speaker || 'narrator'), emotion: pjStr(o.emotion).trim().toLowerCase() || 'neutral', strength: nrInt(o.strength, 3), pace: nrPace(o.pace),
+    accent: pjStr(o.accent).trim(), language: pjStr(o.language).trim(), note: pjStr(o.note).trim() };
+}
+function nrSame(a, b) { for (var i = 0; i < NR_FIELDS.length; i++) if (String(a[NR_FIELDS[i]]) !== String(b[NR_FIELDS[i]])) return false; return true; }
+function nrNote(o) {
+  var f = nrFields(o), now = new Date().toISOString();
+  f.anchor = nrAnchor(o && o.anchor); f.status = o && o.status === 'approved' ? 'approved' : 'suggested'; f.by = pjStr(o && o.by) || 'helper'; f.updated = pjStr(o && o.updated) || now;
+  var pr = o && o.proposal;
+  if (pr && typeof pr === 'object') { f.proposal = pr.remove ? { remove: true } : nrFields(pr); f.proposal.by = pjStr(pr.by) || 'helper'; f.proposal.updated = pjStr(pr.updated) || now; } else f.proposal = null;
+  return f;
+}
+function nrChar(c) {
+  c = c || {};
+  var name = pjStr(c.name).trim() || pjStr(c.id).trim() || 'Narrator';
+  return { id: nrCharId(c.id || name), name: name, emotion: pjStr(c.emotion).trim().toLowerCase() || 'neutral', strength: nrInt(c.strength, 2), pace: nrPace(c.pace),
+    voice: pjStr(c.voice).trim(), accent: pjStr(c.accent).trim(), language: pjStr(c.language).trim() };
+}
+function nrNorm(o) {
+  o = o && typeof o === 'object' ? o : {};
+  var n = { format: NR_FMT, version: NR_VER, source: o.source === 'original' ? 'original' : 'text', updated: pjStr(o.updated), characters: [], chapters: {} }, seen = {};
+  each(Object.prototype.toString.call(o.characters) === '[object Array]' ? o.characters : [], function (c) { if (!c || typeof c !== 'object') return; var x = nrChar(c); if (seen[x.id]) return; seen[x.id] = 1; n.characters.push(x); });
+  if (!seen.narrator) n.characters.unshift(nrChar({ id: 'narrator', name: 'Narrator', emotion: 'neutral', strength: 2, pace: 'normal' }));
+  var ch = o.chapters && typeof o.chapters === 'object' ? o.chapters : {};
+  each(keys(ch), function (cid) {
+    var m = ch[cid], out = {}, any = false; if (!m || typeof m !== 'object') return;
+    each(keys(m), function (sid) { if (!/^p\d+\.s\d+$/.test(sid) || !m[sid] || typeof m[sid] !== 'object') return; out[sid] = nrNote(m[sid]); any = true; });
+    if (any) n.chapters[cid] = out;
+  });
+  return n;
+}
+/* Readable inline form */
+function nrTagText(f) {
+  var s = '[speaker: ' + f.speaker + ' | emotion: ' + f.emotion + ' | strength: ' + f.strength + ' | pace: ' + f.pace;
+  if (f.accent) s += ' | accent: ' + f.accent; if (f.language) s += ' | language: ' + f.language; if (f.note) s += ' | note: ' + f.note.replace(/[\]|]/g, ' ');
+  return s + ']';
+}
+function nrParseTag(t) {
+  var o = {}; pjStr(t).replace(/^\s*\[|\]\s*$/g, '').split('|').forEach(function (part) { var m = /^\s*([a-z]+)\s*:\s*(.*?)\s*$/i.exec(part); if (m && NR_FIELDS.indexOf(m[1].toLowerCase()) >= 0) o[m[1].toLowerCase()] = m[2]; });
+  return o;
+}
+function nrSrc(p, c) { return p.narration && p.narration.source === 'original' ? (c.original || '') : (c.text || c.original || ''); }
+function nrSrcField(p, c) { return p.narration && p.narration.source === 'original' ? 'original' : (c.text ? 'text' : 'original'); }
+function nrCharName(p, id) { var r = id; each(p.narration.characters, function (c) { if (c.id === id) r = c.name; }); return r; }
+
+/* Put a note on a sentence without overwriting: empty sentences take it, others get a proposal */
+function nrOffer(map, sid, incoming, anchor) {
+  var cur = map[sid], f = nrFields(incoming);
+  if (!cur) { var x = nrNote(incoming); x.anchor = anchor || x.anchor; map[sid] = x; return 'added'; }
+  if (nrSame(cur, f)) { if (incoming.status === 'approved' && cur.status !== 'approved' && incoming.by) { cur.status = 'approved'; cur.by = pjStr(incoming.by); } return 'same'; }
+  f.by = pjStr(incoming.by) || 'helper'; f.updated = pjStr(incoming.updated) || new Date().toISOString(); cur.proposal = f; return 'proposal';
+}
+/* Move [speaker: ... ] tags found in chapter text into the narration track */
+function nrPullInline(p) {
+  var moved = 0;
+  each(p.chapters, function (c) {
+    each(['text', 'original'], function (fld) {
+      var t = c[fld]; if (!t || !NR_INLINE.test(t)) return;
+      var TAG = '\\[\\s*(?:speaker|emotion|strength|pace|accent|language|note)\\s*:[^\\]\\n]*\\]';
+      var tags = [], re = new RegExp(TAG, 'gi'), m;
+      while ((m = re.exec(t))) {
+        var after = t.slice(re.lastIndex, re.lastIndex + 300).replace(new RegExp(TAG, 'gi'), '');
+        tags.push({ o: nrParseTag(m[0]), key: nrAnchor(after.replace(/^\s*#*\s*/, '')).slice(0, 25) });
+      }
+      var clean = t.replace(new RegExp('^[ \\t]*' + TAG + '[ \\t]*\\n', 'gim'), '').replace(new RegExp('[ \\t]*' + TAG + '[ \\t]*', 'gi'), '\u0000');
+      clean = clean.replace(/^\u0000+/gm, '').replace(/\u0000+$/gm, '').replace(/\u0000+/g, ' ');
+      c[fld] = clean;
+      if (fld !== nrSrcField(p, c)) return;
+      var sents = nrSplit(clean), ptr = 0, map = p.narration.chapters[c.id] || (p.narration.chapters[c.id] = {});
+      each(tags, function (tg) {
+        for (var k = ptr; k < sents.length; k++) {
+          var s = sents[k].text;
+          if (tg.key && (s.indexOf(tg.key) === 0 || tg.key.indexOf(s) === 0)) {
+            var o = tg.o; o.status = 'suggested'; o.by = o.by || 'inline';
+            nrOffer(map, sents[k].id, o, nrAnchor(s)); moved++; ptr = k + 1; return;
+          }
+        }
+      });
+    });
+  });
+  return moved;
+}
+/* Match notes to sentences after the text changed. Returns { sents, lost: [sid] } */
+function nrSyncChapter(p, c) {
+  var sents = nrSplit(nrSrc(p, c)), map = p.narration.chapters[c.id], byId = {}, lost = [];
+  each(sents, function (s) { byId[s.id] = s; });
+  if (!map) return { sents: sents, lost: lost };
+  var moves = [];
+  each(keys(map), function (sid) {
+    var n = map[sid], s = byId[sid];
+    if (s && (!n.anchor || nrAnchor(s.text) === n.anchor)) { if (!n.anchor) n.anchor = nrAnchor(s.text); return; }
+    var hit = null; each(sents, function (x) { if (!hit && nrAnchor(x.text) === n.anchor && (!map[x.id] || map[x.id].anchor !== n.anchor)) hit = x; });
+    if (hit) moves.push([sid, hit.id]); else lost.push(sid);
+  });
+  if (moves.length) { var tmp = {}; each(moves, function (m) { tmp[m[1]] = map[m[0]]; delete map[m[0]]; }); each(keys(tmp), function (k) { if (!map[k]) map[k] = tmp[k]; else lost.push(k); }); }
+  return { sents: sents, lost: lost };
+}
+function nrStats(p) {
+  var st = { sentences: 0, noted: 0, approved: 0, suggested: 0, proposals: 0, lost: 0, chapters: [] };
+  each(p.chapters, function (c) {
+    var r = nrSyncChapter(p, c), map = p.narration.chapters[c.id] || {}, cs = { sentences: r.sents.length, noted: 0, approved: 0, suggested: 0, proposals: 0, lost: r.lost.length };
+    each(r.sents, function (s) { var n = map[s.id]; if (!n) return; cs.noted++; if (n.status === 'approved') cs.approved++; else cs.suggested++; if (n.proposal) cs.proposals++; });
+    each(['sentences', 'noted', 'approved', 'suggested', 'proposals', 'lost'], function (k) { st[k] += cs[k]; });
+    st.chapters.push(cs);
+  });
+  return st;
+}
+function nrCount(p) { var n = 0; if (p.narration) each(keys(p.narration.chapters), function (k) { n += keys(p.narration.chapters[k]).length; }); return n; }
+function nrListTag(p) {
+  if (!p.chapters.length) return '';
+  var n = nrCount(p); if (!n) return '<span class="tag warn">No narration notes</span>';
+  var st = nrStats(p), pc = st.sentences ? Math.floor(100 * st.noted / st.sentences) : 0;
+  return '<span class="tag' + (pc < 100 ? ' warn' : '') + '">Narration ' + pc + '%</span>' + (st.proposals || st.suggested ? '<span class="tag">' + (st.suggested + st.proposals) + ' to approve</span>' : '');
+}
+/* Bundle extras: the sidecar, a readable script, and the AI sheet */
+function nrSidecar(p) { var n = JSON.parse(JSON.stringify(p.narration)); n.projectId = p.id; n.updated = n.updated || p.updated; return n; }
+function nrScript(p) {
+  var out = ['PD Press narration script: ' + (p.title || 'Untitled'), 'Read only copy of narration.json, made ' + new Date().toISOString() + '. Edit narration.json, not this file.', 'Reading from: ' + (p.narration.source === 'original' ? 'original text' : 'translation or annotated text'), '', 'Characters:'];
+  each(p.narration.characters, function (c) { out.push('  ' + c.id + ': ' + c.name + ' [emotion: ' + c.emotion + ' | strength: ' + c.strength + ' | pace: ' + c.pace + (c.accent ? ' | accent: ' + c.accent : '') + (c.language ? ' | language: ' + c.language : '') + ']' + (c.voice ? ' voice: ' + c.voice : '')); });
+  each(p.chapters, function (c) {
+    var map = p.narration.chapters[c.id] || {}, r = nrSyncChapter(p, c);
+    out.push('', '=== Chapter: ' + (c.title || 'Untitled') + ' (id ' + c.id + ')');
+    each(r.sents, function (s) { var n = map[s.id]; out.push(s.id + ' ' + (n ? nrTagText(n) + ' (' + n.status + (n.proposal ? ', change proposed' : '') + ')' : '(no note)')); out.push('    ' + s.text); });
+  });
+  return out.join('\n') + '\n';
+}
+/* Merge an incoming project's notes into the one on the phone (Replace import) */
+function nrMerge(local, incoming) {
+  var L = local.narration, I = incoming.narration, have = {}, res = { added: 0, proposals: 0 };
+  each(L.characters, function (c) { have[c.id] = 1; });
+  each(I.characters, function (c) { if (!have[c.id]) { L.characters.push(c); have[c.id] = 1; } });
+  each(keys(I.chapters), function (cid) {
+    var map = L.chapters[cid] || (L.chapters[cid] = {});
+    each(keys(I.chapters[cid]), function (sid) {
+      var inc = I.chapters[cid][sid], cur = map[sid];
+      if (!cur) { map[sid] = inc; res.added++; return; }
+      var r = nrOffer(map, sid, inc, inc.anchor); if (r === 'proposal') res.proposals++;
+      if (inc.proposal && !map[sid].proposal) map[sid].proposal = inc.proposal;
+    });
+  });
+  each(keys(L.chapters), function (cid) {
+    var inc = I.chapters[cid] || {};
+    each(keys(L.chapters[cid]), function (sid) { var cur = L.chapters[cid][sid]; if (!inc[sid] && !cur.proposal && I.chapters[cid]) { cur.proposal = { remove: true, by: 'import', updated: new Date().toISOString() }; res.proposals++; } });
+  });
+  incoming.narration = L;
+  return res;
+}
+
+/* ---------- The Narration tab ---------- */
+function nrRole() { var r = ''; try { r = localStorage.getItem('pdpress.nrRole') || ''; } catch (e) {} return r === 'leader' || r === 'helper' ? r : 'narrator'; }
+function nrCanApprove() { return nrRole() !== 'helper'; }
+function nrSel(attr, opts, val) { return '<select ' + attr + '>' + opts.map(function (o) { var v = o.push ? o[0] : o, t = o.push ? o[1] : o; return '<option value="' + esc(v) + '"' + (String(v) === String(val) ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select>'; }
+function nrSegHtml(attr, opts, val) { return '<div class="seg ed-seg nr-seg">' + opts.map(function (o) { return '<button type="button" ' + attr + '="' + esc(o[0]) + '"' + (String(o[0]) === String(val) ? ' class="on"' : '') + '>' + esc(o[1]) + '</button>'; }).join('') + '</div>'; }
+function nrTabHtml(p) {
+  var N = p.narration, h = '', st = nrStats(p), role = nrRole();
+  if (pjChap >= 0 && p.chapters[pjChap]) return nrChapterHtml(p, pjChap);
+  h += '<div class="card nr-intro"><p class="mt0 small">Narration notes tell the Voice Studio who is speaking and how each sentence should sound. They are only for the audiobook and never go into the print book or ebook.</p>';
+  if (!p.chapters.length) h += '<p class="small muted" style="margin-bottom:0">Add chapters on the Text tab first.</p>';
+  else if (!st.noted) h += '<p class="small nr-flag" id="nr-flag"><span class="tag warn">No narration notes</span> This project has no narration notes yet. Ask Grok Bot or another AI helper to add them, or tap a chapter below and add them yourself.</p>';
+  else h += '<p class="small" id="nr-sum" style="margin-bottom:0">' + commas(st.noted) + ' of ' + commas(st.sentences) + ' sentences have notes. ' + commas(st.approved) + ' approved, ' + commas(st.suggested) + ' suggestions' + (st.proposals ? ', ' + commas(st.proposals) + ' changes waiting' : '') + (st.lost ? ', ' + commas(st.lost) + ' whose sentence changed' : '') + '.</p>';
+  h += '</div>';
+  h += '<h3 class="ed-h">Who is using this phone</h3>' + nrSegHtml('data-nrrole', NR_ROLES, role) +
+    '<p class="small muted">' + (role === 'helper' ? 'Helpers can add suggestions. Only the narrator or a leader can approve notes.' : 'You can approve notes. Approved notes are locked: a change becomes a suggestion that needs approval.') + '</p>';
+  if (p.chapters.some(function (c) { return c.text && c.original; })) h += '<h3 class="ed-h">Read aloud from</h3>' + nrSegHtml('data-nrsrc', [['text', 'Translation'], ['original', 'Original']], N.source);
+  h += '<h3 class="ed-h">Characters</h3><p class="small muted mt0">Each voice in the book. Its usual feeling and voice are used when a note leaves them out, so characters stay different even inside one paragraph.</p>';
+  each(N.characters, function (c, i) {
+    h += '<div class="card nr-char"><div class="pj-two">' + pjField('Name', 'data-nc="' + i + '.name"', c.name) + pjField('Usual feeling', 'data-nc="' + i + '.emotion" list="nr-feel"', c.emotion) + '</div>' +
+      '<div class="pj-two"><label class="f"><span>Strength</span>' + nrSel('data-nc="' + i + '.strength"', [1, 2, 3, 4, 5], c.strength) + '</label><label class="f"><span>Pace</span>' + nrSel('data-nc="' + i + '.pace"', NR_PACES, c.pace) + '</label></div>' +
+      pjField('Voice', 'data-nc="' + i + '.voice"', c.voice, { ph: 'Older man, deep and slow, a little rough' }) +
+      '<div class="pj-two">' + pjField('Accent', 'data-nc="' + i + '.accent"', c.accent, { ph: 'None' }) + pjField('Language', 'data-nc="' + i + '.language"', c.language, { ph: 'Book language' }) + '</div>' +
+      (c.id === 'narrator' ? '' : '<button class="btn ghost small" data-ncdel="' + i + '">Remove character</button>') + '</div>';
+  });
+  h += '<button class="btn ghost" id="nr-addchar">Add a character</button>';
+  h += '<datalist id="nr-feel">' + NR_FEEL.map(function (f) { return '<option value="' + f + '">'; }).join('') + '</datalist>';
+  h += '<h3 class="ed-h">Chapters</h3>';
+  each(p.chapters, function (c, i) {
+    var cs = st.chapters[i];
+    var flag = !cs.sentences ? '<span class="tag">No text yet</span>' : !cs.noted ? '<span class="tag warn">No narration notes</span>' : cs.noted < cs.sentences ? '<span class="tag warn">' + (cs.sentences - cs.noted) + ' without notes</span>' : '<span class="tag start">All sentences noted</span>';
+    if (cs.suggested + cs.proposals) flag += '<span class="tag">' + (cs.suggested + cs.proposals) + ' to approve</span>';
+    if (cs.lost) flag += '<span class="tag warn">' + cs.lost + ' sentence changed</span>';
+    h += '<button class="item pj-chap nr-chap" data-nrchap="' + i + '"><span class="item-title">' + (i + 1) + '. ' + esc(c.title || 'Untitled chapter') + '</span><span class="item-meta">' + cs.noted + ' of ' + cs.sentences + ' sentences have notes</span><span class="tags" style="display:block;margin-top:6px">' + flag + '</span></button>';
+  });
+  h += '<h3 class="ed-h">For AI helpers</h3><div class="card"><p class="small mt0">Every project file you export carries AI-INSTRUCTIONS.txt and the note format, so any AI that opens it knows to add narration notes and never to overwrite yours.</p>' +
+    '<div class="btns"><button class="btn ghost small" id="nr-dl-ai">Download AI instructions</button><button class="btn ghost small" id="nr-dl-spec">Download note format</button><button class="btn ghost small" id="nr-dl-json">Download notes (JSON)</button><button class="btn ghost small" id="nr-dl-script">Download script</button></div></div>';
+  return h;
+}
+function nrChapterHtml(p, ci) {
+  var c = p.chapters[ci], r = nrSyncChapter(p, c), map = p.narration.chapters[c.id] || {}, h = '', can = nrCanApprove();
+  var cnt = { all: r.sents.length, none: 0, suggested: 0, approved: 0 };
+  each(r.sents, function (s) { var n = map[s.id]; if (!n) cnt.none++; else if (n.status === 'approved' && !n.proposal) cnt.approved++; else cnt.suggested++; });
+  h += '<button class="btn ghost small" id="nr-back">All chapters</button><div class="small muted" style="margin:10px 0">Chapter ' + (ci + 1) + ' of ' + p.chapters.length + ': ' + esc(c.title || 'Untitled chapter') + '</div>';
+  if (!r.sents.length) return h + '<p class="small muted">This chapter has no text yet.</p>';
+  if (!cnt.all || cnt.none === cnt.all) h += '<p class="small nr-flag"><span class="tag warn">No narration notes</span> No sentence in this chapter has a note yet.</p>';
+  h += '<div class="seg ed-seg nr-filter">' + [['all', 'All'], ['none', 'No note'], ['suggested', 'To approve'], ['approved', 'Approved']].map(function (f) { return '<button type="button" data-nrfilter="' + f[0] + '"' + (nrFilter === f[0] ? ' class="on"' : '') + '>' + f[1] + '<span class="n">' + cnt[f[0]] + '</span></button>'; }).join('') + '</div>';
+  if (can && cnt.suggested) h += '<div class="btns" style="margin-top:10px"><button class="btn ghost small" id="nr-approveall">Approve all ' + cnt.suggested + ' in this chapter</button></div>';
+  if (r.lost.length) {
+    h += '<div class="card nr-lost"><p class="small mt0"><span class="tag warn">Sentence changed</span> ' + r.lost.length + (r.lost.length === 1 ? ' note no longer matches' : ' notes no longer match') + ' a sentence, because the text was edited.</p>';
+    each(r.lost, function (sid) { var n = map[sid]; h += '<div class="small nr-lostrow">' + esc(nrTagText(n)) + ' was on: <i>' + esc(n.anchor) + '</i> <button class="btn ghost small" data-nrlostdel="' + esc(sid) + '"' + (n.status === 'approved' && !can ? ' disabled' : '') + '>Remove</button></div>'; });
+    h += '</div>';
+  }
+  h += '<div class="nr-lines">';
+  each(r.sents, function (s) {
+    var n = map[s.id], kind = !n ? 'none' : n.status === 'approved' && !n.proposal ? 'approved' : 'suggested';
+    if (nrFilter !== 'all' && nrFilter !== kind) return;
+    var who = n ? nrCharName(p, n.speaker) : '';
+    h += '<button class="nr-line' + (nrOpen === s.id ? ' open' : '') + (n ? ' st-' + n.status : ' st-none') + '" data-nrs="' + s.id + '">' +
+      '<span class="nr-tagline">' + (n ? esc(nrTagText(n)) : 'No note yet') + '</span>' +
+      '<span class="nr-text">' + (who && n.speaker !== 'narrator' ? '<b>' + esc(who) + ':</b> ' : '') + esc(s.text) + '</span>' +
+      '<span class="tags" style="display:block;margin-top:4px">' + (n ? (n.status === 'approved' ? '<span class="tag start">Approved, locked</span>' : '<span class="tag">' + (/^ai:/.test(n.by) ? 'AI suggestion' : 'Suggestion') + '</span>') : '') + (n && n.proposal ? '<span class="tag warn">Change waiting</span>' : '') + '<span class="tag nr-sid">' + s.id + '</span></span></button>';
+    if (nrOpen === s.id) h += nrEditorHtml(p, n, can);
+  });
+  h += '</div>';
+  return h;
+}
+function nrEditorHtml(p, n, can) {
+  var f = n ? (n.proposal && !n.proposal.remove ? n.proposal : n) : null, ch = p.narration.characters, h = '<div class="card nr-ed" id="nr-ed">';
+  if (!f) { var sp = ch[0]; f = { speaker: sp.id, emotion: sp.emotion, strength: sp.strength, pace: sp.pace, accent: '', language: '', note: '' }; }
+  var spk = ch.map(function (c) { return [c.id, c.name]; }); if (!ch.some(function (c) { return c.id === f.speaker; })) spk.push([f.speaker, f.speaker]);
+  if (n && n.proposal) h += '<p class="small mt0 nr-prop"><span class="tag warn">Change waiting</span> ' + (n.proposal.remove ? 'Remove this note' : esc(nrTagText(n.proposal))) + ' <span class="muted">from ' + esc(n.proposal.by) + '</span></p>' +
+    (can ? '<div class="btns"><button class="btn small" data-nra="accept">Approve change</button><button class="btn ghost small" data-nra="reject">Keep the current note</button></div>' : '<p class="small muted">Only the narrator or a leader can approve this change.</p>');
+  if (n && n.status === 'approved') h += '<p class="small muted' + (n.proposal ? '' : ' mt0') + '">This note is approved and locked. Saving a change sends it for approval.</p>';
+  h += '<div class="pj-two"><label class="f"><span>Speaker</span>' + nrSel('id="nr-f-speaker"', spk, f.speaker) + '</label>' + pjField('Feeling', 'id="nr-f-emotion" list="nr-feel"', f.emotion) + '</div>' +
+    '<label class="f"><span>Strength (1 a hint, 5 as strong as it gets)</span></label>' + nrSegHtml('data-nrstr', [[1, '1'], [2, '2'], [3, '3'], [4, '4'], [5, '5']], f.strength) +
+    '<label class="f" style="margin-top:12px"><span>Pace</span></label>' + nrSegHtml('data-nrpace', NR_PACES.map(function (x) { return [x, x.replace('very ', 'very\u00a0')]; }), f.pace) +
+    '<div class="pj-two" style="margin-top:12px">' + pjField('Accent', 'id="nr-f-accent"', f.accent, { ph: 'None' }) + pjField('Language', 'id="nr-f-language"', f.language, { ph: 'Book language' }) + '</div>' +
+    pjField('Direction', 'id="nr-f-note"', f.note, { ph: 'Pause before the last word' }) +
+    '<datalist id="nr-feel">' + NR_FEEL.map(function (x) { return '<option value="' + x + '">'; }).join('') + '</datalist><div class="btns">';
+  if (!n) h += '<button class="btn small" data-nra="' + (can ? 'approve' : 'save') + '">' + (can ? 'Save and approve' : 'Save as suggestion') + '</button>' + (can ? '<button class="btn ghost small" data-nra="save">Save as suggestion</button>' : '');
+  else if (n.status === 'approved') h += '<button class="btn small" data-nra="propose">Suggest this change</button><button class="btn ghost small" data-nra="propremove">Suggest removing it</button>';
+  else h += (can ? '<button class="btn small" data-nra="approve">Approve</button>' : '') + '<button class="btn ghost small" data-nra="save">Save suggestion</button><button class="btn ghost small" data-nra="remove">Remove note</button>';
+  h += '<button class="btn ghost small" data-nra="close">Close</button></div></div>';
+  return h;
+}
+function nrReadEditor() {
+  function v(id) { var e = $(id); return e ? e.value : ''; }
+  function on(attr) { var b = document.querySelector('#nr-ed [' + attr + '].on'); return b ? b.getAttribute(attr) : ''; }
+  return nrFields({ speaker: v('nr-f-speaker'), emotion: v('nr-f-emotion'), strength: on('data-nrstr'), pace: on('data-nrpace'), accent: v('nr-f-accent'), language: v('nr-f-language'), note: v('nr-f-note') });
+}
+function nrRerender() { var sh = $('pjSheet'), st = sh.scrollTop; pjRenderSheet(); sh.scrollTop = st; }
+function nrClick(b, p) {
+  var a, N = p.narration, now = new Date().toISOString(), role = nrRole();
+  if ((a = b.getAttribute('data-nrrole'))) { try { localStorage.setItem('pdpress.nrRole', a); } catch (e) {} nrRerender(); return true; }
+  if ((a = b.getAttribute('data-nrsrc'))) { N.source = a === 'original' ? 'original' : 'text'; pjDirty(); nrRerender(); return true; }
+  if ((a = b.getAttribute('data-nrchap')) !== null) { pjChap = +a; nrOpen = ''; nrFilter = 'all'; pjRenderSheet(); $('pjSheet').scrollTop = 0; return true; }
+  if (b.id === 'nr-back') { pjChap = -1; nrOpen = ''; pjRenderSheet(); return true; }
+  if ((a = b.getAttribute('data-nrfilter'))) { nrFilter = a; nrOpen = ''; nrRerender(); return true; }
+  if (b.id === 'nr-addchar') { var nm = 'Character ' + N.characters.length, id = nrCharId(nm) + uid().slice(-3); N.characters.push(nrChar({ id: id, name: nm, emotion: 'neutral', strength: 3 })); pjDirty(); nrRerender(); return true; }
+  if ((a = b.getAttribute('data-ncdel')) !== null) { var cc = N.characters[+a]; if (cc && window.confirm('Remove ' + cc.name + '? Notes for this character keep the name.')) { N.characters.splice(+a, 1); pjDirty(); nrRerender(); } return true; }
+  if ((a = b.getAttribute('data-nrstr'))) { each(b.parentNode.querySelectorAll('button'), function (x) { x.className = x === b ? 'on' : ''; }); return true; }
+  if ((a = b.getAttribute('data-nrpace'))) { each(b.parentNode.querySelectorAll('button'), function (x) { x.className = x === b ? 'on' : ''; }); return true; }
+  if (b.id === 'nr-dl-ai') { pjSaveBlob(new Blob([NR_AI_TXT], { type: 'text/plain' }), 'AI-INSTRUCTIONS.txt'); toast('Downloaded AI-INSTRUCTIONS.txt'); return true; }
+  if (b.id === 'nr-dl-spec') { pjSaveBlob(new Blob([NR_SPEC_MD], { type: 'text/plain' }), 'NARRATION-SPEC.md'); toast('Downloaded NARRATION-SPEC.md'); return true; }
+  if (b.id === 'nr-dl-json') { pjSaveBlob(new Blob([JSON.stringify(nrSidecar(p), null, 1)], { type: 'application/json' }), slug(p.title || 'project') + '-narration.json'); toast('Downloaded the narration notes'); return true; }
+  if (b.id === 'nr-dl-script') { pjSaveBlob(new Blob([nrScript(p)], { type: 'text/plain' }), slug(p.title || 'project') + '-narration-script.txt'); toast('Downloaded the narration script'); return true; }
+  var c = p.chapters[pjChap]; if (!c) return false;
+  var map = N.chapters[c.id] || (N.chapters[c.id] = {});
+  if ((a = b.getAttribute('data-nrlostdel'))) {
+    var ln = map[a]; if (!ln) return true;
+    if (ln.status === 'approved' && role === 'helper') { toast('Only the narrator or a leader can remove an approved note.'); return true; }
+    if (window.confirm('Remove this note?')) { delete map[a]; pjDirty(); nrRerender(); } return true;
+  }
+  if (b.id === 'nr-approveall') {
+    if (role === 'helper') return true;
+    var r0 = nrSyncChapter(p, c), k = 0;
+    if (!window.confirm('Approve every suggestion and waiting change in this chapter? Approved notes are locked.')) return true;
+    each(r0.sents, function (s) { var n = map[s.id]; if (!n) return; if (n.proposal) { if (n.proposal.remove) { delete map[s.id]; k++; return; } var pf = n.proposal; each(NR_FIELDS, function (f) { n[f] = pf[f]; }); n.proposal = null; } if (n.status !== 'approved') { n.status = 'approved'; k++; } n.by = role; n.updated = now; });
+    pjDirty(); nrRerender(); toast(k + ' approved'); return true;
+  }
+  if ((a = b.getAttribute('data-nrs'))) { nrOpen = nrOpen === a ? '' : a; nrRerender(); var ed = $('nr-ed'); if (ed && ed.scrollIntoView && nrOpen) { var top = ed.getBoundingClientRect().top; if (top > window.innerHeight - 120) $('pjSheet').scrollTop += top - 160; } return true; }
+  if ((a = b.getAttribute('data-nra'))) {
+    var sid = nrOpen, n = map[sid], s = null; if (!sid) return true;
+    each(nrSplit(nrSrc(p, c)), function (x) { if (x.id === sid) s = x; });
+    if (a === 'close') { nrOpen = ''; nrRerender(); return true; }
+    var f = a === 'accept' || a === 'reject' || a === 'remove' || a === 'propremove' ? null : nrReadEditor();
+    if ((a === 'approve' || a === 'accept' || a === 'reject') && role === 'helper') { toast('Only the narrator or a leader can approve.'); return true; }
+    if (a === 'save' || a === 'approve') {
+      if (n && n.status === 'approved') { a = 'propose'; }
+      else { var nn = nrNote(f); nn.anchor = nrAnchor(s ? s.text : (n && n.anchor)); nn.status = a === 'approve' ? 'approved' : 'suggested'; nn.by = role; nn.updated = now; nn.proposal = null; map[sid] = nn; toast(a === 'approve' ? 'Approved and locked' : 'Saved as a suggestion'); }
+    }
+    if (a === 'propose') { if (nrSame(n, f)) { toast('Nothing changed.'); return true; } f.by = role; f.updated = now; n.proposal = f; toast('Change sent for approval'); }
+    if (a === 'propremove') { n.proposal = { remove: true, by: role, updated: now }; toast('Removal sent for approval'); }
+    if (a === 'remove') { if (n && n.status === 'approved') return true; delete map[sid]; toast('Note removed'); }
+    if (a === 'accept' && n && n.proposal) { if (n.proposal.remove) { delete map[sid]; toast('Note removed'); } else { var pr = n.proposal; each(NR_FIELDS, function (x) { n[x] = pr[x]; }); n.proposal = null; n.status = 'approved'; n.by = role; n.updated = now; toast('Change approved'); } }
+    if (a === 'reject' && n && n.proposal) { n.proposal = null; toast('Kept the current note'); }
+    N.updated = now; nrOpen = ''; pjDirty(); nrRerender(); return true;
+  }
+  return false;
+}
+function nrInput(t) {
+  var nc = t.getAttribute('data-nc'); if (!nc || !pjCur) return false;
+  var a = nc.split('.'), c = pjCur.narration.characters[+a[0]]; if (!c) return true;
+  if (a[1] === 'strength') c.strength = nrInt(t.value, 3); else if (a[1] === 'pace') c.pace = nrPace(t.value); else if (a[1] === 'emotion') c.emotion = String(t.value).toLowerCase(); else c[a[1]] = t.value;
+  pjDirty(); return true;
+}
+/* Make sure a new project carries the AI sheet as one of its files */
+function nrAiRec(p) { return pjFileRec(p, new Blob([NR_AI_TXT], { type: 'text/plain' }), 'AI-INSTRUCTIONS.txt', 'ai'); }
+
 /* ---- v2.10: loose files ----
    Chat apps on Android can unpack a project file into loose pieces named like
    "f7e6183ddde-struggle-of-the-age-cover-wrap.pdf". Import takes any files: whole bundles import as
@@ -4714,6 +5089,9 @@ function pjCleanName(n) {
 function pjExt(n) { var m = /\.([a-z0-9]{1,8})$/i.exec(n || ''); return m ? m[1].toLowerCase() : ''; }
 function pjKindOf(name, type) {
   var n = pjCleanName(name).toLowerCase(), e = pjExt(n), t = String(type || ''), texty = !e || e === 'txt' || e === 'md' || e === 'csv';
+  if (/^(ai[-_ ]?instructions|narration[-_ ]?spec)\b/.test(n) && texty) return 'ai';
+  if (/narration[-_ ]?script/.test(n) && texty) return 'other';
+  if (/^(mp3|m4a|m4b|wav|ogg|flac)$/.test(e) || /^audio\//.test(t)) return 'audio';
   if (/kdp[-_ ]?listing/.test(n) && texty) return 'listing';
   if (/facts?[-_ ]?to[-_ ]?verify|fact[-_ ]?check/.test(n) && texty) return 'facts';
   if (e === 'epub' || t === 'application/epub+zip') return 'epub';
@@ -4911,6 +5289,7 @@ function pjSortPicked(files) {
       var c0 = u.length ? String.fromCharCode(u[0] === 0xef ? u[3] : u[0]) : '';
       if (e === 'json' || ((e === 'pdpress' || !e) && (c0 === '{' || c0 === '['))) {
         var o = null; try { o = JSON.parse(pjUtf8Dec(u).replace(/^\ufeff/, '')); } catch (x) {}
+        if (o && o.format === NR_FMT) { (out.narr = out.narr || []).push(o); return; }
         if (o && o.format === PJ_FMT && o.projects && o.projects.length && o.projects.every(function (x) { return x && x.path && !x.chapters && !x.files; })) { item.manifest = o; return; }
         if (o && o.format === PJ_FMT && o.projects) { out.bundles.push(item); return; }
         if (o && typeof o === 'object' && (o.title || o.chapters)) {
@@ -5055,6 +5434,7 @@ function pjApply(c, choice) {
     var t = pjFind(choice.slice(4)); if (!t) return Promise.resolve(null);
     pjFill(t, { title: p.title, subtitle: p.subtitle, author: p.author, translator: p.translator, annotator: p.annotator, year: p.year, language: p.language, pages: p.pages, prices: p.prices,
       listing: p.listing, introduction: p.introduction, notes: p.notes, factChecks: p.factChecks, chapters: p.chapters });
+    if (nrCount(p)) { var nt = { narration: p.narration }; window.__nrLastMerge = nrMerge(t, nt); }
     each(p.files, function (f) {
       var b = c.blobs[f.id]; if (!b) return;
       if (t.files.some(function (x) { return x.name === f.name && x.size === b.size; })) return;
@@ -5068,7 +5448,7 @@ function pjApply(c, choice) {
   }
   if (choice.indexOf('replace:') === 0) {
     var old = pjFind(choice.slice(8));
-    if (old) dels = old.files.map(function (f) { return f.id; }).filter(function (id) { return !c.blobs[id]; });
+    if (old) { dels = old.files.map(function (f) { return f.id; }).filter(function (id) { return !c.blobs[id]; }); window.__nrLastMerge = nrMerge(old, p); }
   } else if (pjFind(p.id)) {
     var map = {}; p.id = 'p' + uid().slice(1); if (c.rebuild) p.title = (p.title || 'Untitled') + ' (copy)';
     each(p.files, function (f) { var nid = 'f' + uid().slice(1) + Math.floor(Math.random() * 1e4); map[f.id] = nid; c.blobs[nid] = c.blobs[f.id]; f.id = nid; });
@@ -5081,6 +5461,7 @@ function pjApply(c, choice) {
 function pjImportLoose(s) {
   return pjCandidates(s).then(function (cands) {
     if (!cands.length) return [];
+    each(s.narr || [], function (o) { var hit = null; each(cands, function (c) { if (!hit && c.p.id === o.projectId) hit = c; }); if (!hit && cands.length === 1) hit = cands[0]; if (hit) { hit.p.narration = nrNorm(o); hit.shown.push({ name: 'narration.json', kind: 'ai' }); } });
     return pjShowSummary(cands).then(function (ok) {
       if (!ok) { toast('Nothing was imported.'); return []; }
       var choices = pjImpChoices(), done = [], chain = Promise.resolve();
@@ -5699,6 +6080,7 @@ window.addEventListener('resize', function () { setTimeout(pdNavCheck, 300); });
   });
 })();
 window.__pd.proj.inflateRaw = pjInflateRaw;
+window.__pd.nr = { split: nrSplit, norm: nrNorm, stats: function (id) { return nrStats(pjFind(id)); }, script: function (id) { return nrScript(pjFind(id)); }, sidecar: function (id) { return nrSidecar(pjFind(id)); }, tag: nrTagText, ai: function () { return NR_AI_TXT; }, spec: function () { return NR_SPEC_MD; }, role: nrRole };
 window.__pdReady = true;
 })();
 </script>

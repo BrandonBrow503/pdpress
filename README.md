@@ -12,6 +12,18 @@ It is one HTML file, with no sign-in, no ads and no outside code. Your data stay
   4. After a minute or two, open **https://brandonbrow503.github.io/pdpress/**.
   5. In Chrome's menu, tap **Add to Home screen** to use it like an app.
 
+## What's new in version 2.13 (Narration notes for audiobooks), test build, not live
+
+- **A hidden Narration track.** Each sentence can carry a note: who speaks, the feeling (somber, sad, playful...), how strong (1 a hint, 5 as strong as it gets), pace, accent, language and a short direction. Notes are never printed in the PDF or ebook.
+- **Where:** a project's new Narration tab (between Text and Notes). Characters at the top (name, usual feeling, voice description, accent). Pick a chapter, tap a line, set the note. Filters show all lines, lines with no note, notes to approve, and approved notes.
+- **Approved notes are locked.** Once the narrator or project leader approves a note, a change from anyone else (or an import, or an AI) becomes a suggestion that waits for approval. "Who is using this phone" sets the role: narrator, project leader or helper (helpers can suggest, not approve).
+- **Inline tags work too.** Typing or pasting `[speaker: Anna | emotion: somber | strength: 3 | pace: slow]` before a sentence moves it into the track, and the tag disappears from the text.
+- **AI instructions in every project and every exported file.** `AI-INSTRUCTIONS.txt` tells an AI helper to add narration notes in this format, never to overwrite existing narration without permission (propose instead), not to use long dashes in its own writing (the author's dashes stay), to write in the author's style, and to keep the "Annotated by PD Press" credits. `NARRATION-SPEC.md` describes the format.
+- **Imports keep narration.** Replace and Add merge notes without losing any; differences become suggestions.
+- **Audio files.** New file kind "Audiobook chapter" for chapter MP3s, for example from PD Press Voice Studio.
+- Works on Chrome 62 and 72 (older phones get the Simple look automatically). Upload `index.html` and `sw.js` as usual (the offline cache name is now pdpress-v17).
+- Fix: typing a title right after making a new project could be lost when the files finished loading.
+
 ## What's new in version 2.12 (Sync from Grok Bot)
 
 - **Off unless you turn it on.** A fresh install has no feed and makes no sync checks. Nothing is shared between people: each person gets their own private pairing code, and the code is the only way to find their feed. No code or feed address is stored in the app.
