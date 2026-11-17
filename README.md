@@ -12,6 +12,14 @@ It is one HTML file, with no sign-in, no ads and no outside code. Your data stay
   4. After a minute or two, open **https://brandonbrow503.github.io/pdpress/**.
   5. In Chrome's menu, tap **Add to Home screen** to use it like an app.
 
+## What's new in version 2.12 (Sync from Grok Bot)
+
+- **Off unless you turn it on.** A fresh install has no feed and makes no sync checks. Nothing is shared between people: each person gets their own private pairing code, and the code is the only way to find their feed. No code or feed address is stored in the app.
+- **Where:** Projects tab, the "Sync from Grok Bot" box under the New project / Import buttons. Type the pairing code once and tap Pair with Grok Bot.
+- **What it does:** each time PD Press opens (and when you tap Sync now) it checks your feed, downloads only books that changed, and saves them in My Projects, the same as Import, Replace.
+- **Your work is safe:** books you made yourself are never touched. If you changed a book on this phone and a newer one arrives, your version is kept as its own copy, named "(my edits, date)". A book open on screen is left alone until next time. Offline, it just tries again later. Unpair stops syncing and keeps your books.
+- Fix: two books no longer share a file id when imported (older project files reused one id for the KDP listing and facts file in every book, so a second book could overwrite the first one's).
+
 ## What's new in version 2.11 (Scan Pages)
 
 - Scan pages: take a photo of each page of a printed book (or pick photos from the gallery, or use the live camera) and PD Press reads the words on the phone. No paid service, and nothing is uploaded.

@@ -754,7 +754,7 @@ html.nav-top .toast { bottom: 24px; }
       <p class="small muted">Puts back both starter lists (Publish now and Coming 2027) and removes your own titles and notes.</p>
       <button class="btn ghost small" id="reset">Reset to starter list</button>
     </div>
-    <p class="foot">Public Domain Press, version 2.11. Page reading by Tesseract OCR (Apache License 2.0). Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
+    <p class="foot">Public Domain Press, version 2.12. Page reading by Tesseract OCR (Apache License 2.0). Background photo: Brown Leather Armchairs Beside Fireplace by Yosra (Pexels). Works offline after the first visit, except catalog search.</p>
   </div>
 </main>
 
@@ -771,6 +771,7 @@ html.nav-top .toast { bottom: 24px; }
         <button class="btn ghost small hidden" id="pj-persist" style="margin-top:10px">Ask the phone to keep my projects</button>
         <p class="small muted" id="pj-count" style="margin-bottom:0"></p>
       </div>
+      <div class="card" id="pj-sync"></div>
     </div>
     <div id="pjList"></div>
   </div>
@@ -3691,7 +3692,7 @@ function exportEpub(t) {
   } catch (x) { toast('Could not build the ebook on this browser.'); }
 }
 
-var PJ_APPVER = '2.11';
+var PJ_APPVER = '2.12';
 /* ---- My Projects (v2.9): whole book projects kept on this phone ----
    Each project (details, chapters, notes, KDP listing, fact checks) is one record in the IndexedDB
    database "pdpress-projects", store "projects". Cover art and finished files (EPUB, PDFs, JPG) are
@@ -4061,6 +4062,14 @@ function pjFromJson(o) {
     return { p: x, blobs: blobs };
   });
 }
+/* v2.12: two books must never share a file id. Bundles made before v2.12 reused the same id for
+   KDP-listing.txt and FACTS-TO-VERIFY.txt in every book, so a second book overwrote the first one's. */
+function pjOtherFileIds(pid) { var s = {}; each(pjList, function (x) { if (x.id !== pid) each(x.files, function (f) { s[f.id] = 1; }); }); return s; }
+function pjUniqFiles(p, blobs) {
+  var used = pjOtherFileIds(p.id), map = {};
+  each(p.files, function (f) { if (!used[f.id]) return; var n = 'f' + uid().slice(1); map[f.id] = n; if (blobs[f.id]) { blobs[n] = blobs[f.id]; delete blobs[f.id]; } f.id = n; });
+  if (p.coverId && map[p.coverId]) p.coverId = map[p.coverId];
+}
 function pjStoreImported(items) {
   var done = [], chain = Promise.resolve();
   each(items, function (it) {
@@ -4075,11 +4084,12 @@ function pjStoreImported(items) {
           if (p.coverId) p.coverId = map[p.coverId] || '';
         }
       }
-      var recs = [];
+      var recs = [], keepIds = pjOtherFileIds(p.id);
+      pjUniqFiles(p, it.blobs);
       p.files = p.files.filter(function (f) { return !!it.blobs[f.id]; });
       each(p.files, function (f) { var b = it.blobs[f.id]; recs.push({ id: f.id, projectId: p.id, kind: f.kind, name: f.name, type: f.type || b.type, size: b.size, added: f.added, blob: b }); f.size = b.size; delete f.path; });
       if (p.coverId && !p.files.some(function (f) { return f.id === p.coverId; })) p.coverId = '';
-      return pjWrite(p, recs, dels.filter(function (id) { return !it.blobs[id]; })).then(function () {
+      return pjWrite(p, recs, dels.filter(function (id) { return !it.blobs[id] && !keepIds[id]; })).then(function () {
         pjList = pjList.filter(function (x) { return x.id !== p.id; }); pjList.push(p); done.push(p);
       });
     });
@@ -4383,7 +4393,8 @@ function pjClick(e) {
   if (b.id === 'pj-delete') {
     if (!window.confirm('Delete "' + (p.title || 'Untitled') + '" from this phone? This cannot be undone unless you exported it.')) return;
     clearTimeout(pjSaveT); pjSaveT = null;
-    pjTx(['projects', 'files'], 'readwrite', function (tx) { var fs = tx.objectStore('files'); each(p.files, function (f) { fs['delete'](f.id); }); tx.objectStore('projects')['delete'](p.id); })
+    var keepIds = pjOtherFileIds(p.id);
+    pjTx(['projects', 'files'], 'readwrite', function (tx) { var fs = tx.objectStore('files'); each(p.files, function (f) { if (!keepIds[f.id]) fs['delete'](f.id); }); tx.objectStore('projects')['delete'](p.id); })
       .then(function () { pjList = pjList.filter(function (x) { return x.id !== p.id; }); toast('Project deleted'); pjCloseSheet(); }, function (x) { toast('Could not delete it: ' + pjErr(x)); });
   }
 }
@@ -4410,10 +4421,278 @@ function pjBind() {
 }
 function initProjects() {
   pjBind();
-  var fin = function () { pjReady = true; window.__pdProjReady = true; renderProjects(); persistStatus().then(pjKeepLine); return pjCheckInbox(); };
+  var fin = function () { pjReady = true; window.__pdProjReady = true; renderProjects(); persistStatus().then(pjKeepLine); var r = pjCheckInbox(); try { syInit(); } catch (e) {} return r; };
   pjOpenDb().then(function (db) { pjDb = db; pjMode = 'idb'; return pjGetAll('projects'); })
     .then(function (l) { pjList = l.map(pjNorm); pjSort(); }, function () { if (!pjDb) pjMode = 'none'; })
     .then(fin, fin);
+}
+
+/* ---- v2.12: Sync from Grok Bot ----
+   Books Grok Bot finishes are posted to a private, unlisted feed (a secret GitHub gist). After a
+   one-time pairing code, PD Press checks the feed when it opens (and on Sync now), downloads only
+   books that changed, and saves them the same way Import, Replace does, matched by project id.
+   Safety: projects that are not in the feed are never touched; if a book was changed on this phone
+   after it last came from the feed, the phone's version is kept as its own copy first; a book that
+   is open on screen is left alone until next time. Offline, it just tries again later. */
+/* Nothing is set up on a fresh install: no feed, no code, no checks. Each person's code points to their
+   own feed, so everyone sees only their own books. No code or feed address is stored in this file. */
+var SY_KEY = 'pdpress-sync', SY_FMT = 'pdpress-sync';
+var syBusy = false, syState = null, syProg = '';
+function syLoad() {
+  var s = null;
+  try { s = JSON.parse(window.localStorage.getItem(SY_KEY) || 'null'); } catch (e) { s = null; }
+  if (!s || typeof s !== 'object') s = {};
+  if (!s.books || typeof s.books !== 'object') s.books = {};
+  if (!s.last || !s.last.length) s.last = [];
+  syState = s; return s;
+}
+function sySave() { try { window.localStorage.setItem(SY_KEY, JSON.stringify(syState)); } catch (e) {} }
+/* A pairing code is the feed id (hex). Accepts "PD-4799-1322-...", spaces, a pasted gist link, O for 0, I or l for 1. */
+function syParse(s) {
+  s = String(s || '').trim();
+  var u = /gist\.github(?:usercontent)?\.com\/([A-Za-z0-9-]+)\/([0-9a-fA-F]{20,40})/.exec(s);
+  if (u) return { owner: u[1], id: u[2].toLowerCase() };
+  var t = s.replace(/^pd(?=[\s\-_:.]|$)[\s\-_:.]*/i, '').replace(/[oO]/g, '0').replace(/[lI]/g, '1').replace(/[^0-9a-fA-F]/g, '').toLowerCase();
+  return t.length >= 20 && t.length <= 40 ? { owner: '', id: t } : null;
+}
+function syPretty(c) { return c ? 'PD-' + c.id.match(/.{1,4}/g).join('-') : ''; }
+function syReq(url, bin, onprog) {
+  return new Promise(function (res, rej) {
+    var x = new XMLHttpRequest();
+    try { x.open('GET', url, true); } catch (e) { rej(e); return; }
+    if (bin) x.responseType = 'arraybuffer';
+    x.timeout = bin ? 600000 : 20000;
+    x.onload = function () {
+      if (x.status >= 200 && x.status < 300) res(x.response);
+      else { var e = new Error('HTTP ' + x.status); e.status = x.status; rej(e); }
+    };
+    x.onerror = function () { var e = new Error('offline'); e.net = true; rej(e); };
+    x.ontimeout = function () { var e = new Error('timeout'); e.net = true; rej(e); };
+    if (onprog) x.onprogress = function (ev) { onprog(ev.loaded || 0, ev.lengthComputable ? ev.total : 0); };
+    x.send();
+  });
+}
+/* Newest feed list: ask GitHub for the latest revision (a tiny reply), then read that exact revision,
+   so a fresh post shows up at once. If that is busy, read the plain link (may be up to 5 minutes old). */
+function syFeed(c) {
+  var raw = 'https://gist.githubusercontent.com/';
+  return syReq('https://api.github.com/gists/' + c.id + '/commits?per_page=1')['catch'](function (e) { if (e) e.api = true; throw e; }).then(function (t) {
+    var l = JSON.parse(t), v = l && l[0] && l[0].version;
+    if (!v) throw new Error('empty');
+    if (l[0].user && l[0].user.login) { c.owner = l[0].user.login; if (syState) syState.owner = c.owner; }
+    return syReq(raw + c.owner + '/' + c.id + '/raw/' + v + '/manifest.json');
+  })['catch'](function (e) {
+    if (e && e.status === 404 && e.api) throw e;
+    if (!c.owner && syState && syState.owner) c.owner = syState.owner;
+    if (!c.owner) throw e;
+    return syReq(raw + c.owner + '/' + c.id + '/raw/manifest.json?t=' + Date.now());
+  }).then(function (t) {
+    var m; try { m = JSON.parse(t); } catch (e) { m = null; }
+    if (!m || m.format !== SY_FMT) { var er = new Error('That pairing code does not point to a PD Press feed.'); er.status = 404; throw er; }
+    if (m.version > 1) throw new Error('Grok Bot used a newer feed. Update PD Press (close it and open it again).');
+    return m;
+  });
+}
+function syErrText(e) {
+  if (!e) return 'Something went wrong.';
+  if (e.net || (window.navigator && navigator.onLine === false)) return 'No internet right now. PD Press will try again next time it opens.';
+  if (e.status === 404) return 'That pairing code did not work. Check it and type it again.';
+  if (e.status === 403 || e.status === 429) return 'GitHub is busy. Try Sync now again in a few minutes.';
+  if (e.name === 'QuotaExceededError') return 'The phone is out of space, so the book could not be saved.';
+  return e.message || 'Something went wrong.';
+}
+function syTime(iso) {
+  var d = new Date(iso); if (!iso || isNaN(d.getTime())) return '';
+  var h = d.getHours(), m = d.getMinutes(), t = (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? ' AM' : ' PM');
+  var now = new Date(), y = new Date(now.getTime() - 864e5), mo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  if (d.toDateString() === now.toDateString()) return 'today at ' + t;
+  if (d.toDateString() === y.toDateString()) return 'yesterday at ' + t;
+  return mo[d.getMonth()] + ' ' + d.getDate() + (d.getFullYear() !== now.getFullYear() ? ', ' + d.getFullYear() : '') + ' at ' + t;
+}
+function syMs(s) { var n = Date.parse(s || ''); return isNaN(n) ? null : n; }
+
+/* Keep the phone's own version of a project as a separate copy (new ids, same files). */
+function syKeepCopy(old) {
+  return pjGetAll('files', old.id).then(function (recs) {
+    var cp = JSON.parse(JSON.stringify(old)), map = {}, nrecs = [], d = new Date();
+    var mo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    cp.id = 'p' + uid().slice(1);
+    cp.title = (old.title || 'Untitled') + ' (my edits, ' + mo[d.getMonth()] + ' ' + d.getDate() + ')';
+    each(recs, function (r) { var n = {}, k; for (k in r) n[k] = r[k]; n.id = 'f' + uid().slice(1); n.projectId = cp.id; map[r.id] = n.id; nrecs.push(n); });
+    cp.files = cp.files.filter(function (f) { return !!map[f.id]; });
+    each(cp.files, function (f) { f.id = map[f.id]; });
+    cp.coverId = map[cp.coverId] || '';
+    if (!cp.coverId) each(cp.files, function (f) { if (!cp.coverId && f.kind === 'cover') cp.coverId = f.id; });
+    return pjTx(['projects', 'files'], 'readwrite', function (tx) {
+      var fs = tx.objectStore('files'); each(nrecs, function (n) { fs.put(n); }); tx.objectStore('projects').put(cp);
+    }).then(function () { pjList.push(cp); return cp; });
+  });
+}
+/* Save one project from the feed in place of the phone's copy (Import, Replace), keeping edits safe. */
+function syStoreOne(it, bk, ent, res) {
+  var p = pjNorm(it.p), old = pjFind(p.id), rec = syState.books[p.id], kept = null;
+  var edited = false;
+  if (old) {
+    var base = syMs(rec ? rec.upd : (ent && ent.updated) || p.updated), mine = syMs(old.updated);
+    edited = base === null || mine === null ? !rec : mine > base + 2000;
+  }
+  var step = old && edited ? syKeepCopy(old).then(function (cp) { kept = cp; }) : Promise.resolve();
+  return step.then(function () {
+    var recs = [], dels = old ? old.files.map(function (f) { return f.id; }) : [], keepIds = pjOtherFileIds(p.id);
+    pjUniqFiles(p, it.blobs);
+    p.files = p.files.filter(function (f) { return !!it.blobs[f.id]; });
+    each(p.files, function (f) { var b = it.blobs[f.id]; recs.push({ id: f.id, projectId: p.id, kind: f.kind, name: f.name, type: f.type || b.type, size: b.size, added: f.added, blob: b }); f.size = b.size; delete f.path; });
+    if (p.coverId && !p.files.some(function (f) { return f.id === p.coverId; })) p.coverId = '';
+    return pjWrite(p, recs, dels.filter(function (id) { return !it.blobs[id] && !keepIds[id]; }));
+  }).then(function () {
+    pjList = pjList.filter(function (x) { return x.id !== p.id; }); pjList.push(p);
+    syState.books[p.id] = { blob: bk.blob || bk.url, upd: p.updated, at: new Date().toISOString(), title: p.title };
+    var t = p.title || 'Untitled';
+    if (kept) res.push({ k: 'kept', t: t, n: 'Your changes on this phone are kept as "' + kept.title + '".' });
+    else res.push({ k: old ? 'updated' : 'added', t: t, n: old ? 'Now the newest version.' : 'Saved in My Projects.' });
+  });
+}
+function syOneBook(bk, res, i, n) {
+  var projs = (bk && bk.projects) || [], need = false, same = true;
+  if (!bk || !bk.url || !projs.length) return Promise.resolve();
+  var title = projs.map(function (x) { return x.title || 'Untitled'; }).join(', ');
+  each(projs, function (x) {
+    var r = syState.books[x.id], loc = pjFind(x.id);
+    if (!r || r.blob !== (bk.blob || bk.url)) need = true;
+    // First time on this phone: a copy imported by hand from the same build counts as up to date.
+    if (r || !loc || syMs(loc.updated) === null || syMs(loc.updated) !== syMs(x.updated)) same = false;
+    else { var oth = pjOtherFileIds(loc.id); if (loc.files.some(function (f) { return oth[f.id]; })) same = false; }
+  });
+  if (!need) { res.push({ k: 'same', t: title, n: 'Already up to date.' }); return Promise.resolve(); }
+  if (same) {
+    each(projs, function (x) { syState.books[x.id] = { blob: bk.blob || bk.url, upd: pjFind(x.id).updated, at: new Date().toISOString(), title: x.title }; });
+    res.push({ k: 'same', t: title, n: 'Already up to date.' }); return Promise.resolve();
+  }
+  if (pjCur && projs.some(function (x) { return x.id === pjCur.id; })) {
+    res.push({ k: 'wait', t: title, n: 'Open on screen right now, so it was left alone. Close it and tap Sync now.' }); return Promise.resolve();
+  }
+  var size = bk.size || 0;
+  syProg = 'Downloading ' + title + (n > 1 ? ' (' + (i + 1) + ' of ' + n + ')' : '') + '...'; syRender();
+  return syReq(bk.url, true, function (got, tot) {
+    tot = tot || size;
+    syProg = 'Downloading ' + title + ': ' + sizeText(got) + (tot ? ' of ' + sizeText(tot) : '') + '...';
+    var el = $('sy-prog'); if (el) el.textContent = syProg;
+  }).then(function (buf) {
+    var u = new Uint8Array(buf);
+    if (size && u.length !== size) throw new Error('The download of ' + title + ' was cut short. Tap Sync now to try again.');
+    syProg = 'Saving ' + title + '...'; syRender();
+    return pjUnzip(u).then(pjFromZip);
+  }).then(function (items) {
+    var chain = Promise.resolve();
+    each(items, function (it) {
+      var ent = null; each(projs, function (x) { if (it.p && x.id === it.p.id) ent = x; });
+      chain = chain.then(function () { return syStoreOne(it, bk, ent, res); });
+    });
+    return chain;
+  })['catch'](function (e) { res.push({ k: 'error', t: title, n: syErrText(e) }); if (e && e.net) throw e; });
+}
+function syRun(auto) {
+  syLoad();
+  var c = syParse(syState.code);
+  if (!c || syBusy) return Promise.resolve(null);
+  if (!pjReady || pjMode !== 'idb') { syState.err = 'This browser cannot save book projects, so it cannot sync.'; sySave(); syRender(); return Promise.resolve(null); }
+  var now = new Date().toISOString();
+  if (auto && window.navigator && navigator.onLine === false) { syState.lastTry = now; syState.err = syErrText({ net: true }); sySave(); syRender(); return Promise.resolve(null); }
+  syBusy = true; syProg = 'Checking for books from Grok Bot...'; syRender();
+  try { pjFlush(); } catch (e) {}
+  var res = [], failed = null;
+  return syFeed(c).then(function (m) {
+    var books = m.books || [], chain = Promise.resolve();
+    each(books, function (bk, i) { chain = chain.then(function () { return syOneBook(bk, res, i, books.length); }); });
+    return chain.then(function () { syState.feedUpdated = m.updated || ''; if (!books.length) res.push({ k: 'same', t: 'No books yet', n: 'Grok Bot has not posted a book yet.' }); });
+  })['catch'](function (e) { failed = e; }).then(function () {
+    syBusy = false; syProg = '';
+    syState.lastTry = new Date().toISOString();
+    if (failed && !res.length) syState.err = syErrText(failed);
+    else { syState.err = failed ? syErrText(failed) : ''; syState.lastOk = syState.lastTry; syState.last = res; }
+    sySave();
+    var changed = res.filter(function (r) { return r.k === 'added' || r.k === 'updated' || r.k === 'kept'; });
+    if (changed.length) { pjSort(); try { pjAskKeep(); } catch (e) {} }
+    renderProjects(); syRender();
+    if (changed.length) toast('Grok Bot sent ' + (changed.length === 1 ? '"' + changed[0].t + '"' : changed.length + ' books') + '. ' + (changed.length === 1 ? 'It is' : 'They are') + ' in My Projects.');
+    else if (!auto) toast(failed && !res.length ? syState.err : res.some(function (r) { return r.k === 'error' || r.k === 'wait'; }) ? 'Sync finished. See the notes under Sync from Grok Bot.' : 'Everything is up to date.');
+    window.__syLast = { res: res, err: syState.err };
+    return { res: res, err: failed ? syState.err : '' };
+  });
+}
+function syPair(code, fromLink) {
+  var c = syParse(code);
+  if (!c) { toast('That does not look like a pairing code. It starts with PD- and has letters and numbers.'); return Promise.resolve(false); }
+  syLoad(); var prev = syParse(syState.code); if (!prev || prev.id !== c.id) { syState.books = {}; delete syState.owner; } if (c.owner) syState.owner = c.owner; syState.code = syPretty(c); syState.err = ''; syState.last = []; sySave(); syRender();
+  return syRun(false).then(function (r) {
+    if (r && r.err && /pairing code did not work|does not point/.test(r.err) && !(r.res && r.res.length)) {
+      syLoad(); delete syState.code; delete syState.owner; sySave(); syRender(); toast(r.err); return false;
+    }
+    return true;
+  });
+}
+function syUnpair() {
+  if (!window.confirm('Stop syncing with Grok Bot on this phone? Your books stay here. You can pair again with the same code.')) return;
+  syLoad(); delete syState.code; delete syState.owner; syState.books = {}; syState.last = []; syState.err = ''; sySave(); syRender(); toast('Sync is off. Your books are still here.');
+}
+function syRender() {
+  var el = $('pj-sync'); if (!el) return;
+  var s = syState || syLoad(), c = syParse(s.code), h = '<h3 style="font-size:18px;margin:0 0 6px">Sync from Grok Bot</h3>';
+  if (!c) {
+    h += '<p class="small mt0">Books Grok Bot works on can come to this phone by themselves. Type the pairing code Grok Bot gave you, once. After that PD Press checks for new or updated books every time you open it.</p>' +
+      '<label class="f" style="margin-bottom:10px"><span>Pairing code</span><input type="text" id="sy-code" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="PD-1234-abcd-..."></label>' +
+      '<div class="btns"><button class="btn" id="sy-pair">Pair with Grok Bot</button></div>';
+  } else {
+    var line = syBusy ? '' : s.lastOk ? 'On. Last checked ' + syTime(s.lastOk) + '.' : 'On. Not checked yet.';
+    h += '<p class="small mt0" id="sy-status">' + esc(line) + '</p>';
+    if (syBusy) h += '<p class="small" id="sy-prog" style="font-weight:600">' + esc(syProg) + '</p>';
+    if (!syBusy && s.err) h += '<p class="small" id="sy-err" style="color:#8a3b12">' + esc(s.err) + (s.lastTry && s.lastTry !== s.lastOk ? ' (' + esc(syTime(s.lastTry)) + ')' : '') + '</p>';
+    if (!syBusy && s.last && s.last.length) {
+      h += '<div class="small" id="sy-res" style="margin:0 0 10px">';
+      each(s.last, function (r) {
+        var mark = r.k === 'added' ? 'New' : r.k === 'updated' ? 'Updated' : r.k === 'kept' ? 'Updated, your copy kept' : r.k === 'wait' ? 'Waiting' : r.k === 'error' ? 'Problem' : 'Up to date';
+        h += '<div style="margin:0 0 6px"><b>' + esc(r.t) + '</b>: ' + esc(mark) + (r.k === 'same' ? '' : '. ' + esc(r.n)) + '</div>';
+      });
+      h += '</div>';
+    }
+    h += '<div class="btns"><button class="btn" id="sy-now"' + (syBusy ? ' disabled' : '') + '>' + (syBusy ? 'Syncing...' : 'Sync now') + '</button><button class="btn ghost small" id="sy-off"' + (syBusy ? ' disabled' : '') + '>Unpair</button></div>' +
+      '<p class="small muted" style="margin:0">Pairing code ' + esc(syPretty(c)) + '. If you change a book on this phone and Grok Bot sends a newer one, your version is kept as its own copy. Books you made yourself are never touched.</p>';
+  }
+  el.innerHTML = h;
+}
+function syLinkCode() {
+  var m = /[#&?]sync=([^&#]+)/.exec(location.hash + '&' + location.search);
+  if (!m) return '';
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
+}
+function syInit() {
+  syLoad();
+  var el = $('pj-sync'); if (!el) return;
+  el.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('button') : null; if (!b || b.disabled) return;
+    if (b.id === 'sy-pair') { var i = $('sy-code'); syPair(i ? i.value : ''); }
+    if (b.id === 'sy-now') syRun(false);
+    if (b.id === 'sy-off') syUnpair();
+  });
+  if (window.__pd) window.__pd.sync = { run: syRun, busy: function () { return syBusy; }, state: function () { return syState; } };
+  el.addEventListener('keydown', function (e) { if (e.target && e.target.id === 'sy-code' && (e.key === 'Enter' || e.keyCode === 13)) { e.preventDefault(); syPair(e.target.value); } });
+  syRender();
+  var link = syLinkCode();
+  if (link && syParse(link)) {
+    go('projects');
+    var cur = syParse(syState.code);
+    if (!cur || cur.id !== syParse(link).id) {
+      if (window.confirm('Pair PD Press with Grok Bot using this code? Books Grok Bot finishes will then be saved on this phone by themselves.')) { syPair(link, true); return; }
+    }
+  }
+  if (syParse(syState.code)) setTimeout(function () { syRun(true); }, 1200);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState !== 'visible' || !syParse((syState || syLoad()).code)) return;
+    var last = syMs(syState.lastTry) || 0;
+    if (Date.now() - last > 30 * 60000) syRun(true);
+  });
+  window.addEventListener('online', function () { if (syParse((syState || syLoad()).code) && syState.err) syRun(true); });
 }
 
 /* ---- v2.10: loose files ----
